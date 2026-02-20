@@ -1,25 +1,94 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
-
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
+/*
+ * ARTIFEX LABS — Benchmarking & Evaluation Reference Guide
+ * Design: Industrial Manifesto Brutalism
+ * Primary: #FF4D00 | Black #000000 | White #FFFFFF
+ * Fonts: Archivo Black (display), Space Mono (metadata), Inter (body)
  */
-export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
 
+import Nav from "@/components/Nav";
+import Hero from "@/components/Hero";
+import MarqueeTicker from "@/components/MarqueeTicker";
+import FoundationsSection from "@/components/FoundationsSection";
+import BbomSection from "@/components/BbomSection";
+import BenchmarksSection from "@/components/BenchmarksSection";
+import AgenticSection from "@/components/AgenticSection";
+import ScoringSection from "@/components/ScoringSection";
+import GovernanceSection from "@/components/GovernanceSection";
+import GlossarySection from "@/components/GlossarySection";
+import Footer from "@/components/Footer";
+
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen bg-white text-black" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <Nav />
+      <Hero />
+      <MarqueeTicker
+        items={[
+          "BENCHMARKS REWARD PERFORMANCE",
+          "EVALS EXPOSE RISK",
+          "A BENCHMARK IS A TOOL",
+          "AN EVALUATION IS A PROCESS",
+          "BENCHMARKS RANK MODELS",
+          "EVALUATIONS SURFACE FAILURE MODES",
+          "BENCHMARKS PRODUCE COMPARABLE SCORES",
+          "EVALUATIONS PRODUCE INSIGHTS",
+        ]}
+        speed={30}
+        bg="black"
+        color="#FF4D00"
+      />
+      <FoundationsSection />
+      <BbomSection />
+      <MarqueeTicker
+        items={[
+          "MMLU-PRO",
+          "GPQA DIAMOND",
+          "HUMANEVAL+",
+          "LIVECODEBENCH",
+          "AIME 2025",
+          "MATH-500",
+          "IFEVAL",
+          "BFCL V3",
+          "GAIA",
+          "SWE-BENCH VERIFIED",
+          "HELMET",
+          "ARC-AGI3",
+          "HUMANITY'S LAST EXAM",
+          "TAUBENCH",
+          "BROWSECOMP",
+          "PAPERBENCH",
+        ]}
+        speed={20}
+        bg="#FF4D00"
+        color="black"
+      />
+      <BenchmarksSection />
+      <AgenticSection />
+      <ScoringSection />
+      <GovernanceSection />
+      <MarqueeTicker
+        items={[
+          "CONSTRUCT VALIDITY",
+          "DATA LEAKAGE",
+          "BENCHMARK SATURATION",
+          "CONTAMINATION DETECTION",
+          "JUDGE DRIFT",
+          "HALLUCINATION RATE",
+          "JAILBREAK RESISTANCE",
+          "PERTURBATION VARIANCE",
+          "LOGIC COLLAPSE RATE",
+          "FALSE REFUSAL RATE",
+          "CANARY STRINGS",
+          "IRR CHECKS",
+          "SHA-256 INTEGRITY",
+          "SIGNED ATTESTATION",
+        ]}
+        speed={25}
+        bg="black"
+        color="white"
+      />
+      <GlossarySection />
+      <Footer />
     </div>
   );
 }
