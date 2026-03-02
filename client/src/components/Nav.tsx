@@ -2,11 +2,13 @@
  * Nav — Brutalist sticky navigation
  * Archivo Black brand name | Space Mono nav links
  * 2px bottom border | Orange accent on active
+ * Page-aware: shows section links on Home, page links on all pages
  */
 
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 
-const navLinks = [
+const sectionLinks = [
   { label: "Foundations", href: "#foundations" },
   { label: "BBOM", href: "#bbom" },
   { label: "Benchmarks", href: "#benchmarks" },
@@ -16,8 +18,16 @@ const navLinks = [
   { label: "Glossary", href: "#glossary" },
 ];
 
+const pageLinks = [
+  { label: "Eval Guide", href: "/" },
+  { label: "Safety", href: "/safety" },
+  { label: "Multicultural", href: "/multicultural" },
+];
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [location, navigate] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -25,11 +35,21 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (location !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    } else {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
+  const isHome = location === "/";
 
   return (
     <nav
@@ -52,12 +72,13 @@ export default function Nav() {
           alignItems: "center",
           justifyContent: "space-between",
           height: 56,
+          gap: "1rem",
         }}
       >
         {/* Brand */}
         <a
-          href="#"
-          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           style={{
             fontFamily: "'Archivo Black', sans-serif",
             fontSize: "1rem",
@@ -69,6 +90,7 @@ export default function Nav() {
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
+            flexShrink: 0,
           }}
         >
           <span
@@ -87,44 +109,88 @@ export default function Nav() {
           <span>LABS</span>
         </a>
 
-        {/* Nav links — desktop */}
-        <div
-          style={{
-            display: "flex",
-            gap: "1.75rem",
-            alignItems: "center",
-          }}
-          className="hidden-mobile"
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleClick(e, link.href)}
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                color: "#000000",
-                textDecoration: "none",
-                paddingBottom: "2px",
-                borderBottom: "2px solid transparent",
-                transition: "color 0.1s linear, border-color 0.1s linear",
-              }}
-              onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.color = "#FF4D00";
-                (e.target as HTMLElement).style.borderBottomColor = "#FF4D00";
-              }}
-              onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.color = "#000000";
-                (e.target as HTMLElement).style.borderBottomColor = "transparent";
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+        {/* Page tabs — always visible */}
+        <div style={{ display: "flex", gap: "0", border: "2px solid #000000", flexShrink: 0 }}>
+          {pageLinks.map((link) => {
+            const isActive = location === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => { e.preventDefault(); navigate(link.href); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: isActive ? "#FFFFFF" : "#000000",
+                  textDecoration: "none",
+                  padding: "0.4rem 0.9rem",
+                  background: isActive ? "#000000" : "transparent",
+                  borderRight: "2px solid #000000",
+                  transition: "background 0.1s linear, color 0.1s linear",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.background = "#FF4D00";
+                    (e.currentTarget as HTMLElement).style.color = "#000000";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    (e.currentTarget as HTMLElement).style.background = "transparent";
+                    (e.currentTarget as HTMLElement).style.color = "#000000";
+                  }
+                }}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
+
+        {/* Section links — only on home page, desktop */}
+        {isHome && (
+          <div
+            style={{
+              display: "flex",
+              gap: "1.25rem",
+              alignItems: "center",
+              overflow: "hidden",
+            }}
+          >
+            {sectionLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleSectionClick(e, link.href)}
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#666666",
+                  textDecoration: "none",
+                  paddingBottom: "2px",
+                  borderBottom: "2px solid transparent",
+                  transition: "color 0.1s linear, border-color 0.1s linear",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.color = "#FF4D00";
+                  (e.currentTarget as HTMLElement).style.borderBottomColor = "#FF4D00";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.color = "#666666";
+                  (e.currentTarget as HTMLElement).style.borderBottomColor = "transparent";
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )}
 
         {/* Right badge */}
         <div
@@ -136,6 +202,7 @@ export default function Nav() {
             color: "#FF4D00",
             border: "2px solid #FF4D00",
             padding: "0.2rem 0.6rem",
+            flexShrink: 0,
           }}
         >
           2026 FIELD MANUAL
