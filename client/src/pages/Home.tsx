@@ -11,6 +11,8 @@ import MarqueeTicker from "@/components/MarqueeTicker";
 import FoundationsSection from "@/components/FoundationsSection";
 import BbomSection from "@/components/BbomSection";
 import BenchmarksSection from "@/components/BenchmarksSection";
+import BenchmarkCemetery from "@/components/BenchmarkCemetery";
+import ResourcesSection from "@/components/ResourcesSection";
 import AgenticSection from "@/components/AgenticSection";
 import ScoringSection from "@/components/ScoringSection";
 import GovernanceSection from "@/components/GovernanceSection";
@@ -52,17 +54,59 @@ export default function Home() {
           "GAIA",
           "SWE-BENCH VERIFIED",
           "HELMET",
-          "ARC-AGI3",
+          "ARC-AGI-2",
           "HUMANITY'S LAST EXAM",
           "TAUBENCH",
           "BROWSECOMP",
           "PAPERBENCH",
+          "HEALTHBENCH",
+          "MULTIAGENTBENCH",
+          "LIVECODEBENCHWPRO",
+          "MATHARENA",
+          "COLBENCH",
         ]}
         speed={20}
         bg="#FF4D00"
         color="black"
       />
       <BenchmarksSection />
+      <MarqueeTicker
+        items={[
+          "EPOCH AI",
+          "LMARENA",
+          "CHATBOT ARENA",
+          "LMSYS ORG",
+          "HUMAN PREFERENCE",
+          "ELO RATINGS",
+          "COMPUTE TRENDS",
+          "AI BENCHMARKING DATABASE",
+          "PAIRWISE COMPARISON",
+          "CROWDSOURCED EVALUATION",
+          "TRAINING COMPUTE",
+          "ML HARDWARE",
+        ]}
+        speed={25}
+        bg="black"
+        color="white"
+      />
+      <ResourcesSection />
+      <MarqueeTicker
+        items={[
+          "MMLU — CONTAMINATED 2023",
+          "HELLASWAG — SATURATED 2022",
+          "GSM8K — SATURATED 2023",
+          "ARC CHALLENGE — SATURATED 2022",
+          "WINOGRANDE — CONTAMINATED 2023",
+          "TRUTHFULQA — CONSTRUCT FAILURE",
+          "BIG-BENCH — METHODOLOGY FLAW",
+          "HUMANEVAL — CONTAMINATED 2023",
+          "ARENA-HARD AUTO — METHODOLOGY FLAW 2025",
+        ]}
+        speed={22}
+        bg="#CC0000"
+        color="white"
+      />
+      <BenchmarkCemetery />
       <AgenticSection />
       <ScoringSection />
       <GovernanceSection />

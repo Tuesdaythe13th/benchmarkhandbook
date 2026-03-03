@@ -12,6 +12,8 @@ const sectionLinks = [
   { label: "Foundations", href: "#foundations" },
   { label: "BBOM", href: "#bbom" },
   { label: "Benchmarks", href: "#benchmarks" },
+  { label: "Resources", href: "#resources" },
+  { label: "Cemetery", href: "#cemetery" },
   { label: "Agentic", href: "#agentic" },
   { label: "Scoring", href: "#scoring" },
   { label: "Governance", href: "#governance" },
