@@ -12,12 +12,14 @@ const sectionLinks = [
   { label: "Foundations", href: "#foundations" },
   { label: "BBOM", href: "#bbom" },
   { label: "Benchmarks", href: "#benchmarks" },
-  { label: "Resources", href: "#resources" },
-  { label: "Cemetery", href: "#cemetery" },
   { label: "Agentic", href: "#agentic" },
   { label: "Scoring", href: "#scoring" },
   { label: "Governance", href: "#governance" },
   { label: "Glossary", href: "#glossary" },
+  { label: "Cemetery", href: "#cemetery" },
+  { label: "Resources", href: "#resources" },
+  { label: "Research", href: "#research" },
+  { label: "Assessment", href: "#survey" },
 ];
 
 const pageLinks = [

@@ -3,6 +3,7 @@
  * Design: Industrial Manifesto Brutalism
  * Primary: #FF4D00 | Black #000000 | White #FFFFFF
  * Fonts: Archivo Black (display), Space Mono (metadata), Inter (body)
+ * Last updated: March 4, 2026
  */
 
 import Nav from "@/components/Nav";
@@ -11,12 +12,14 @@ import MarqueeTicker from "@/components/MarqueeTicker";
 import FoundationsSection from "@/components/FoundationsSection";
 import BbomSection from "@/components/BbomSection";
 import BenchmarksSection from "@/components/BenchmarksSection";
-import BenchmarkCemetery from "@/components/BenchmarkCemetery";
-import ResourcesSection from "@/components/ResourcesSection";
 import AgenticSection from "@/components/AgenticSection";
 import ScoringSection from "@/components/ScoringSection";
 import GovernanceSection from "@/components/GovernanceSection";
 import GlossarySection from "@/components/GlossarySection";
+import BenchmarkCemetery from "@/components/BenchmarkCemetery";
+import ResourcesSection from "@/components/ResourcesSection";
+import ResearchPapersSection from "@/components/ResearchPapersSection";
+import SurveySection from "@/components/SurveySection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -61,52 +64,14 @@ export default function Home() {
           "PAPERBENCH",
           "HEALTHBENCH",
           "MULTIAGENTBENCH",
-          "LIVECODEBENCHWPRO",
-          "MATHARENA",
           "COLBENCH",
+          "MEGASCIENCE",
         ]}
         speed={20}
         bg="#FF4D00"
         color="black"
       />
       <BenchmarksSection />
-      <MarqueeTicker
-        items={[
-          "EPOCH AI",
-          "LMARENA",
-          "CHATBOT ARENA",
-          "LMSYS ORG",
-          "HUMAN PREFERENCE",
-          "ELO RATINGS",
-          "COMPUTE TRENDS",
-          "AI BENCHMARKING DATABASE",
-          "PAIRWISE COMPARISON",
-          "CROWDSOURCED EVALUATION",
-          "TRAINING COMPUTE",
-          "ML HARDWARE",
-        ]}
-        speed={25}
-        bg="black"
-        color="white"
-      />
-      <ResourcesSection />
-      <MarqueeTicker
-        items={[
-          "MMLU — CONTAMINATED 2023",
-          "HELLASWAG — SATURATED 2022",
-          "GSM8K — SATURATED 2023",
-          "ARC CHALLENGE — SATURATED 2022",
-          "WINOGRANDE — CONTAMINATED 2023",
-          "TRUTHFULQA — CONSTRUCT FAILURE",
-          "BIG-BENCH — METHODOLOGY FLAW",
-          "HUMANEVAL — CONTAMINATED 2023",
-          "ARENA-HARD AUTO — METHODOLOGY FLAW 2025",
-        ]}
-        speed={22}
-        bg="#CC0000"
-        color="white"
-      />
-      <BenchmarkCemetery />
       <AgenticSection />
       <ScoringSection />
       <GovernanceSection />
@@ -132,6 +97,28 @@ export default function Home() {
         color="white"
       />
       <GlossarySection />
+      <MarqueeTicker
+        items={[
+          "R.I.P. MMLU",
+          "R.I.P. HELLASWAG",
+          "R.I.P. GSM8K",
+          "R.I.P. ARC CHALLENGE",
+          "R.I.P. TRUTHFULQA",
+          "R.I.P. WINOGRANDE",
+          "R.I.P. BIG-BENCH",
+          "R.I.P. HUMANEVAL",
+          "R.I.P. ARENA-HARD AUTO v0.1",
+          "EVERY SATURATED BENCHMARK IS A CONFIRMED HYPOTHESIS",
+          "MOVE ON",
+        ]}
+        speed={22}
+        bg="#FF4D00"
+        color="black"
+      />
+      <BenchmarkCemetery />
+      <ResourcesSection />
+      <ResearchPapersSection />
+      <SurveySection />
       <Footer />
     </div>
   );
