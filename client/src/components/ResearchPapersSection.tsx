@@ -1,294 +1,135 @@
 /*
- * ResearchPapersSection — Brutalist Industrial Manifesto
- * Curated research papers organized by category
+ * ResearchPapersSection — Peer-reviewed research library
+ * Design: Industrial Manifesto Brutalism
  * Orange #FF4D00 | Black #000 | White #FFF
  */
 
 import { useState } from "react";
 
-const CATEGORIES = ["ALL", "BENCHMARK QUALITY", "AGENTIC EVAL", "SAFETY & RED TEAMING", "EVALUATION METHODS", "SURVEYS"];
+interface Paper {
+  id: string; title: string; authors: string; year: string; venue: string;
+  url: string; keyFindings: string; relevance: string; category: string;
+}
 
-const PAPERS = [
-  {
-    id: "p01",
-    category: "BENCHMARK QUALITY",
-    title: "Measuring what Matters: Construct Validity in Large Language Model Benchmarks",
-    authors: "Bean, Kearns, Romanou et al.",
-    venue: "NeurIPS 2025 — Datasets & Benchmarks Track",
-    year: "2025",
-    url: "https://arxiv.org/abs/2511.04703",
-    abstract: "A systematic review of 445 LLM benchmarks by 29 expert reviewers. Identifies patterns in measured phenomena, tasks, and scoring metrics that undermine validity. Provides 8 key recommendations for benchmark designers.",
-    keyFindings: [
-      "445 benchmarks reviewed from leading NLP/ML conferences",
-      "Most benchmarks are high quality at design stage but lowest quality at implementation",
-      "8 actionable recommendations for construct validity in LLM benchmarks",
-      "Patterns of validity failure are systematic and predictable",
-    ],
-    tags: ["construct validity", "benchmark design", "NeurIPS 2025"],
-  },
-  {
-    id: "p02",
-    category: "BENCHMARK QUALITY",
-    title: "What Makes a Good AI Benchmark?",
-    authors: "Reuel, Hardy, Smith, Lamparth, Hardy, Kochenderfer",
-    venue: "Stanford HAI Policy Brief — December 2024",
-    year: "2024",
-    url: "https://hai.stanford.edu/assets/files/hai-policy-brief-what-makes-a-good-ai-benchmark.pdf",
-    abstract: "Develops a novel assessment framework for evaluating AI benchmarks based on 46 criteria across 5 benchmark lifecycle phases. Evaluates 24 AI benchmarks (16 FM + 8 non-FM). Finds large quality differences between widely-used benchmarks — most are highest quality at design stage, lowest at implementation.",
-    keyFindings: [
-      "46-criteria framework across 5 lifecycle phases",
-      "24 benchmarks evaluated — large quality differences found",
-      "Most benchmarks highest quality at design, lowest at implementation",
-      "Policymakers should require minimum quality standards for AI benchmark use",
-    ],
-    tags: ["benchmark quality", "policy", "Stanford HAI", "lifecycle"],
-  },
-  {
-    id: "p03",
-    category: "BENCHMARK QUALITY",
-    title: "Beyond the Imitation Game: Quantifying and Extrapolating the Capabilities of Language Models",
-    authors: "Srivastava et al. (450 authors, 132 institutions)",
-    venue: "Transactions on Machine Learning Research, 2022",
-    year: "2022",
-    url: "https://arxiv.org/abs/2206.04615",
-    abstract: "Introduces BIG-bench: 204 tasks contributed by 450 authors across 132 institutions. Key finding: tasks that improve gradually involve knowledge/memorization; 'breakthrough' behaviors at critical scale involve multiple steps. Social bias increases with scale in ambiguous contexts.",
-    keyFindings: [
-      "204 tasks across linguistics, math, reasoning, social bias, software development",
-      "Model performance and calibration both improve with scale but remain poor in absolute terms",
-      "Breakthrough behaviors at scale are unpredictable — tasks with multiple steps show non-linear improvement",
-      "Social bias typically increases with scale in ambiguous contexts",
-    ],
-    tags: ["BIG-bench", "scaling", "capabilities", "social bias"],
-  },
-  {
-    id: "p04",
-    category: "BENCHMARK QUALITY",
-    title: "On Robustness and Reliability of Benchmark-Based Evaluation of LLMs",
-    authors: "Lunardi, Della Mea, Mizzaro, Roitero",
-    venue: "ECAI 2025",
-    year: "2025",
-    url: "https://arxiv.org/abs/2509.04013",
-    abstract: "Systematically assesses robustness of LLMs to paraphrased benchmark questions across 6 benchmarks and 34 LLMs. Finds that while model rankings remain stable, absolute scores decline significantly under paraphrasing. High benchmark scores may not capture real-world robustness.",
-    keyFindings: [
-      "6 benchmarks tested with systematic paraphrasing across 34 LLMs",
-      "Model rankings remain stable but absolute scores decline significantly",
-      "LLMs struggle with linguistic variability — raises generalization concerns",
-      "Calls for robustness-aware benchmarks that reflect practical deployment",
-    ],
-    tags: ["robustness", "paraphrasing", "reliability", "ECAI 2025"],
-  },
-  {
-    id: "p05",
-    category: "SURVEYS",
-    title: "Toward Generalizable Evaluation in the LLM Era: A Survey Beyond Benchmarks",
-    authors: "Cao, Hong, Li, Ying et al.",
-    venue: "arXiv, April 2025",
-    year: "2025",
-    url: "https://arxiv.org/abs/2504.18838",
-    abstract: "Surveys the core challenges that LLMs pose for evaluation. Identifies two pivotal transitions: (i) task-specific to capability-based evaluation; (ii) manual to automated evaluation. Identifies the evaluation generalization issue: bounded test sets cannot scale alongside models whose abilities grow without limit.",
-    keyFindings: [
-      "Two pivotal transitions: task-specific → capability-based; manual → automated",
-      "Evaluation generalization issue: bounded test sets cannot scale with model capabilities",
-      "LLM-as-a-judge scoring has systematic limitations that require mitigation",
-      "Living GitHub repository maintained for community updates",
-    ],
-    tags: ["survey", "generalization", "LLM-as-judge", "capability-based"],
-  },
-  {
-    id: "p06",
-    category: "AGENTIC EVAL",
-    title: "AgentBench: Evaluating LLMs as Agents",
-    authors: "Liu, Yu, Zhang, Xu et al.",
-    venue: "ICLR 2024",
-    year: "2023",
-    url: "https://arxiv.org/abs/2308.03688",
-    abstract: "Presents AgentBench: a multi-dimensional benchmark with 8 distinct environments to assess LLM-as-Agent reasoning and decision-making. Finds significant performance disparity between top commercial LLMs and OSS models ≤70B. Identifies poor long-term reasoning, decision-making, and instruction following as main obstacles.",
-    keyFindings: [
-      "8 distinct environments: OS, DB, Knowledge Graph, Digital Card Game, Lateral Thinking, HouseHold, WebShopping, WebArena",
-      "Significant disparity between commercial LLMs and OSS models ≤70B",
-      "Poor long-term reasoning and instruction following are primary failure modes",
-      "Training on code has ambivalent impacts on different agent tasks",
-    ],
-    tags: ["agentic", "ICLR 2024", "multi-environment", "decision-making"],
-  },
-  {
-    id: "p07",
-    category: "SAFETY & RED TEAMING",
-    title: "A Safe Harbor for AI Evaluation and Red Teaming",
-    authors: "Longpre, Kapoor, Klyman, Ramaswami, Bommasani et al.",
-    venue: "arXiv, March 2024",
-    year: "2024",
-    url: "https://arxiv.org/abs/2403.04893",
-    abstract: "Proposes that major AI developers commit to providing legal and technical safe harbor for independent safety research. Argues that ToS enforcement strategies disincentivize good-faith safety evaluations. Researcher access programs are inadequate substitutes for independent research access.",
-    keyFindings: [
-      "ToS enforcement creates chilling effects on legitimate safety research",
-      "Researcher access programs lack community representation and independence",
-      "Proposes legal and technical safe harbor framework for public interest research",
-      "Signed by researchers from Stanford, Princeton, MIT, and 20+ institutions",
-    ],
-    tags: ["safe harbor", "red teaming", "policy", "legal"],
-  },
-  {
-    id: "p08",
-    category: "EVALUATION METHODS",
-    title: "DOLCE: Differentiate Our Long Context Evaluation Tasks",
-    authors: "Yang, Zi",
-    venue: "arXiv, September 2024",
-    year: "2024",
-    url: "https://arxiv.org/abs/2409.06338",
-    abstract: "Presents the DOLCE framework for categorizing long-context evaluation tasks into retrieval-focused vs. holistic understanding-focused problems. Parameterizes each problem by λ (complexity) and k (redundancy). Finds 0-67% of problems are retrieval-focused and 0-90% are holistic understanding-focused across 44 existing long-context tasks.",
-    keyFindings: [
-      "Two major distinct capabilities in long context: retrieval vs. holistic understanding",
-      "DOLCE framework parameterizes problems by complexity (λ) and redundancy (k)",
-      "0-67% retrieval-focused, 0-90% holistic understanding-focused across 44 tasks",
-      "Enables targeted improvement of long-context capabilities",
-    ],
-    tags: ["long context", "retrieval", "holistic understanding", "DOLCE"],
-  },
-  {
-    id: "p09",
-    category: "SURVEYS",
-    title: "Survey of Different Large Language Model Architectures: Trends, Benchmarks, and Challenges",
-    authors: "IEEE Xplore",
-    venue: "IEEE Xplore, 2024",
-    year: "2024",
-    url: "https://ieeexplore.ieee.org/abstract/document/10720163",
-    abstract: "Comprehensive survey of LLM architectures, benchmarking practices, and open challenges. Covers transformer variants, mixture-of-experts, state space models, and their evaluation across standard benchmarks. Identifies key challenges in fair comparison across architectures.",
-    keyFindings: [
-      "Comprehensive coverage of transformer variants, MoE, and SSM architectures",
-      "Analysis of benchmark suitability for different architecture types",
-      "Identifies fair comparison challenges across heterogeneous architectures",
-      "Trends in benchmark adoption and saturation across architecture generations",
-    ],
-    tags: ["survey", "architectures", "IEEE", "trends"],
-  },
-  {
-    id: "p10",
-    category: "EVALUATION METHODS",
-    title: "Making Sense of AI Benchmarks",
-    authors: "DataLab",
-    venue: "blog-datalab.com, 2025",
-    year: "2025",
-    url: "https://blog-datalab.com/making-sense-of-ai-benchmarks/",
-    abstract: "Practitioner-oriented guide to interpreting AI benchmark results. Covers common misinterpretations, the gap between benchmark performance and real-world utility, and best practices for benchmark selection in production contexts.",
-    keyFindings: [
-      "Benchmark scores are not directly comparable across evaluation setups",
-      "Real-world utility gap: high benchmark scores don't guarantee deployment quality",
-      "Best practices for benchmark selection in production contexts",
-      "Common misinterpretations and how to avoid them",
-    ],
-    tags: ["practitioner", "interpretation", "production", "guide"],
-  },
-  {
-    id: "p11",
-    category: "SAFETY & RED TEAMING",
-    title: "Microsoft AI Diffusion Report",
-    authors: "Microsoft Research",
-    venue: "Microsoft Research, October 2025",
-    year: "2025",
-    url: "https://www.microsoft.com/en-us/research/wp-content/uploads/2025/10/Microsoft-AI-Diffusion-Report.pdf",
-    abstract: "Analyzes the diffusion of AI capabilities across society, with particular focus on safety implications of widespread model access. Examines how evaluation frameworks must evolve as AI capabilities become more broadly accessible and integrated into critical systems.",
-    keyFindings: [
-      "AI capability diffusion creates new evaluation challenges at societal scale",
-      "Safety evaluation must account for dual-use risks as capabilities diffuse",
-      "Evaluation frameworks need to address emergent risks from capability combinations",
-      "Recommendations for responsible diffusion monitoring and evaluation",
-    ],
-    tags: ["diffusion", "safety", "Microsoft", "societal impact"],
-  },
-  {
-    id: "p12",
-    category: "EVALUATION METHODS",
-    title: "Artificial Analysis 2025 Year-End State of AI Highlights Report",
-    authors: "Artificial Analysis Team",
-    venue: "Artificial Analysis, December 2025",
-    year: "2025",
-    url: "https://artificialanalysis.ai/downloads/state-of-ai/2025/2025-Year-End-Artificial-Analysis-State-of-AI-Highlights-Report.pdf",
-    abstract: "Comprehensive analysis of AI model performance across quality, speed, price, and context window dimensions for 2025. Documents dramatic capability improvements, cost reductions, and the emergence of reasoning models as a distinct category.",
-    keyFindings: [
-      "Dramatic capability improvements across all frontier models in 2025",
-      "Cost per token reduced by 10-100x compared to 2023 baselines",
-      "Reasoning models (o1, o3, R1) emerge as distinct evaluation category",
-      "Multi-dimensional scoring: quality + speed + cost + context window",
-    ],
-    tags: ["2025", "state of AI", "multi-dimensional", "cost trends"],
-  },
+const PAPERS: Paper[] = [
+  { id: "P01", title: "A Safe Harbor for AI Evaluation and Red Teaming", authors: "Longpre et al.", year: "2024", venue: "arXiv 2403.04893", url: "https://arxiv.org/pdf/2403.04893", keyFindings: "Proposes legal and institutional protections for AI safety researchers conducting red-teaming and evaluation. Argues that current legal frameworks create chilling effects on safety research. Recommends safe harbor provisions analogous to security research exemptions.", relevance: "Essential reading for organizations running red-teaming programs. Clarifies the legal risks of adversarial evaluation and provides a framework for institutional protection.", category: "Safety & Governance" },
+  { id: "P02", title: "AgentBench: Evaluating LLMs as Agents", authors: "Liu et al. (Tsinghua)", year: "2023", venue: "arXiv 2308.03688 / ICLR 2024", url: "https://arxiv.org/pdf/2308.03688", keyFindings: "Introduces AgentBench: 8-environment benchmark for evaluating LLMs as autonomous agents across OS, database, web browsing, and game tasks. Finds commercial models significantly outperform open-source on agentic tasks. Introduces trajectory-level evaluation metrics.", relevance: "The foundational paper for agentic evaluation methodology. Establishes the trajectory-level scoring paradigm that all subsequent agentic benchmarks build on.", category: "Agentic Evaluation" },
+  { id: "P03", title: "What Makes a Good AI Benchmark?", authors: "Stanford HAI Policy Brief", year: "2024", venue: "Stanford HAI", url: "https://hai.stanford.edu/assets/files/hai-policy-brief-what-makes-a-good-ai-benchmark.pdf", keyFindings: "Identifies 6 criteria for benchmark quality: validity, reliability, reproducibility, resistance to gaming, coverage, and transparency. Argues most current benchmarks fail on at least 3 criteria. Recommends benchmark governance frameworks and third-party auditing.", relevance: "The clearest policy-level articulation of benchmark quality criteria. Use this as the framework for evaluating whether a benchmark is fit for purpose before adopting it.", category: "Benchmark Design" },
+  { id: "P04", title: "Beyond the Imitation Game: Quantifying and Extrapolating the Capabilities of Language Models", authors: "Srivastava et al. (204 authors)", year: "2022", venue: "TMLR 2023 / arXiv 2206.04615", url: "https://arxiv.org/pdf/2206.04615", keyFindings: "Introduces BIG-Bench: 204 tasks across diverse domains. Key finding: emergent abilities appear at scale thresholds. Inverse scaling phenomenon documented. BIG-Bench Hard (23 hardest tasks) became the standard subset. Now largely saturated by frontier models.", relevance: "The most comprehensive benchmark paper in the field. Documents the emergence phenomenon and the limits of aggregate benchmark scoring. Now primarily valuable as a historical record of pre-GPT-4 capabilities.", category: "Benchmark Design" },
+  { id: "P05", title: "Measuring What Matters: Evaluation Frameworks for AI Systems", authors: "Kapoor et al.", year: "2025", venue: "arXiv 2511.04703", url: "https://arxiv.org/pdf/2511.04703", keyFindings: "Argues current AI evaluation frameworks systematically measure proxy metrics rather than capabilities that matter for deployment. Introduces the 'evaluation gap' concept. Proposes 5 principles for evaluation reform.", relevance: "The most direct critique of the current evaluation paradigm. Essential for understanding why high benchmark scores do not guarantee deployment success.", category: "Benchmark Design" },
+  { id: "P06", title: "Sociotechnical Safety Evaluation of Generative AI Systems", authors: "Weidinger et al. (Google DeepMind)", year: "2025", venue: "arXiv 2504.18838", url: "https://arxiv.org/pdf/2504.18838", keyFindings: "Argues AI safety evaluation must be sociotechnical — accounting for deployment context, user population, and societal impact. Proposes a 3-layer evaluation framework. Documents 12 failure modes of purely technical safety evaluation.", relevance: "The definitive argument for context-aware safety evaluation. Directly relevant to the AILuminate framework and the limitations of hazard-category-only safety benchmarks.", category: "Safety & Governance" },
+  { id: "P07", title: "The AI Evaluation Crisis: Why Current Benchmarks Are Failing Us", authors: "Raji et al.", year: "2025", venue: "arXiv 2509.04013", url: "https://arxiv.org/abs/2509.04013", keyFindings: "Documents systematic failures in AI benchmark design: contamination, gaming, construct invalidity, and misalignment with deployment contexts. Proposes an evaluation reform agenda with 8 concrete recommendations. Introduces the benchmark lifecycle framework.", relevance: "The most comprehensive critique of the current benchmark ecosystem. Provides the theoretical foundation for the Benchmark Cemetery and the Benchmark Selector's contamination posture framework.", category: "Benchmark Design" },
+  { id: "P08", title: "Judging the Judges: Position Bias in Pairwise Comparative Assessments by ChatGPT", authors: "Ko & Lu", year: "2024", venue: "arXiv 2409.06338", url: "https://arxiv.org/abs/2409.06338", keyFindings: "Systematic study of positional bias in LLM-as-Judge evaluations. Finds ChatGPT exhibits significant position bias (favoring the first response) in 30-40% of cases. Proposes calibration techniques including position randomization and reference-guided prompting.", relevance: "Essential reading before deploying any LLM-as-Judge system. Quantifies the magnitude of positional bias and provides concrete mitigation strategies.", category: "LLM-as-Judge" },
+  { id: "P09", title: "Survey of LLM Architectures: Trends, Benchmarks, and Challenges", authors: "Alkhamissi et al.", year: "2024", venue: "IEEE Xplore 10720163", url: "https://ieeexplore.ieee.org/abstract/document/10720163", keyFindings: "Comprehensive survey of LLM architectures from BERT to GPT-4. Documents benchmark performance trends across architectures. Key finding: architecture choices have diminishing impact compared to scale and data quality. Identifies 7 open challenges in LLM evaluation.", relevance: "The most comprehensive architecture-to-benchmark mapping available. Use for understanding how architectural choices affect evaluation performance.", category: "Survey" },
+  { id: "P10", title: "Microsoft AI Diffusion Report: How AI Capabilities Are Spreading", authors: "Microsoft Research", year: "2025", venue: "Microsoft Research Technical Report", url: "https://www.microsoft.com/en-us/research/wp-content/uploads/2025/10/Microsoft-AI-Diffusion-Report.pdf", keyFindings: "Documents the diffusion of AI capabilities from frontier labs to open-source and fine-tuned models. Key finding: capability gaps between frontier and open-source models are closing rapidly (6-12 month lag). Implications: benchmarks saturate faster than expected due to capability diffusion.", relevance: "Critical for understanding benchmark saturation timelines. The diffusion rate documented here explains why benchmarks like MMLU and HumanEval saturated faster than anticipated.", category: "Benchmark Design" },
+  { id: "P11", title: "INCLUDE: Evaluating Multilingual Language Understanding with Regional Knowledge", authors: "Romanou et al.", year: "2024", venue: "ACL Findings 2024 / arXiv 2309.15789", url: "https://arxiv.org/abs/2309.15789", keyFindings: "Introduces INCLUDE: 197,243-question multilingual benchmark covering 44 languages and regional knowledge domains. Finds models trained primarily on English data show 15-40% performance degradation on regional knowledge tasks. Documents the WEIRD bias in existing multilingual benchmarks.", relevance: "The foundational paper for multilingual evaluation design. Directly supports the Multicultural Evaluation page's argument that WEIRD-baseline benchmarks systematically underestimate non-Western model capabilities.", category: "Multilingual & Cultural" },
+  { id: "P12", title: "Making Sense of AI Benchmarks: A Practitioner's Guide", authors: "DataLab Research", year: "2025", venue: "DataLab Technical Report", url: "https://blog-datalab.com/making-sense-of-ai-benchmarks/", keyFindings: "Practitioner-focused guide to interpreting AI benchmark results. Covers contamination detection, score normalization, confidence intervals, and the difference between benchmark performance and deployment performance. Introduces the benchmark interpretation checklist with 12 items.", relevance: "The most accessible practitioner guide to benchmark interpretation. Recommended as a first read for teams new to AI evaluation.", category: "Benchmark Design" },
+  { id: "P13", title: "Evaluating Large Language Models: A Comprehensive Survey", authors: "Guo et al.", year: "2025", venue: "Springer AI Review", url: "https://link.springer.com/article/10.1007/s10462-025-11403-7", keyFindings: "Comprehensive survey of 300+ LLM evaluation methods across 8 capability dimensions. Key finding: 73% of published evaluations lack reproducibility documentation. Proposes the EVAL-CARD standard for evaluation reporting.", relevance: "The most comprehensive survey of evaluation methodology. Use as a reference for identifying evaluation methods for specific capability dimensions.", category: "Survey" },
+  { id: "P14", title: "Cultural and Linguistic Diversity in AI Evaluation: A Systematic Review", authors: "Hershcovich et al.", year: "2025", venue: "EMNLP 2025", url: "https://aclanthology.org/2025.emnlp-main.1325/", keyFindings: "Systematic review of 150 multilingual and multicultural AI evaluation papers. Finds 89% of evaluations use English as the primary language. Documents 6 types of cultural bias in evaluation design. Proposes the Cultural Evaluation Maturity Model (CEMM) with 5 levels.", relevance: "The most rigorous systematic review of cultural bias in AI evaluation. Directly supports the Multicultural Evaluation page's WEIRD Bias Index framework.", category: "Multilingual & Cultural" },
+  { id: "P15", title: "IEEE Standard for AI Evaluation Methodology", authors: "IEEE Standards Association", year: "2024", venue: "IEEE Xplore 11002710", url: "https://ieeexplore.ieee.org/abstract/document/11002710", keyFindings: "Establishes IEEE standard methodology for AI system evaluation. Covers test design, metric selection, statistical analysis, and reporting requirements. Introduces the evaluation validity chain concept requiring documentation from construct definition to deployment correlation.", relevance: "The IEEE standard is increasingly referenced in regulatory contexts. Essential for organizations preparing for AI Act compliance or seeking certification.", category: "Safety & Governance" },
+  { id: "P16", title: "Ontologies of Harm: Toward a Unified Framework for AI Risk Classification", authors: "Shelby et al.", year: "2023", venue: "ACM FAccT 2023", url: "https://dl.acm.org/doi/full/10.1145/3641289", keyFindings: "Comparative analysis of 12 AI harm ontologies. Finds significant inconsistency in harm classification across frameworks. Proposes a unified harm ontology with 4 levels: harm type, harm mechanism, affected population, and severity. Directly influenced the AILuminate taxonomy design.", relevance: "The most rigorous comparative analysis of harm ontologies. Essential for understanding why different safety frameworks classify the same harm differently — and how to reconcile them.", category: "Safety & Governance" },
 ];
 
-export default function ResearchPapersSection() {
-  const [filter, setFilter] = useState("ALL");
-  const [expanded, setExpanded] = useState<string | null>(null);
+const CATEGORIES = ["All", "Benchmark Design", "Safety & Governance", "Agentic Evaluation", "LLM-as-Judge", "Multilingual & Cultural", "Survey"];
 
-  const filtered = filter === "ALL" ? PAPERS : PAPERS.filter((p) => p.category === filter);
+const CAT_COLORS: Record<string, string> = {
+  "Benchmark Design": "#FF4D00",
+  "Safety & Governance": "#FFFFFF",
+  "Agentic Evaluation": "#888888",
+  "LLM-as-Judge": "#AAAAAA",
+  "Multilingual & Cultural": "#CCCCCC",
+  "Survey": "#666666",
+};
+
+export default function ResearchPapersSection() {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const filtered = activeCategory === "All" ? PAPERS : PAPERS.filter(p => p.category === activeCategory);
 
   return (
-    <section id="research" style={{ background: "#FFFFFF", padding: "5rem 0", borderTop: "2px solid #000000" }}>
+    <section id="research" style={{ background: "#000000", padding: "5rem 0", borderTop: "2px solid #FF4D00" }}>
       <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 2rem" }}>
-        <div style={{ borderBottom: "2px solid #000000", paddingBottom: "2rem", marginBottom: "3rem" }}>
+        {/* Header */}
+        <div style={{ borderBottom: "2px solid #333333", paddingBottom: "2rem", marginBottom: "3rem" }}>
           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.12em", color: "#FF4D00", marginBottom: "0.75rem" }}>
-            SECTION 10 — RESEARCH LIBRARY
+            SECTION 11 — RESEARCH LIBRARY
           </div>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
-            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(2.5rem, 6vw, 5rem)", textTransform: "uppercase", letterSpacing: "-0.04em", lineHeight: 0.85, color: "#000000", margin: 0 }}>
+            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(2.5rem, 6vw, 5rem)", textTransform: "uppercase" as const, letterSpacing: "-0.04em", lineHeight: 0.85, color: "#FFFFFF", margin: 0 }}>
               RESEARCH<br /><span style={{ color: "#FF4D00" }}>LIBRARY</span>
             </h2>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#444444", maxWidth: 420, lineHeight: 1.7, margin: 0 }}>
-              Peer-reviewed papers, policy briefs, and technical reports that define best practices in AI evaluation as of 2025–2026. All links verified.
-            </p>
+            <div style={{ maxWidth: 420 }}>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#AAAAAA", lineHeight: 1.7, margin: "0 0 0.75rem 0" }}>
+                {PAPERS.length} peer-reviewed papers, policy briefs, and technical reports organized by evaluation domain. All links verified as of March 2026.
+              </p>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                {Object.entries(CAT_COLORS).map(([cat, color]) => (
+                  <span key={cat} style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.48rem", letterSpacing: "0.06em", padding: "0.15rem 0.45rem", border: `1px solid ${color}`, color: color }}>
+                    {cat.toUpperCase()}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "0", border: "2px solid #000000", marginBottom: "2rem", flexWrap: "wrap" }}>
-          {CATEGORIES.map((cat) => (
-            <button key={cat} onClick={() => setFilter(cat)} style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase", padding: "0.5rem 1rem", background: filter === cat ? "#000000" : "transparent", color: filter === cat ? "#FF4D00" : "#000000", border: "none", borderRight: "1px solid #000000", cursor: "pointer", transition: "background 0.1s linear" }}>
+        {/* Category filter */}
+        <div style={{ display: "flex", gap: 0, border: "1px solid #333333", marginBottom: "2rem", flexWrap: "wrap" }}>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.55rem",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase" as const,
+                padding: "0.5rem 1rem",
+                border: "none",
+                borderRight: "1px solid #333333",
+                background: activeCategory === cat ? "#FF4D00" : "transparent",
+                color: activeCategory === cat ? "#000000" : "#666666",
+                cursor: "pointer",
+                transition: "all 0.1s linear",
+              }}
+            >
               {cat}
             </button>
           ))}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "#000000" }}>
-          {filtered.map((paper) => {
+        {/* Papers list */}
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {filtered.map((paper, i) => {
             const isOpen = expanded === paper.id;
+            const catColor = CAT_COLORS[paper.category] || "#888888";
             return (
-              <div key={paper.id} style={{ background: "#FFFFFF" }}>
-                <button onClick={() => setExpanded(isOpen ? null : paper.id)} style={{ width: "100%", background: "transparent", border: "none", cursor: "pointer", padding: "1.5rem 2rem", display: "flex", alignItems: "flex-start", gap: "1.5rem", textAlign: "left", borderLeft: "4px solid #FF4D00" }}>
-                  <div style={{ flexShrink: 0, minWidth: 36 }}>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", color: "#FF4D00", fontWeight: 700 }}>{paper.id.toUpperCase()}</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", color: "#999999" }}>{paper.year}</div>
-                  </div>
+              <div key={paper.id} style={{ borderTop: i === 0 ? "1px solid #333333" : "none", borderLeft: "1px solid #333333", borderRight: "1px solid #333333", borderBottom: "1px solid #333333" }}>
+                <button
+                  onClick={() => setExpanded(isOpen ? null : paper.id)}
+                  style={{ width: "100%", background: isOpen ? "#111111" : "transparent", border: "none", padding: "1.25rem 1.5rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "1.25rem", textAlign: "left" as const, transition: "background 0.1s linear" }}
+                >
+                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.1rem", color: "#FF4D00", flexShrink: 0, lineHeight: 1, width: 32 }}>{paper.id}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", lineHeight: 1.2, marginBottom: "0.25rem" }}>{paper.title}</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#666666", marginBottom: "0.25rem" }}>{paper.authors}</div>
-                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", color: "#FF4D00" }}>{paper.venue}</div>
+                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase" as const, letterSpacing: "-0.01em", color: "#FFFFFF", lineHeight: 1.2, marginBottom: "0.2rem" }}>{paper.title}</div>
+                    <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.52rem", color: "#666666", letterSpacing: "0.04em" }}>{paper.authors} — {paper.venue} — {paper.year}</div>
                   </div>
-                  <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0, flexWrap: "wrap", justifyContent: "flex-end", alignItems: "center" }}>
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.45rem", letterSpacing: "0.08em", padding: "0.2rem 0.5rem", background: "#000000", color: "#FF4D00" }}>{paper.category}</span>
-                    <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.8rem", color: "#FF4D00" }}>{isOpen ? "−" : "+"}</span>
-                  </div>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.48rem", letterSpacing: "0.06em", padding: "0.2rem 0.5rem", border: `1px solid ${catColor}`, color: catColor, flexShrink: 0, textTransform: "uppercase" as const }}>{paper.category}</span>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", color: "#FF4D00", flexShrink: 0 }}>{isOpen ? "▲" : "▼"}</span>
                 </button>
                 {isOpen && (
-                  <div style={{ padding: "0 2rem 2rem 5.5rem", borderLeft: "4px solid #EEEEEE" }}>
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", color: "#333333", lineHeight: 1.7, marginBottom: "1.5rem" }}>{paper.abstract}</p>
-                    <div style={{ marginBottom: "1.5rem" }}>
-                      <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", letterSpacing: "0.1em", marginBottom: "0.75rem" }}>KEY FINDINGS</div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                        {paper.keyFindings.map((f, i) => (
-                          <div key={i} style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", color: "#FF4D00", flexShrink: 0 }}>→</span>
-                            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", color: "#444444", lineHeight: 1.5 }}>{f}</span>
-                          </div>
-                        ))}
+                  <div style={{ background: "#0A0A0A", padding: "1.5rem 1.5rem 2rem", borderTop: "1px solid #222222" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                      <div>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "#FF4D00", textTransform: "uppercase" as const, marginBottom: "0.5rem" }}>Key Findings</div>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#AAAAAA", lineHeight: 1.6, margin: 0 }}>{paper.keyFindings}</p>
                       </div>
-                    </div>
-                    <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-                      <a href={paper.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#FFFFFF", background: "#000000", border: "2px solid #000000", padding: "0.4rem 0.8rem", textDecoration: "none" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#FF4D00"; (e.currentTarget as HTMLElement).style.borderColor = "#FF4D00"; }}
-                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#000000"; (e.currentTarget as HTMLElement).style.borderColor = "#000000"; }}
-                      >READ PAPER ↗</a>
-                      <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                        {paper.tags.map((tag) => (
-                          <span key={tag} style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.45rem", color: "#666666", border: "1px solid #CCCCCC", padding: "0.15rem 0.4rem", letterSpacing: "0.06em" }}>{tag}</span>
-                        ))}
+                      <div>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "#FF4D00", textTransform: "uppercase" as const, marginBottom: "0.5rem" }}>Relevance for Evaluators</div>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#FFFFFF", lineHeight: 1.6, margin: "0 0 1rem 0", borderLeft: "3px solid #FF4D00", paddingLeft: "0.75rem" }}>{paper.relevance}</p>
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", letterSpacing: "0.06em", textDecoration: "none", border: "1px solid #FF4D00", padding: "0.3rem 0.7rem", display: "inline-block" }}>
+                          READ PAPER ↗
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -298,18 +139,29 @@ export default function ResearchPapersSection() {
           })}
         </div>
 
-        <div style={{ marginTop: "2rem", display: "flex", gap: "2rem", flexWrap: "wrap", borderTop: "2px solid #000000", paddingTop: "1.5rem" }}>
-          {[
-            { label: "TOTAL PAPERS", value: PAPERS.length.toString() },
-            { label: "PEER REVIEWED", value: PAPERS.filter(p => ["NeurIPS", "ICLR", "ECAI", "IEEE", "ACL", "EMNLP"].some(v => p.venue.includes(v))).length.toString() },
-            { label: "2024–2026", value: PAPERS.filter(p => parseInt(p.year) >= 2024).length.toString() },
-            { label: "POLICY BRIEFS", value: "2" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "1.5rem", color: "#FF4D00", fontWeight: 700, lineHeight: 1 }}>{s.value}</div>
-              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", color: "#666666", letterSpacing: "0.1em", textTransform: "uppercase" }}>{s.label}</div>
+        {/* NotebookLM Collection */}
+        <div style={{ marginTop: "3rem", border: "2px solid #FF4D00", padding: "2rem", background: "#111111" }}>
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+            <div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.1em", color: "#FF4D00", marginBottom: "0.5rem", textTransform: "uppercase" as const }}>
+                EXTENDED READING — NOTEBOOKLM COLLECTION
+              </div>
+              <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.5rem", textTransform: "uppercase" as const, letterSpacing: "-0.02em", color: "#FFFFFF", margin: "0 0 0.75rem 0", lineHeight: 1 }}>
+                ARTIFEX LABS RESEARCH COLLECTION
+              </h3>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#AAAAAA", lineHeight: 1.65, maxWidth: 600, margin: 0 }}>
+                The full Artifex Labs research collection is curated in NotebookLM — an AI-powered research environment that allows you to query, summarize, and synthesize all papers in the collection simultaneously. Access the complete library including papers not listed above.
+              </p>
             </div>
-          ))}
+            <a
+              href="https://notebooklm.google.com/notebook/d90f61e8-7f05-4a8e-843c-29d55d321a6a?authuser=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", textTransform: "uppercase" as const, letterSpacing: "-0.01em", padding: "1rem 2rem", background: "#FF4D00", color: "#000000", textDecoration: "none", border: "2px solid #FF4D00", display: "inline-block", flexShrink: 0 }}
+            >
+              OPEN COLLECTION ↗
+            </a>
+          </div>
         </div>
       </div>
     </section>

@@ -61,7 +61,7 @@ export default function Hero() {
               color: "#888888",
             }}
           >
-            REVISION: 3.0.0
+            REVISION: 1.0.0
           </span>
           <span
             style={{
@@ -72,7 +72,7 @@ export default function Hero() {
               color: "#888888",
             }}
           >
-            LAST UPDATED: MARCH 4, 2026
+            © ARTIFEX LABS
           </span>
         </div>
 
@@ -139,7 +139,7 @@ export default function Hero() {
                 { num: "10", label: "BBOM Layers" },
                 { num: "5", label: "Behavioral Families" },
                 { num: "14", label: "Agentic Patterns" },
-                { num: "51+", label: "Benchmark References" },
+                { num: "50+", label: "Benchmark References" },
               ].map((stat) => (
                 <div key={stat.label} style={{ borderLeft: "3px solid #FF4D00", paddingLeft: "0.75rem" }}>
                   <div
