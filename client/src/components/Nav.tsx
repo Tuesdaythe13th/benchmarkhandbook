@@ -29,6 +29,7 @@ const pageLinks = [
   { label: "Eval Guide", href: "/" },
   { label: "Safety", href: "/safety" },
   { label: "Multicultural", href: "/multicultural" },
+  { label: "Eval Science", href: "/eval-science" },
 ];
 
 export default function Nav() {
