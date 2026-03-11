@@ -186,11 +186,78 @@ const DOMAIN_GUIDELINES = [
   },
 ];
 
+const INTRO_FINDINGS = [
+  {
+    n: "01",
+    finding: "Rubric quality drives evaluator performance.",
+    detail:
+      "Even frontier judge models plateau around 85% accuracy on challenging evaluation tasks when given high-quality human rubrics, but drop substantially when forced to generate their own criteria.",
+  },
+  {
+    n: "02",
+    finding: "Human rubrics encode essential constraints that models miss.",
+    detail:
+      "Models writing their own rubrics fixate on easy-to-spot formatting while missing logical feasibility, safety requirements, and tacit human priorities — a failure mode known as 'attention displacement.'",
+  },
+  {
+    n: "03",
+    finding: "Small, atomic rubrics work best.",
+    detail:
+      "Recent benchmarks commonly use 2–10 binary yes/no criteria per task, with each criterion testing exactly one requirement. APEX-Agents mean: 4.06 per task.",
+  },
+];
+
+const QA_PASSES = [
+  {
+    n: "01",
+    title: "Logical Consistency",
+    desc: "No two criteria contradict each other. A criterion requiring 'formal tone' cannot coexist with one requiring 'casual language.'",
+  },
+  {
+    n: "02",
+    title: "Minimal Redundancy",
+    desc: "Overlapping items are merged or removed to maintain atomicity. Duplicate coverage adds noise, not signal.",
+  },
+  {
+    n: "03",
+    title: "Instruction Traceability",
+    desc: "Every item maps back to something explicit or necessary in the original prompt. If you cannot trace it, remove it.",
+  },
+];
+
+const STRESS_CASES = [
+  "High-fluency output that does not solve the task",
+  "Low-fluency output that correctly solves the task",
+  "Output that satisfies explicit constraints but violates implicit ones",
+  "Output that appears complete but contains fabricated information",
+];
+
+const HUMAN_ADVANTAGE_ITEMS = [
+  "Recognizing implicit constraints and feasibility conditions",
+  "Aligning strictness with true user intent rather than surface form",
+  "Encoding safety boundaries and refusal logic",
+  "Avoiding low-necessity formatting obsession",
+];
+
+const HUMAN_RUBRIC_WHEN = {
+  use: [
+    "High-stakes benchmarks and model selection",
+    "Safety-critical evaluation",
+    "Tasks with significant implicit constraints or domain expertise requirements",
+    "Contexts where evaluation failure has compliance, legal, or reputational consequences",
+  ],
+  acceptable: [
+    "Low-stakes exploratory evaluation",
+    "Rapid prototyping and iteration",
+    "Tasks with purely explicit, mechanical constraints",
+  ],
+};
+
 const REFERENCES = [
   {
     id: "[1]",
     citation:
-      'Chen, Y., et al. (2026). RubricBench: Aligning Model-Generated Rubrics with Human Standards. arXiv:2603.01562.',
+      "Chen, Y., et al. (2026). RubricBench: Aligning Model-Generated Rubrics with Human Standards. arXiv:2603.01562.",
     url: "https://arxiv.org/abs/2603.01562",
   },
   {
@@ -200,10 +267,34 @@ const REFERENCES = [
     url: "https://arxiv.org/pdf/2601.14242.pdf",
   },
   {
+    id: "[3]",
+    citation:
+      "Chen, Y., et al. (2026). RubricBench: Aligning Model-Generated Rubrics with Human Standards (Extended). arXiv:2603.01562v2.",
+    url: "https://arxiv.org/html/2603.01562v2",
+  },
+  {
+    id: "[4]",
+    citation:
+      "Emergent Mind Research. (2026). Rubric Formalization in AI and Education.",
+    url: "https://www.emergentmind.com/topics/rubric-formalization",
+  },
+  {
+    id: "[5]",
+    citation:
+      "Emergent Mind Research. (2026). APEX-Agents Benchmark: Evaluating AI Agents in Professional Settings.",
+    url: "https://www.emergentmind.com/topics/apex-agents-benchmark",
+  },
+  {
     id: "[6]",
     citation:
       "Wolfe, C. R. (2026). Rubric-Based Rewards for Reinforcement Learning. Deep Learning Focus.",
     url: "https://cameronrwolfe.substack.com/p/rubric-rl",
+  },
+  {
+    id: "[7]",
+    citation:
+      "University of Illinois Chicago, Center for the Advancement of Teaching Excellence. (n.d.). Rubrics: Best Practices for Assessment.",
+    url: "https://teaching.uic.edu/cate-teaching-guides/assessment-grading-practices/rubrics/",
   },
 ];
 
@@ -392,6 +483,142 @@ export default function RubricHandbook() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 01: Introduction — Why Rubrics Matter */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#FFFFFF",
+          borderBottom: "2px solid #000000",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 01
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#000000",
+                margin: 0,
+              }}
+            >
+              INTRODUCTION: WHY RUBRICS MATTER
+            </h2>
+          </div>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              color: "#555555",
+              marginBottom: "2rem",
+              lineHeight: 1.6,
+              maxWidth: 800,
+            }}
+          >
+            A good rubric is not a paragraph about "quality." It is a small set
+            of verifiable checks that define what success means for a specific
+            task. Rubrics make evaluation more transparent, reproducible, and
+            resistant to outputs that sound polished without actually solving the
+            problem. Recent state-of-the-art work demonstrates three key
+            findings:
+          </p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0",
+              border: "2px solid #000000",
+            }}
+          >
+            {INTRO_FINDINGS.map((item, i) => (
+              <div
+                key={item.n}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "64px 1fr 2fr",
+                  borderBottom:
+                    i < INTRO_FINDINGS.length - 1
+                      ? "2px solid #000000"
+                      : "none",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "1.5rem 1rem",
+                    background: "#000000",
+                    borderRight: "2px solid #000000",
+                    fontFamily: "'Archivo Black', sans-serif",
+                    fontSize: "1.8rem",
+                    letterSpacing: "-0.04em",
+                    color: "#FF4D00",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.n}
+                </div>
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    borderRight: "2px solid #000000",
+                    background: "#FAFAFA",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Archivo Black', sans-serif",
+                      fontSize: "0.85rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "-0.02em",
+                      color: "#000000",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {item.finding}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.78rem",
+                    lineHeight: 1.6,
+                    color: "#444444",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {item.detail}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -807,6 +1034,557 @@ export default function RubricHandbook() {
         </div>
       </section>
 
+      {/* Section 05: Necessity vs. Rigidity */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#000000",
+          borderBottom: "2px solid #FF4D00",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 05
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#FFFFFF",
+                margin: 0,
+              }}
+            >
+              NECESSITY VS. RIGIDITY
+            </h2>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0",
+              border: "2px solid #333333",
+              marginBottom: "2rem",
+            }}
+          >
+            <div style={{ padding: "2rem", borderRight: "2px solid #333333" }}>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#FF4D00",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                §5.1 ALIGNING STRICTNESS WITH INTENT
+              </div>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "#AAAAAA",
+                  margin: "0 0 1rem",
+                }}
+              >
+                A good rubric is strict where the task truly demands strictness
+                and flexible where multiple good answers are possible. If the
+                prompt says "return valid JSON," exact structure may be
+                necessary. If the prompt says "summarize clearly," requiring
+                exactly five bullets may be unnecessarily rigid unless the
+                instruction explicitly demanded it.
+              </p>
+              <div
+                style={{
+                  background: "#111111",
+                  border: "1px solid #333333",
+                  padding: "0.75rem 1rem",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  color: "#FF4D00",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                PRACTICAL TEST: If this criterion fails, should the task still
+                count as successful? If yes — remove it from the must-have set.
+              </div>
+            </div>
+            <div style={{ padding: "2rem" }}>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#FF4D00",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                §5.2 AVOIDING SURFACE OBSESSION
+              </div>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "#AAAAAA",
+                  margin: "0 0 1rem",
+                }}
+              >
+                RubricBench demonstrates that models writing their own rubrics
+                fixate on easy-to-spot formatting and surface features while
+                missing logical feasibility, safety requirements, or tacit human
+                priorities. This is "attention displacement" — the rubric
+                rewards surface polish instead of actual task completion.
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "#AAAAAA",
+                  margin: 0,
+                }}
+              >
+                Human rubric writers are better at recognizing what truly
+                matters to the user's intent and aligning strictness
+                accordingly. This is the primary driver of the ~26% Rubric Gap.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 07: Quality Control */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#FFFFFF",
+          borderBottom: "2px solid #000000",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 07
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#000000",
+                margin: 0,
+              }}
+            >
+              QUALITY CONTROL
+            </h2>
+          </div>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              color: "#555555",
+              marginBottom: "2rem",
+              lineHeight: 1.5,
+            }}
+          >
+            Before a rubric is used in benchmarking, model selection, or
+            deployment QA, it should pass a three-pass QA workflow derived from
+            RubricBench's construction philosophy.
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "2rem",
+            }}
+          >
+            {/* Three-Pass QA */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                  marginBottom: "1rem",
+                }}
+              >
+                THREE-PASS QA CHECKLIST
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0",
+                  border: "2px solid #000000",
+                }}
+              >
+                {QA_PASSES.map((pass, i) => (
+                  <div
+                    key={pass.n}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "56px 1fr",
+                      borderBottom:
+                        i < QA_PASSES.length - 1
+                          ? "2px solid #000000"
+                          : "none",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "1rem",
+                        background: "#000000",
+                        borderRight: "2px solid #000000",
+                        fontFamily: "'Archivo Black', sans-serif",
+                        fontSize: "1.2rem",
+                        letterSpacing: "-0.04em",
+                        color: "#FF4D00",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {pass.n}
+                    </div>
+                    <div style={{ padding: "1rem" }}>
+                      <div
+                        style={{
+                          fontFamily: "'Archivo Black', sans-serif",
+                          fontSize: "0.75rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "-0.02em",
+                          color: "#000000",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {pass.title}
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: "0.73rem",
+                          lineHeight: 1.5,
+                          color: "#555555",
+                        }}
+                      >
+                        {pass.desc}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Stress Testing */}
+            <div>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                  marginBottom: "1rem",
+                }}
+              >
+                STRESS TEST CASES — ADVERSARIAL VALIDATION
+              </div>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.78rem",
+                  lineHeight: 1.6,
+                  color: "#444444",
+                  marginBottom: "1rem",
+                }}
+              >
+                Run the rubric on contrasting outputs. A rubric is good only if
+                it separates these for the right reasons — not surface
+                presentation. RubricBench was deliberately constructed to remain
+                discriminative when surface cues like length or formatting
+                conflict with actual quality.
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0",
+                  border: "2px solid #000000",
+                }}
+              >
+                {STRESS_CASES.map((sc, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: "0.85rem 1rem",
+                      borderBottom:
+                        i < STRESS_CASES.length - 1
+                          ? "1px solid #DDDDDD"
+                          : "none",
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "0.75rem",
+                      lineHeight: 1.5,
+                      color: "#333333",
+                      display: "flex",
+                      gap: "0.75rem",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "0.6rem",
+                        color: "#FF4D00",
+                        flexShrink: 0,
+                        paddingTop: "0.05rem",
+                      }}
+                    >
+                      →
+                    </span>
+                    {sc}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 08: Scoring Patterns */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#000000",
+          borderBottom: "2px solid #FF4D00",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 08
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#FFFFFF",
+                margin: 0,
+              }}
+            >
+              SCORING PATTERNS
+            </h2>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0",
+              border: "2px solid #333333",
+            }}
+          >
+            {/* Binary Scoring */}
+            <div style={{ padding: "2rem", borderRight: "2px solid #333333" }}>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#FF4D00",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                §8.1 BINARY SCORING — PREFERRED
+              </div>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "#AAAAAA",
+                  margin: "0 0 1.25rem",
+                }}
+              >
+                The cleanest setup is binary scoring per criterion: met / not
+                met. This is the dominant pattern in RubricBench and APEX-Agents
+                because it improves interpretability and reduces ambiguity.
+              </p>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.5rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                DECISION RULE
+              </div>
+              {[
+                "All hard constraints must pass",
+                "Most or all core fulfillment items must pass",
+                "Pitfall checks must not fail",
+              ].map((rule, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "0.6rem 0.75rem",
+                    background: "#111111",
+                    border: "1px solid #333333",
+                    borderTop: i > 0 ? "none" : "1px solid #333333",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.73rem",
+                    color: "#CCCCCC",
+                    display: "flex",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span style={{ color: "#FF4D00", flexShrink: 0 }}>→</span>
+                  {rule}
+                </div>
+              ))}
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.73rem",
+                  lineHeight: 1.55,
+                  color: "#888888",
+                  margin: "1rem 0 0",
+                }}
+              >
+                For high-stakes evaluation, avoid collapsing everything into one
+                opaque score too early. Keep criterion-level results visible so
+                humans can diagnose failure modes.
+              </p>
+            </div>
+            {/* Weighted Scoring */}
+            <div style={{ padding: "2rem" }}>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                §8.2 WEIGHTED SCORING — CONDITIONAL
+              </div>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.8rem",
+                  lineHeight: 1.65,
+                  color: "#AAAAAA",
+                  margin: "0 0 1.25rem",
+                }}
+              >
+                Weighted scoring may be appropriate when different criteria have
+                clearly different importance levels, partial credit is
+                meaningful, or downstream systems require continuous scores. Even
+                then, maintain atomic binary checks as the foundation and apply
+                weights transparently.
+              </p>
+              <div
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.5rem",
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                WHEN WEIGHTED SCORING IS APPROPRIATE
+              </div>
+              {[
+                "Different criteria have clearly different importance levels",
+                "Partial credit is meaningful and well-defined",
+                "Downstream systems require continuous scores",
+              ].map((cond, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "0.6rem 0.75rem",
+                    background: "#0A0A0A",
+                    border: "1px solid #333333",
+                    borderTop: i > 0 ? "none" : "1px solid #333333",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.73rem",
+                    color: "#AAAAAA",
+                    display: "flex",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span style={{ color: "#666666", flexShrink: 0 }}>→</span>
+                  {cond}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Part 4: Poor vs Strong Example */}
       <section
         style={{
@@ -1011,7 +1789,7 @@ export default function RubricHandbook() {
         </div>
       </section>
 
-      {/* Part 5: Safety + Anti-Patterns */}
+      {/* Section 06: Safety & Refusal Logic */}
       <section style={{ padding: "4rem 2rem", background: "#FFFFFF", borderBottom: "2px solid #000000" }}>
         <div style={{ maxWidth: 1440, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem" }}>
@@ -1098,7 +1876,7 @@ export default function RubricHandbook() {
               </div>
             </div>
 
-            {/* Anti-patterns */}
+            {/* Anti-patterns — §09 inline alongside safety */}
             <div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "1.5rem" }}>
                 <span
@@ -1277,6 +2055,225 @@ export default function RubricHandbook() {
         </div>
       </section>
 
+      {/* Section 12: The Human Rubric Advantage */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#FFFFFF",
+          borderBottom: "2px solid #000000",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "0.5rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 12
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#000000",
+                margin: 0,
+              }}
+            >
+              THE HUMAN RUBRIC ADVANTAGE
+            </h2>
+          </div>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              color: "#555555",
+              marginBottom: "2.5rem",
+              lineHeight: 1.6,
+              maxWidth: 800,
+            }}
+          >
+            The most important finding from recent evaluation research is that{" "}
+            <strong>rubric quality is the limiting factor</strong>, not just
+            which judge model is used. RubricBench reports that human-annotated
+            rubrics produce a performance gain of approximately{" "}
+            <strong>26%</strong> over model-generated rubrics, even when using
+            the same judge model.
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0",
+              marginBottom: "2rem",
+            }}
+          >
+            {/* Why Human Rubrics Outperform */}
+            <div
+              style={{
+                border: "2px solid #000000",
+                borderRight: "1px solid #000000",
+              }}
+            >
+              <div
+                style={{
+                  padding: "0.75rem 1.25rem",
+                  background: "#000000",
+                  borderBottom: "2px solid #000000",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.5rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#FF4D00",
+                }}
+              >
+                §12.1 WHY HUMAN RUBRICS OUTPERFORM
+              </div>
+              <div
+                style={{
+                  padding: "1.25rem",
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.73rem",
+                  color: "#555555",
+                  lineHeight: 1.6,
+                  marginBottom: "0.5rem",
+                }}
+              >
+                Human rubric writers are better at:
+              </div>
+              {HUMAN_ADVANTAGE_ITEMS.map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "0.7rem 1.25rem",
+                    borderTop: "1px solid #EEEEEE",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.73rem",
+                    color: "#333333",
+                    display: "flex",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span style={{ color: "#FF4D00", flexShrink: 0 }}>→</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+            {/* When to Use Human Rubrics */}
+            <div
+              style={{
+                border: "2px solid #000000",
+                borderLeft: "1px solid #000000",
+              }}
+            >
+              <div
+                style={{
+                  padding: "0.75rem 1.25rem",
+                  background: "#000000",
+                  borderBottom: "2px solid #000000",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.5rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#FF4D00",
+                }}
+              >
+                §12.2 WHEN TO USE HUMAN RUBRICS
+              </div>
+              <div
+                style={{
+                  padding: "0.75rem 1.25rem",
+                  background: "#FFF3EE",
+                  borderBottom: "1px solid #EEEEEE",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.45rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                }}
+              >
+                ALWAYS USE HUMAN-AUTHORED RUBRICS FOR:
+              </div>
+              {HUMAN_RUBRIC_WHEN.use.map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "0.7rem 1.25rem",
+                    borderTop: "1px solid #EEEEEE",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.73rem",
+                    color: "#333333",
+                    display: "flex",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span style={{ color: "#FF4D00", flexShrink: 0 }}>✓</span>
+                  {item}
+                </div>
+              ))}
+              <div
+                style={{
+                  padding: "0.75rem 1.25rem",
+                  background: "#FAFAFA",
+                  borderTop: "2px solid #000000",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.45rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "#888888",
+                }}
+              >
+                MODEL-GENERATED MAY BE ACCEPTABLE FOR:
+              </div>
+              {HUMAN_RUBRIC_WHEN.acceptable.map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "0.7rem 1.25rem",
+                    borderTop: "1px solid #EEEEEE",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.73rem",
+                    color: "#888888",
+                    display: "flex",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span style={{ color: "#CCCCCC", flexShrink: 0 }}>→</span>
+                  {item}
+                </div>
+              ))}
+              <div
+                style={{
+                  padding: "0.7rem 1.25rem",
+                  borderTop: "2px solid #000000",
+                  background: "#000000",
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: "0.5rem",
+                  color: "#888888",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                Even in these cases, human review and refinement is recommended.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Implementation Checklist */}
       <section style={{ padding: "4rem 2rem", background: "#FFFFFF", borderBottom: "2px solid #000000" }}>
         <div style={{ maxWidth: 1440, margin: "0 auto" }}>
@@ -1344,6 +2341,154 @@ export default function RubricHandbook() {
                   }}
                 >
                   {item}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section 14: Final Principle */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#000000",
+          borderBottom: "2px solid #FF4D00",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "1rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "0.6rem",
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#FF4D00",
+              }}
+            >
+              SECTION 14
+            </span>
+            <h2
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                color: "#FFFFFF",
+                margin: 0,
+              }}
+            >
+              FINAL PRINCIPLE
+            </h2>
+          </div>
+          <div
+            style={{
+              border: "2px solid #FF4D00",
+              padding: "2.5rem",
+              marginBottom: "2rem",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'Archivo Black', sans-serif",
+                fontSize: "clamp(1.1rem, 2vw, 1.6rem)",
+                textTransform: "uppercase",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.25,
+                color: "#FFFFFF",
+                margin: "0 0 1.5rem",
+              }}
+            >
+              A rubric should behave like a{" "}
+              <span style={{ color: "#FF4D00" }}>unit test for intent.</span>
+            </p>
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+                color: "#AAAAAA",
+                margin: "0 0 1rem",
+              }}
+            >
+              If it mainly rewards outputs for looking polished, it is not a
+              good rubric. If it makes task success legible, auditable, and
+              resistant to superficial reward hacking, it is doing its job.
+            </p>
+            <p
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+                color: "#AAAAAA",
+                margin: 0,
+              }}
+            >
+              The shift toward rubric-guided evaluation represents a fundamental
+              improvement in AI evaluation methodology: moving from opaque
+              vibes-based scoring to structured, verifiable criteria that can be
+              inspected, debugged, and improved over time.
+            </p>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "0",
+              border: "2px solid #333333",
+            }}
+          >
+            {[
+              {
+                label: "LEGIBLE",
+                desc: "Task success is clearly defined, not a vague sense of polish.",
+              },
+              {
+                label: "AUDITABLE",
+                desc: "Every pass or fail can be traced to a specific criterion from the original instruction.",
+              },
+              {
+                label: "IMPROVABLE",
+                desc: "When a rubric fails, it can be diagnosed and refined — unlike opaque single-score systems.",
+              },
+            ].map((item, i) => (
+              <div
+                key={item.label}
+                style={{
+                  padding: "1.5rem",
+                  borderRight: i < 2 ? "2px solid #333333" : "none",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "'Archivo Black', sans-serif",
+                    fontSize: "1rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "-0.03em",
+                    color: "#FF4D00",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {item.label}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.75rem",
+                    lineHeight: 1.6,
+                    color: "#888888",
+                  }}
+                >
+                  {item.desc}
                 </div>
               </div>
             ))}
