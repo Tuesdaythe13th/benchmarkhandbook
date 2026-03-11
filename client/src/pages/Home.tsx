@@ -11,12 +11,15 @@ import MarqueeTicker from "@/components/MarqueeTicker";
 import FoundationsSection from "@/components/FoundationsSection";
 import BbomSection from "@/components/BbomSection";
 import BenchmarksSection from "@/components/BenchmarksSection";
+import BenchmarkSelector from "@/components/BenchmarkSelector";
 import BenchmarkCemetery from "@/components/BenchmarkCemetery";
-import ResourcesSection from "@/components/ResourcesSection";
 import AgenticSection from "@/components/AgenticSection";
 import ScoringSection from "@/components/ScoringSection";
 import GovernanceSection from "@/components/GovernanceSection";
 import GlossarySection from "@/components/GlossarySection";
+import ResourcesSection from "@/components/ResourcesSection";
+import ResearchPapersSection from "@/components/ResearchPapersSection";
+import SurveySection from "@/components/SurveySection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -59,51 +62,30 @@ export default function Home() {
           "TAUBENCH",
           "BROWSECOMP",
           "PAPERBENCH",
-          "HEALTHBENCH",
-          "MULTIAGENTBENCH",
-          "LIVECODEBENCHWPRO",
-          "MATHARENA",
-          "COLBENCH",
         ]}
         speed={20}
         bg="#FF4D00"
         color="black"
       />
       <BenchmarksSection />
+      <BenchmarkSelector />
       <MarqueeTicker
         items={[
-          "EPOCH AI",
-          "LMARENA",
-          "CHATBOT ARENA",
-          "LMSYS ORG",
-          "HUMAN PREFERENCE",
-          "ELO RATINGS",
-          "COMPUTE TRENDS",
-          "AI BENCHMARKING DATABASE",
-          "PAIRWISE COMPARISON",
-          "CROWDSOURCED EVALUATION",
-          "TRAINING COMPUTE",
-          "ML HARDWARE",
+          "MMLU R.I.P. 2024",
+          "HELLASWAG R.I.P. 2022",
+          "GSM8K R.I.P. 2024",
+          "ARC CHALLENGE R.I.P. 2023",
+          "TRUTHFULQA R.I.P. 2024",
+          "HUMANEVAL R.I.P. 2024",
+          "BIG-BENCH R.I.P. 2024",
+          "ARENA-HARD V0.1 R.I.P. 2025",
+          "WINOGRANDE R.I.P. 2023",
+          "SATURATION KILLS BENCHMARKS",
+          "CONTAMINATION KILLS BENCHMARKS",
+          "GAMING KILLS BENCHMARKS",
         ]}
-        speed={25}
+        speed={18}
         bg="black"
-        color="white"
-      />
-      <ResourcesSection />
-      <MarqueeTicker
-        items={[
-          "MMLU — CONTAMINATED 2023",
-          "HELLASWAG — SATURATED 2022",
-          "GSM8K — SATURATED 2023",
-          "ARC CHALLENGE — SATURATED 2022",
-          "WINOGRANDE — CONTAMINATED 2023",
-          "TRUTHFULQA — CONSTRUCT FAILURE",
-          "BIG-BENCH — METHODOLOGY FLAW",
-          "HUMANEVAL — CONTAMINATED 2023",
-          "ARENA-HARD AUTO — METHODOLOGY FLAW 2025",
-        ]}
-        speed={22}
-        bg="#CC0000"
         color="white"
       />
       <BenchmarkCemetery />
@@ -132,6 +114,9 @@ export default function Home() {
         color="white"
       />
       <GlossarySection />
+      <ResourcesSection />
+      <ResearchPapersSection />
+      <SurveySection />
       <Footer />
     </div>
   );

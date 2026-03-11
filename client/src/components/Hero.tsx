@@ -61,7 +61,7 @@ export default function Hero() {
               color: "#888888",
             }}
           >
-            REVISION: 1.0.0
+              REVISION: 4.0.0
           </span>
           <span
             style={{
@@ -72,7 +72,32 @@ export default function Hero() {
               color: "#888888",
             }}
           >
-            © ARTIFEX LABS
+              © ARTIFEX LABS
+          </span>
+          <span
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.6rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#000000",
+              background: "#FF4D00",
+              padding: "0.2rem 0.6rem",
+              fontWeight: 700,
+            }}
+          >
+              ⚠ STATUS: WORK IN PROGRESS
+          </span>
+          <span
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.6rem",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#888888",
+            }}
+          >
+              LAST UPDATED: MARCH 10, 2026
           </span>
         </div>
 
@@ -130,16 +155,29 @@ export default function Hero() {
             >
               A comprehensive, standardized framework for the design, execution, and governance of AI benchmarks.
               Built from practical, real-world application experience scoring 15,000+ models over 3 years.
-              Governance-grade. Auditable. Reproducible. Legally defensible.
+              Governance-grade. Auditable. Reproducible. On the road to becoming legally and forensically defensible.
             </p>
+
+            {/* Contact row */}
+            <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem", alignItems: "center" }}>
+              <a href="mailto:general@artifex.fun" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#FF4D00", textDecoration: "none", border: "1px solid #FF4D00", padding: "0.3rem 0.7rem", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                ✉ GENERAL@ARTIFEX.FUN
+              </a>
+              <a href="https://zcal.co/tuesday" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#000000", background: "#FF4D00", textDecoration: "none", padding: "0.3rem 0.7rem", display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                BOOK A SESSION ↗
+              </a>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#666666" }}>
+                TUESDAY — DIRECTOR OF RESEARCH @ ARTIFEX LABS
+              </span>
+            </div>
 
             {/* Stat row */}
             <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
               {[
-                { num: "10", label: "BBOM Layers" },
+                { num: "11", label: "BBOM Layers" },
                 { num: "5", label: "Behavioral Families" },
                 { num: "14", label: "Agentic Patterns" },
-                { num: "50+", label: "Benchmark References" },
+                { num: "60+", label: "Benchmark References" },
               ].map((stat) => (
                 <div key={stat.label} style={{ borderLeft: "3px solid #FF4D00", paddingLeft: "0.75rem" }}>
                   <div

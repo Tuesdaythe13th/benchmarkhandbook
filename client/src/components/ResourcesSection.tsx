@@ -1,378 +1,46 @@
-/*
- * ResourcesSection — Key research organizations and platforms
- * White background | Resource cards with links
- * Design: Industrial Manifesto Brutalism
- * Primary: #FF4D00 | Black #000000 | White #FFFFFF
- */
-
-interface Resource {
-  id: string;
-  name: string;
-  tagline: string;
-  url: string;
-  type: string;
-  description: string;
-  keyTools: { name: string; url: string; desc: string }[];
-  whyItMatters: string;
-  founded: string;
-  affiliation: string;
-}
-
-const resources: Resource[] = [
-  {
-    id: "01",
-    name: "EPOCH AI",
-    tagline: "Data on the Trajectory of AI",
-    url: "https://epoch.ai/",
-    type: "RESEARCH INSTITUTE",
-    founded: "2021",
-    affiliation: "Independent nonprofit",
-    description: "Epoch AI is an independent research institute investigating key trends and questions that will shape the trajectory and governance of artificial intelligence. Their work focuses on empirical measurement of AI progress — compute, data, algorithmic efficiency, and capabilities — rather than building AI systems. As of January 2026, Epoch AI has published over 100 research outputs, doubled its reach, and raised over $10M in funding.",
-    keyTools: [
-      {
-        name: "AI Benchmarking Database",
-        url: "https://epoch.ai/benchmarks",
-        desc: "Performance of leading AI models on challenging benchmarks, with insights into compute and accessibility. Updated March 2, 2026.",
-      },
-      {
-        name: "AI Models Dataset",
-        url: "https://epoch.ai/data/ai-models-documentation",
-        desc: "Collection of ML models useful for research about trends in the history and future of AI. Tracks training compute, parameters, and performance.",
-      },
-      {
-        name: "AI Trends Dashboard",
-        url: "https://epoch.ai/trends",
-        desc: "Dashboard tracking capabilities, compute, algorithmic progress, costs, and hardware trends shaping the future of AI.",
-      },
-      {
-        name: "ML Hardware Database",
-        url: "https://epoch.ai/data/machine-learning-hardware",
-        desc: "Key data on 170+ AI accelerators (GPUs, TPUs) used to develop and deploy machine learning models.",
-      },
-      {
-        name: "Data Insights",
-        url: "https://epoch.ai/data-insights",
-        desc: "Focused snapshots on training compute, hardware advancements, and AI economics. Digestible summaries of complex trends.",
-      },
-      {
-        name: "Gradient Updates Newsletter",
-        url: "https://epochai.substack.com/",
-        desc: "The Epoch Brief and Gradient Updates newsletters covering AI progress forecasting, hyperscaler capex, and model capability trends.",
-      },
-    ],
-    whyItMatters: "Epoch AI provides the empirical infrastructure that makes benchmark interpretation possible. Their compute tracking data shows that hyperscaler capex has quadrupled since GPT-4's release, nearing half a trillion dollars in 2025. Their benchmarking database is the most comprehensive public record of model performance across time, enabling researchers to track saturation, detect contamination patterns, and understand capability trajectories. For anyone building evaluation pipelines, Epoch AI's datasets are the ground truth for 'where are models now and where are they going.'",
-  },
-  {
-    id: "02",
-    name: "LMSYS / LMARENA",
-    tagline: "An Open Platform for Evaluating LLMs by Human Preference",
-    url: "https://lmarena.ai/",
-    type: "EVALUATION PLATFORM",
-    founded: "2023",
-    affiliation: "UC Berkeley LMSYS Org",
-    description: "LMSYS (Large Model Systems Organization) is a UC Berkeley research group that built Chatbot Arena — an open platform for evaluating LLMs through crowdsourced human preference. Users interact with two anonymous models simultaneously and vote for the better response. Over 1 million human votes have been collected. The platform has rebranded to LMArena (lmarena.ai) as of 2025 while maintaining the LMSYS.org research presence.",
-    keyTools: [
-      {
-        name: "Chatbot Arena / LMArena Leaderboard",
-        url: "https://lmarena.ai/",
-        desc: "Live ELO-based leaderboard of 100+ models ranked by human preference. Updated continuously. The most widely cited human preference benchmark.",
-      },
-      {
-        name: "MT-Bench",
-        url: "https://lmsys.org/blog/2023-06-22-leaderboard/",
-        desc: "Set of challenging multi-turn, open-ended questions for evaluating chat assistants. Uses GPT-4 as judge. 80 questions across 8 categories.",
-      },
-      {
-        name: "Arena-Hard Auto",
-        url: "https://github.com/lm-sys/arena-hard-auto",
-        desc: "Automatic evaluation tool using 500 challenging user queries from Chatbot Arena. Note: Feuer et al. (2025) documented significant methodology concerns — use with caution.",
-      },
-      {
-        name: "FastChat",
-        url: "https://github.com/lm-sys/FastChat",
-        desc: "Open platform for training, serving, and evaluating LLM-based chatbots. Powers the Chatbot Arena backend.",
-      },
-      {
-        name: "Chatbot Arena Paper (ICML 2024)",
-        url: "https://arxiv.org/abs/2403.04132",
-        desc: "Peer-reviewed methodology paper: 'Chatbot Arena: An Open Platform for Evaluating LLMs by Human Preference.' Published at ICML 2024.",
-      },
-      {
-        name: "Style Control Analysis",
-        url: "https://lmsys.org/blog/2024-08-28-style-control/",
-        desc: "Research on how response style (length, formatting) affects Arena rankings. Important for interpreting ELO scores — style has a strong effect independent of substance.",
-      },
-    ],
-    whyItMatters: "Chatbot Arena solves a fundamental problem in LLM evaluation: how do you measure what humans actually prefer, at scale, without relying on fixed test sets that can be gamed? The pairwise comparison methodology, combined with ELO rating aggregation, produces rankings that correlate strongly with real-world deployment quality. The February 2026 Text Arena leaderboard shows the top three open labs separated by just 3 ELO points — a level of granularity impossible with static benchmarks. Critical caveat: Arena rankings reflect human preference, not capability. Verbose, well-formatted responses outperform concise correct ones. Use alongside capability benchmarks, not as a replacement.",
-  },
+/* ResourcesSection — Key Research Orgs */
+const RESOURCES = [
+  { id: "epoch", name: "EPOCH AI", url: "https://epoch.ai/", tagline: "Empirical research on AI progress and timelines", description: "Epoch AI is an independent research institute tracking the empirical trajectory of AI development — compute scaling, training data, algorithmic efficiency, and capability milestones. Their database is the authoritative source for historical AI training compute trends.", why: "Epoch's compute and capability trend data is essential for contextualizing benchmark scores. A 90% score means something different when you know the model was trained on 10^25 FLOP vs. 10^23 FLOP.", links: [{ label: "AI & Compute Database", url: "https://epoch.ai/data/ai-training-compute" }, { label: "Notable AI Models", url: "https://epoch.ai/data/notable-ai-models" }, { label: "Trends in Machine Learning", url: "https://epoch.ai/trends" }, { label: "FrontierMath Benchmark", url: "https://epoch.ai/frontiermath" }, { label: "Research Blog", url: "https://epoch.ai/blog" }] },
+  { id: "lmarena", name: "LMARENA / CHATBOT ARENA", url: "https://lmarena.ai/", tagline: "Human preference ranking via blind pairwise comparison", description: "LMArena (formerly LMSYS Chatbot Arena) is the largest human preference evaluation platform for LLMs. Users submit prompts and vote on anonymous pairwise model responses. The resulting Elo-based leaderboard is the most widely cited human preference ranking in the field.", why: "Chatbot Arena is the closest thing to ground truth for human preference. It is the benchmark that other benchmarks are validated against. High Arena Elo correlates with real-world deployment quality better than any automated benchmark.", links: [{ label: "Live Leaderboard", url: "https://lmarena.ai/leaderboard" }, { label: "Arena Hard Auto Paper", url: "https://arxiv.org/abs/2406.11939" }, { label: "Chatbot Arena Paper (ICML 2024)", url: "https://arxiv.org/abs/2403.04132" }, { label: "LMSYS GitHub", url: "https://github.com/lm-sys/FastChat" }, { label: "WildBench", url: "https://huggingface.co/spaces/allenai/WildBench" }] },
+  { id: "mit-risk", name: "MIT AI RISK REPOSITORY", url: "https://docs.google.com/spreadsheets/d/1rgyNAfT161yPxDxg_XtKLjh1Tnq8IPQlAEa42c88bxg/edit?usp=sharing", tagline: "Comprehensive taxonomy of AI risks from 43 frameworks", description: "The MIT AI Risk Repository is a living database of AI risks compiled from 43 existing risk taxonomies and frameworks. It maps risks across 7 causal categories and 23 risk domains, providing the most comprehensive cross-framework risk ontology available as of 2025.", why: "The MIT Repository is the essential cross-reference for safety evaluation design. If you are building a safety benchmark, this is the authoritative map of what you need to cover — and what existing frameworks have missed.", links: [{ label: "Full Risk Database (Google Sheets)", url: "https://docs.google.com/spreadsheets/d/1rgyNAfT161yPxDxg_XtKLjh1Tnq8IPQlAEa42c88bxg/edit?usp=sharing" }, { label: "MIT FutureTech Project Page", url: "https://airisk.mit.edu/" }, { label: "Repository Paper (arXiv)", url: "https://arxiv.org/abs/2408.12622" }] },
+  { id: "aiid", name: "AI INCIDENT DATABASE", url: "https://incidentdatabase.ai/", tagline: "Real-world AI failure cases for evaluation grounding", description: "The AI Incident Database (AIID) is a crowd-sourced repository of 700+ documented AI failures and harms in the real world, spanning autonomous vehicles, content moderation, hiring algorithms, medical AI, and more. Maintained by the Responsible AI Collaborative.", why: "Real-world incidents are the ground truth that benchmarks should predict. The AIID is the empirical validation set for safety evaluation design — if your benchmark would not have flagged the failures in the AIID, it has a coverage gap.", links: [{ label: "Incident Database", url: "https://incidentdatabase.ai/" }, { label: "Browse All Incidents", url: "https://incidentdatabase.ai/apps/incidents" }, { label: "CSET Taxonomy", url: "https://incidentdatabase.ai/taxonomy/cset" }, { label: "GitHub", url: "https://github.com/responsible-ai-collaborative/aiid" }] },
+  { id: "artificial-analysis", name: "ARTIFICIAL ANALYSIS", url: "https://artificialanalysis.ai/models", tagline: "Independent performance & cost benchmarking for AI APIs", description: "Artificial Analysis provides independent, continuously updated benchmarking of AI model APIs across quality, speed, and cost dimensions. Their 2025 Year-End State of AI Report documented rapid capability improvements and price compression across frontier models.", why: "Artificial Analysis is the most reliable source for real-world API performance data — latency, throughput, and cost per token. Essential for production deployment decisions and cost-efficiency evaluation design.", links: [{ label: "Model Leaderboard", url: "https://artificialanalysis.ai/models" }, { label: "2025 State of AI Report (PDF)", url: "https://artificialanalysis.ai/downloads/state-of-ai/2025/2025-Year-End-Artificial-Analysis-State-of-AI-Highlights-Report.pdf" }, { label: "Speed & Latency Data", url: "https://artificialanalysis.ai/models#speed" }, { label: "Pricing Tracker", url: "https://artificialanalysis.ai/models#pricing" }] },
+  { id: "awesome-mllm", name: "AWESOME MULTIMODAL LLMs", url: "https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models", tagline: "Curated GitHub list: multimodal LLM papers, benchmarks & tools", description: "A comprehensive, community-maintained GitHub repository tracking the latest research in multimodal large language models. Covers vision-language models, audio-language models, video understanding, and cross-modal evaluation benchmarks. Updated continuously with new papers and tools.", why: "The most complete single reference for multimodal evaluation benchmarks. If you are designing a vision-language or audio-language eval, this list is the fastest way to survey what benchmarks already exist and what gaps remain.", links: [{ label: "GitHub Repository", url: "https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models" }, { label: "Benchmark Section", url: "https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models#evaluation" }, { label: "Papers Section", url: "https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models#papers" }] },
+  { id: "awesome-mlops", name: "AWESOME MLOps", url: "https://github.com/visenger/awesome-mlops", tagline: "Curated GitHub list: MLOps tools, platforms & evaluation infrastructure", description: "A curated reference list for MLOps practitioners covering the full lifecycle of ML systems — from data versioning and experiment tracking to model monitoring, evaluation pipelines, and deployment infrastructure. Maintained by Larysa Visengeriyeva.", why: "Evaluation is not just a research problem — it is an infrastructure problem. The Awesome MLOps list is the best single reference for the tooling stack required to run evaluations at production scale: experiment tracking, data versioning, model monitoring, and CI/CD for ML.", links: [{ label: "GitHub Repository", url: "https://github.com/visenger/awesome-mlops" }, { label: "Evaluation & Testing Section", url: "https://github.com/visenger/awesome-mlops#testing-and-evaluation" }, { label: "Monitoring Section", url: "https://github.com/visenger/awesome-mlops#model-monitoring" }] },
+  { id: "mlcommons", name: "MLCOMMONS / AILUMINATE", url: "https://mlcommons.org/2024/04/mlc-aisafety-v0-5-poc/", tagline: "Industry-standard AI safety benchmarking consortium — Tuesday participates", description: "MLCommons is the industry consortium behind the AILuminate safety evaluation standard. Their AI Safety Working Group developed the 12-hazard taxonomy and annotation framework used by major AI labs for pre-deployment safety assessment. Tuesday participates in the MLCommons assessment standard.", why: "AILuminate v1.0 is the closest thing to an industry standard for AI safety evaluation. Understanding its methodology is essential for any organization conducting safety assessments or seeking regulatory compliance.", links: [{ label: "AILuminate v0.5 POC", url: "https://mlcommons.org/2024/04/mlc-aisafety-v0-5-poc/" }, { label: "AILuminate GitHub", url: "https://github.com/mlcommons/ailuminate" }, { label: "AI Safety Working Group", url: "https://mlcommons.org/working-groups/ai-safety/ai-safety/" }] },
 ];
 
 export default function ResourcesSection() {
   return (
-    <section id="resources" style={{ padding: "5rem 2rem", background: "#FFFFFF" }}>
-      <div style={{ maxWidth: 1440, margin: "0 auto" }}>
-        {/* Section header */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "1rem" }}>
-          <span
-            style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: "0.6rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "#FF4D00",
-            }}
-          >
-            SECTION 03C
-          </span>
-          <h2
-            style={{
-              fontFamily: "'Archivo Black', sans-serif",
-              fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              textTransform: "uppercase",
-              letterSpacing: "-0.04em",
-              lineHeight: 0.88,
-              color: "#000000",
-              margin: 0,
-            }}
-          >
-            KEY RESEARCH ORGS
-          </h2>
+    <section id="resources" style={{ background: "#FF4D00", padding: "5rem 0", borderTop: "2px solid #000000" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 2rem" }}>
+        <div style={{ borderBottom: "2px solid #000000", paddingBottom: "2rem", marginBottom: "3rem" }}>
+          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.12em", color: "#000000", marginBottom: "0.75rem" }}>SECTION 10 — KEY RESEARCH ORGANIZATIONS</div>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap" as const, gap: "1rem" }}>
+            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(2.5rem, 6vw, 5rem)", textTransform: "uppercase" as const, letterSpacing: "-0.04em", lineHeight: 0.85, color: "#000000", margin: 0 }}>FIELD<br />RESOURCES</h2>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#000000", lineHeight: 1.7, maxWidth: 420, margin: 0 }}>The organizations, databases, and platforms that define the evaluation landscape. Primary sources for benchmark data, risk taxonomies, and human preference rankings.</p>
+          </div>
         </div>
-
-        <p
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: "0.9rem",
-            lineHeight: 1.6,
-            color: "#333333",
-            maxWidth: 720,
-            marginBottom: "3rem",
-          }}
-        >
-          Organizations and platforms that provide the infrastructure, data, and methodology for AI evaluation. These are the primary reference points for researchers building evaluation pipelines.
-        </p>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-          {resources.map((resource, idx) => (
-            <div
-              key={resource.id}
-              style={{
-                border: "2px solid #000000",
-                borderBottom: idx < resources.length - 1 ? "none" : "2px solid #000000",
-              }}
-            >
-              {/* Resource header */}
-              <div
-                style={{
-                  background: "#000000",
-                  padding: "1.5rem 2rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                  flexWrap: "wrap",
-                  gap: "1rem",
-                }}
-              >
-                <div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.25rem" }}>
-                    <span
-                      style={{
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: "0.55rem",
-                        color: "#FF4D00",
-                        letterSpacing: "0.1em",
-                      }}
-                    >
-                      {resource.id}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: "0.55rem",
-                        color: "#666666",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      {resource.type}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: "0.55rem",
-                        color: "#666666",
-                        letterSpacing: "0.08em",
-                      }}
-                    >
-                      EST. {resource.founded}
-                    </span>
-                  </div>
-                  <a
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <h3
-                      style={{
-                        fontFamily: "'Archivo Black', sans-serif",
-                        fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
-                        textTransform: "uppercase",
-                        letterSpacing: "-0.04em",
-                        lineHeight: 0.9,
-                        color: "#FF4D00",
-                        margin: "0 0 0.25rem 0",
-                        transition: "color 0.1s linear",
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "#FFFFFF";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "#FF4D00";
-                      }}
-                    >
-                      {resource.name} ↗
-                    </h3>
-                  </a>
-                  <div
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: "0.65rem",
-                      color: "#888888",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {resource.tagline}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: "0.55rem",
-                    color: "#555555",
-                    letterSpacing: "0.06em",
-                    textAlign: "right",
-                  }}
-                >
-                  {resource.affiliation}
-                </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: "1.5rem" }}>
+          {RESOURCES.map(r => (
+            <div key={r.id} style={{ background: "#000000", border: "2px solid #000000", padding: "2rem", display: "flex", flexDirection: "column" as const }}>
+              <div style={{ marginBottom: "1.25rem" }}>
+                <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.25rem", textTransform: "uppercase" as const, letterSpacing: "-0.02em", color: "#FF4D00", margin: "0 0 0.4rem 0", lineHeight: 1 }}>{r.name} ↗</h3>
+                </a>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.58rem", letterSpacing: "0.06em", color: "#888888", textTransform: "uppercase" as const }}>{r.tagline}</div>
               </div>
-
-              {/* Resource body */}
-              <div style={{ padding: "2rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-                {/* Left: description + why it matters */}
-                <div>
-                  <p
-                    style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "0.85rem",
-                      lineHeight: 1.65,
-                      color: "#333333",
-                      margin: "0 0 1.5rem 0",
-                    }}
-                  >
-                    {resource.description}
-                  </p>
-
-                  <div
-                    style={{
-                      background: "#fff3ee",
-                      border: "2px solid #000000",
-                      borderLeft: "6px solid #FF4D00",
-                      padding: "1rem 1.25rem",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: "0.55rem",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "#FF4D00",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      WHY IT MATTERS FOR EVALUATORS
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: "0.78rem",
-                        lineHeight: 1.6,
-                        color: "#333333",
-                        margin: 0,
-                      }}
-                    >
-                      {resource.whyItMatters}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right: key tools */}
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: "0.6rem",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "#000000",
-                      marginBottom: "1rem",
-                      borderBottom: "2px solid #000000",
-                      paddingBottom: "0.5rem",
-                    }}
-                  >
-                    KEY TOOLS & RESOURCES
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-                    {resource.keyTools.map((tool, i) => (
-                      <a
-                        key={tool.name}
-                        href={tool.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: "block",
-                          textDecoration: "none",
-                          padding: "0.85rem 0",
-                          borderBottom: i < resource.keyTools.length - 1 ? "1px solid #E0E0E0" : "none",
-                          transition: "padding-left 0.1s linear",
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.paddingLeft = "0.5rem";
-                          (e.currentTarget as HTMLElement).style.borderLeft = "3px solid #FF4D00";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.paddingLeft = "0";
-                          (e.currentTarget as HTMLElement).style.borderLeft = "none";
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontFamily: "'Space Mono', monospace",
-                            fontSize: "0.62rem",
-                            letterSpacing: "0.04em",
-                            color: "#000000",
-                            marginBottom: "0.2rem",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {tool.name} ↗
-                        </div>
-                        <div
-                          style={{
-                            fontFamily: "'Inter', sans-serif",
-                            fontSize: "0.72rem",
-                            lineHeight: 1.45,
-                            color: "#666666",
-                          }}
-                        >
-                          {tool.desc}
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#AAAAAA", lineHeight: 1.65, margin: "0 0 1.25rem 0", flex: 1 }}>{r.description}</p>
+              <div style={{ background: "#111111", borderLeft: "3px solid #FF4D00", padding: "0.75rem 1rem", marginBottom: "1.25rem" }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.52rem", letterSpacing: "0.08em", color: "#FF4D00", textTransform: "uppercase" as const, marginBottom: "0.3rem" }}>Why It Matters for Evaluators</div>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", color: "#CCCCCC", lineHeight: 1.5, margin: 0 }}>{r.why}</p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" as const, gap: "0.35rem" }}>
+                {r.links.map(link => (
+                  <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.05em", color: "#FFFFFF", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.3rem 0", borderBottom: "1px solid #222222" }}>
+                    <span style={{ color: "#FF4D00", flexShrink: 0 }}>→</span>{link.label}
+                  </a>
+                ))}
               </div>
             </div>
           ))}
