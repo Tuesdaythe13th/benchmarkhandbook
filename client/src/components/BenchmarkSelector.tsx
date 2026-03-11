@@ -21,15 +21,59 @@ const Q4_OPTIONS = ["Academic Research", "CI/CD Pipeline", "Regulatory Audit", "
 const Q5_OPTIONS = ["Automated (Exact Match / Code)", "LLM-as-Judge", "Human Annotation", "Composite (Hybrid)"];
 const Q6_OPTIONS = ["Uniplex / Western-Centric (WEIRD)", "Multiplex / Culturally Diverse"];
 
-const BENCHMARK_STACKS: Record<string, string[]> = {
-  "Reasoning": ["GPQA Diamond", "ARC-AGI-2", "ZebraLogic", "MuSR", "BBH"],
-  "Tool Use / Function Calling": ["BFCL v3", "ToolBench", "API-Bank", "TAU-Bench"],
-  "Safety & Alignment": ["HarmBench", "AILuminate v1.0", "WildGuard", "SafetyBench", "SALAD-Bench"],
-  "Security / Red-Teaming": ["HarmBench", "AdvBench", "JailbreakBench", "CyberSecEval 3"],
-  "Cultural & Multilingual": ["INCLUDE", "CMMLU", "IndicGenBench", "FLORES-200", "GlobalMMLU"],
-  "Code Generation": ["SWE-Bench Verified", "LiveCodeBench Pro", "CodeElo", "HumanEval+", "ResearchCodeBench"],
-  "Math & Quantitative": ["AIME 2025", "MATH-500", "OlympiadBench", "MegaMath"],
-  "Knowledge Retrieval": ["MMLU-Pro", "HELMET", "MegaScience", "BrowseComp"],
+const BENCHMARK_STACKS: Record<string, { name: string; url: string; note: string }[]> = {
+  "Reasoning": [
+    { name: "GPQA Diamond", url: "https://arxiv.org/abs/2311.12022", note: "PhD-level science, anti-contamination" },
+    { name: "ARC-AGI-2", url: "https://arcprize.org/arc-agi-2", note: "Abstract reasoning, 2025 frontier" },
+    { name: "ZebraLogic", url: "https://huggingface.co/datasets/WildEval/ZebraLogic", note: "Constraint satisfaction" },
+    { name: "MuSR", url: "https://arxiv.org/abs/2310.16049", note: "Multi-step soft reasoning" },
+    { name: "BBH", url: "https://arxiv.org/abs/2210.09261", note: "23 hard reasoning tasks" },
+  ],
+  "Tool Use / Function Calling": [
+    { name: "BFCL v3", url: "https://gorilla.cs.berkeley.edu/leaderboard.html", note: "Live function calling leaderboard" },
+    { name: "ToolBench", url: "https://arxiv.org/abs/2307.16789", note: "16,000 real APIs" },
+    { name: "TAU-Bench", url: "https://arxiv.org/abs/2406.12045", note: "Tool-augmented user simulation" },
+    { name: "AgentBench", url: "https://arxiv.org/abs/2308.03688", note: "8 agentic environments" },
+  ],
+  "Safety & Alignment": [
+    { name: "AILuminate v1.0", url: "https://mlcommons.org/2024/04/mlc-aisafety-v0-5-poc/", note: "MLCommons standard, 12 hazards" },
+    { name: "HarmBench", url: "https://www.harmbench.org/", note: "400+ adversarial behaviors" },
+    { name: "WildGuard", url: "https://arxiv.org/abs/2406.18495", note: "Safety classification" },
+    { name: "SALAD-Bench", url: "https://arxiv.org/abs/2402.05044", note: "21K safety Q&A" },
+    { name: "StrongREJECT", url: "https://arxiv.org/abs/2402.10260", note: "Jailbreak resistance" },
+  ],
+  "Security / Red-Teaming": [
+    { name: "HarmBench", url: "https://www.harmbench.org/", note: "400+ adversarial behaviors" },
+    { name: "JailbreakBench", url: "https://jailbreakbench.github.io/", note: "Standardized jailbreak eval" },
+    { name: "CyberSecEval 3", url: "https://arxiv.org/abs/2408.01605", note: "Meta cybersecurity risks" },
+    { name: "StrongREJECT", url: "https://arxiv.org/abs/2402.10260", note: "Jailbreak resistance" },
+  ],
+  "Cultural & Multilingual": [
+    { name: "INCLUDE", url: "https://arxiv.org/abs/2501.08754", note: "44 scripts, 197 regions" },
+    { name: "GlobalMMLU", url: "https://arxiv.org/abs/2412.03304", note: "42 languages" },
+    { name: "FLORES-200", url: "https://arxiv.org/abs/2207.04672", note: "200 languages, translation" },
+    { name: "IndicGenBench", url: "https://arxiv.org/abs/2404.16816", note: "29 Indic languages" },
+    { name: "WalledEval", url: "https://arxiv.org/abs/2408.03837", note: "Multilingual safety" },
+  ],
+  "Code Generation": [
+    { name: "SWE-Bench Verified", url: "https://www.swebench.com/", note: "Real GitHub issues, gold standard" },
+    { name: "LiveCodeBench Pro", url: "https://livecodebench.github.io/", note: "Live competitive programming" },
+    { name: "CodeElo", url: "https://codeelo.github.io/", note: "Elo-rated coding, 2025" },
+    { name: "ResearchCodeBench", url: "https://arxiv.org/abs/2501.10866", note: "ML paper code replication" },
+    { name: "HumanEval+", url: "https://github.com/evalplus/evalplus", note: "Extended HumanEval" },
+  ],
+  "Math & Quantitative": [
+    { name: "AIME 2025", url: "https://artofproblemsolving.com/wiki/index.php/2025_AIME", note: "Competition math, contamination-resistant" },
+    { name: "MATH-500", url: "https://arxiv.org/abs/2206.14858", note: "500 competition problems" },
+    { name: "OlympiadBench", url: "https://arxiv.org/abs/2402.14008", note: "Bilingual olympiad problems" },
+    { name: "FrontierMath", url: "https://epoch.ai/frontiermath", note: "Research-level, Epoch AI" },
+  ],
+  "Knowledge Retrieval": [
+    { name: "MMLU-Pro", url: "https://arxiv.org/abs/2406.01574", note: "57 domains, harder than MMLU" },
+    { name: "HELMET", url: "https://arxiv.org/abs/2410.02694", note: "Long-context retrieval" },
+    { name: "MegaScience", url: "https://arxiv.org/abs/2505.04346", note: "5.6M science QA" },
+    { name: "SimpleQA", url: "https://openai.com/index/introducing-simpleqa/", note: "Factual accuracy" },
+  ],
 };
 
 const HARNESS_MAP: Record<string, { harness: string; warning: string }> = {
@@ -164,7 +208,7 @@ export default function BenchmarkSelector() {
   const hasModerate = detectedRisks.some(r => r.level === "moderate");
   const isMultiplex = q6 === "Multiplex / Culturally Diverse";
   const checklistPct = Math.round((checklist.size / CHECKLIST_ITEMS.length) * 100);
-  const recommendedStack = q1 ? (BENCHMARK_STACKS[q1] || []) : [];
+  const recommendedStack: { name: string; url: string; note: string }[] = q1 ? (BENCHMARK_STACKS[q1] || []) : [];
   const harnessKey = `${q0}|${q1}`;
   const harness = HARNESS_MAP[harnessKey] || null;
   const autoEval = getAutoEvaluator(q5, checklistPct, hasCritical, hasModerate, isMultiplex);
@@ -178,7 +222,7 @@ export default function BenchmarkSelector() {
       configuration: { q0_architecture: q0, q1_capability: q1, q2_modality: q2, q3_contamination: q3, q4_context: q4, q5_scoring: q5, q6_cultural: q6 },
       extra_risks: Array.from(extraRisks.values()),
       detected_risks: detectedRisks,
-      recommended_stack: recommendedStack,
+      recommended_stack: recommendedStack.map(b => ({ name: b.name, url: b.url, note: b.note })),
       harness: harness,
       auto_evaluator: autoEval,
       checklist: { completed: Array.from(checklist.values()), total: CHECKLIST_ITEMS.length, pct: checklistPct },
@@ -211,7 +255,7 @@ export default function BenchmarkSelector() {
       detectedRisks.length === 0 ? `No risks detected.` : detectedRisks.map(r => `- **[${r.level.toUpperCase()}]** ${r.source}: ${r.desc}`).join("\n"),
       ``,
       `## Recommended Benchmark Stack`,
-      recommendedStack.length === 0 ? `Select Q1 to generate recommendations.` : recommendedStack.map(b => `- ${b}`).join("\n"),
+      recommendedStack.length === 0 ? `Select Q1 to generate recommendations.` : recommendedStack.map(b => `- [${b.name}](${b.url}) — ${b.note}`).join("\n"),
       ``,
       `## Evaluation Harness`,
       harness ? `**${harness.harness}**\n\n> ⚠️ ${harness.warning}` : `No specific harness mapped for this combination.`,
@@ -499,10 +543,13 @@ export default function BenchmarkSelector() {
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                   {recommendedStack.map((b, i) => (
-                    <div key={b} style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", width: 20 }}>0{i + 1}</span>
-                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", color: "#FFFFFF", textTransform: "uppercase", letterSpacing: "0.04em" }}>{b}</span>
-                    </div>
+                    <a key={b.name} href={b.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", padding: "0.5rem 0", borderBottom: "1px solid #1A1A1A", textDecoration: "none" }}>
+                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", width: 20, flexShrink: 0 }}>0{i + 1}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", color: "#FFFFFF", textTransform: "uppercase", letterSpacing: "0.04em" }}>{b.name} ↗</div>
+                        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.68rem", color: "#666666", marginTop: "0.15rem" }}>{b.note}</div>
+                      </div>
+                    </a>
                   ))}
                 </div>
               )}

@@ -75,6 +75,13 @@ const bbomLayers = [
     verify: "Change Control",
     failure: "Benchmark Staleness",
   },
+  {
+    layer: "11",
+    name: "SCALABILITY",
+    def: "The framework's capacity to extend to new modalities, geographies, and deployment contexts without ontological failure.",
+    verify: "Regional Adapter Tests / Cultural Veto API",
+    failure: "Data Cascade / Cultural Misalignment",
+  },
 ];
 
 const modalities = [
@@ -153,7 +160,7 @@ export default function BbomSection() {
               margin: 0,
             }}
           >
-            THE 10-LAYER
+            THE 11-LAYER
             <br />
             <span style={{ color: "#FF4D00" }}>BILL OF MATERIALS</span>
           </h2>
@@ -173,6 +180,19 @@ export default function BbomSection() {
           Each layer is a system requirement with a verification method and a known failure mode.
           A benchmark without a complete BBOM is not governance-grade.
         </p>
+
+        {/* Authorship attribution */}
+        <div style={{ marginBottom: "2.5rem", border: "2px solid #FF4D00", padding: "1.25rem 1.5rem", background: "#111111", display: "flex", flexWrap: "wrap" as const, gap: "1.5rem", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.1em", color: "#FF4D00", textTransform: "uppercase" as const, marginBottom: "0.4rem" }}>ORIGINAL WORK — IN PROGRESS</div>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1rem", textTransform: "uppercase" as const, letterSpacing: "-0.02em", color: "#FFFFFF", lineHeight: 1.2 }}>Tuesday — Director of Research @ Artifex Labs</div>
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", color: "#AAAAAA", marginTop: "0.35rem" }}>A Benchmark Bill of Materials for Multicultural, Multimodal Remote Sensing: Auditing Foundation Model Evaluation</div>
+          </div>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" as const }}>
+            <a href="https://ml-for-rs.github.io/iclr2026/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#000000", background: "#FF4D00", textDecoration: "none", padding: "0.4rem 0.85rem", display: "inline-block", border: "2px solid #FF4D00" }}>TO BE PRESENTED @ ICLR 2026 ↗</a>
+            <a href="mailto:general@artifex.fun" style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" as const, color: "#FF4D00", textDecoration: "none", padding: "0.4rem 0.85rem", display: "inline-block", border: "1px solid #FF4D00" }}>GENERAL@ARTIFEX.FUN</a>
+          </div>
+        </div>
 
         {/* BBOM table */}
         <div style={{ overflowX: "auto", marginBottom: "4rem" }}>

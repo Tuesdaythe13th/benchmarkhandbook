@@ -78,7 +78,7 @@ export default function Nav() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 52,
+          height: 64,
           gap: "1rem",
           borderBottom: isHome ? "1px solid #E5E5E5" : "none",
         }}
@@ -92,7 +92,7 @@ export default function Nav() {
           <img
             src={LOGO_URL}
             alt="Artifex Labs"
-            style={{ height: 38, width: "auto", objectFit: "contain", display: "block" }}
+            style={{ height: 56, width: "auto", objectFit: "contain", display: "block" }}
           />
         </a>
 
