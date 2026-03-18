@@ -29,7 +29,7 @@ const pageLinks = [
   { label: "Eval Guide", href: "/" },
   { label: "Safety", href: "/safety" },
   { label: "Multicultural", href: "/multicultural" },
-  { label: "Eval Science", href: "/eval-science" },
+  { label: "Rubric Design", href: "/rubric-design" },
 ];
 
 export default function Nav() {

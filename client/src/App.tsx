@@ -7,9 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import HarmTaxonomy from "./pages/HarmTaxonomy";
 import Multicultural from "./pages/Multicultural";
-import AgenticPrimer from "./pages/AgenticPrimer";
-import RubricHandbook from "./pages/RubricHandbook";
-import EvalScience from "./pages/EvalScience";
+import RubricDesign from "./pages/RubricDesign";
 
 function Router() {
   return (
@@ -17,9 +15,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/safety"} component={HarmTaxonomy} />
       <Route path={"/multicultural"} component={Multicultural} />
-      <Route path={"/agentic"} component={AgenticPrimer} />
-      <Route path={"/rubric"} component={RubricHandbook} />
-      <Route path={"/eval-science"} component={EvalScience} />
+      <Route path={"/rubric-design"} component={RubricDesign} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -4,7 +4,6 @@
  */
 
 import { useState } from "react";
-import { categories, statusColors } from "@/data/benchmarks";
 
 interface Benchmark {
   name: string;
