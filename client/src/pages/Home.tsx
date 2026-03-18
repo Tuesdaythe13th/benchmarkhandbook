@@ -62,6 +62,13 @@ export default function Home() {
           "TAUBENCH",
           "BROWSECOMP",
           "PAPERBENCH",
+          "MEDAGENTGYM",
+          "FINGERTIP 20K",
+          "SHADE-ARENA",
+          "CYBENCH",
+          "COUNSELBENCH",
+          "MEDARABENCH",
+          "NIST AI 800-3",
         ]}
         speed={20}
         bg="#FF4D00"
@@ -108,6 +115,14 @@ export default function Home() {
           "IRR CHECKS",
           "SHA-256 INTEGRITY",
           "SIGNED ATTESTATION",
+          "GENERALIZED ACCURACY",
+          "GLMM LATENT ABILITY",
+          "ITEM RESPONSE THEORY",
+          "RUBRICS-AS-REWARDS",
+          "DECEPTIVE ALIGNMENT",
+          "EXECUTION-VERIFIED OUTCOMES",
+          "MICROVM ISOLATION",
+          "AILUMINATE SCORECARD",
         ]}
         speed={25}
         bg="black"
