@@ -1,7 +1,8 @@
 /*
- * RubricHandbook — Artifex Labs Rubric Design Handbook v1.0
+ * RubricHandbook — Artifex Labs Rubric Design Handbook v2.0
  * State-of-the-Art Practices for AI Evaluation — March 2026
- * Sources: RubricBench (arXiv:2603.01562), APEX-Agents (arXiv:2601.14242)
+ * Sources: 17 peer-reviewed 2026 publications including RubricBench, APEX-Agents,
+ *          Autorubric, RRD, MERG, OpenRS, Rubric-ARM, ResearchRubrics (ICLR 2026)
  * Design: Industrial Manifesto Brutalism
  * Primary: #FF4D00 | Black #000000 | White #FFFFFF
  */
@@ -63,6 +64,10 @@ const ANTI_PATTERNS = [
   {
     name: "Low-Necessity Rigidity",
     desc: "Over-focus on formatting or phrasing details that are easy to check but irrelevant to the user's true goal. Attention displacement.",
+  },
+  {
+    name: "Evaluation Illusion",
+    desc: "High inter-evaluator agreement driven by shared surface heuristics rather than substantive quality. Consensus ≠ correctness. Formalised by Song et al. (2026) — MERG framework addresses this via knowledge-grounded rubric generation.",
   },
 ];
 
@@ -166,6 +171,7 @@ const DOMAIN_GUIDELINES = [
       "Explicit refusal criteria and policy boundaries — never omit",
       "Pitfall checks for harmful compliance, fabrication, manipulation",
       "Human annotation mandatory for high-stakes safety decisions",
+      "Account for distribution shifts in red-teaming — LLM judges degrade to near-random on adversarial inputs (Schwinn et al., 2026)",
     ],
   },
   {
@@ -174,6 +180,16 @@ const DOMAIN_GUIDELINES = [
       "Clear grading targets for each artifact or file produced",
       "Feasibility checks for multi-step plans",
       "Verify agent actions actually achieved the task objective, not just attempted it",
+      "Use unified protocols enabling agent-benchmark integration (Bandel et al., 2026)",
+    ],
+  },
+  {
+    domain: "DEEP RESEARCH RUBRICS",
+    items: [
+      "Assess factual grounding, reasoning soundness, and clarity separately",
+      "Categorise tasks along conceptual breadth, logical nesting, and exploration depth",
+      "Check for implicit context and adequate reasoning about retrieved information",
+      "Note: even leading agents achieve <68% compliance (ResearchRubrics, ICLR 2026)",
     ],
   },
   {
@@ -204,6 +220,18 @@ const INTRO_FINDINGS = [
     finding: "Small, atomic rubrics work best.",
     detail:
       "Recent benchmarks commonly use 2–10 binary yes/no criteria per task, with each criterion testing exactly one requirement. APEX-Agents mean: 4.06 per task.",
+  },
+  {
+    n: "04",
+    finding: "Consensus can be illusory.",
+    detail:
+      "High agreement among LLM judges does not guarantee reliability. Song et al. (2026) formalise the 'Evaluation Illusion' — judges anchoring on shared surface heuristics rather than substantive quality. Model-level agreement masks fragile sample-level agreement.",
+  },
+  {
+    n: "05",
+    finding: "Dynamic, knowledge-grounded rubrics improve assessment.",
+    detail:
+      "Dynamically generating evaluation rubrics grounded in domain knowledge (MERG, 2026) produces more meaningful assessment, increasing agreement in codified domains where knowledge anchors evaluators on shared standards.",
   },
 ];
 
@@ -275,26 +303,86 @@ const REFERENCES = [
   {
     id: "[4]",
     citation:
-      "Emergent Mind Research. (2026). Rubric Formalization in AI and Education.",
-    url: "https://www.emergentmind.com/topics/rubric-formalization",
+      "Song, M., Zheng, M., & Xu, C. (2026). Beyond the Illusion of Consensus: From Surface Heuristics to Knowledge-Grounded Evaluation in LLM-as-a-Judge. arXiv:2603.11027.",
+    url: "https://arxiv.org/abs/2603.11027",
   },
   {
     id: "[5]",
-    citation:
-      "Emergent Mind Research. (2026). APEX-Agents Benchmark: Evaluating AI Agents in Professional Settings.",
-    url: "https://www.emergentmind.com/topics/apex-agents-benchmark",
-  },
-  {
-    id: "[6]",
     citation:
       "Wolfe, C. R. (2026). Rubric-Based Rewards for Reinforcement Learning. Deep Learning Focus.",
     url: "https://cameronrwolfe.substack.com/p/rubric-rl",
   },
   {
-    id: "[7]",
+    id: "[6]",
     citation:
       "University of Illinois Chicago, Center for the Advancement of Teaching Excellence. (n.d.). Rubrics: Best Practices for Assessment.",
     url: "https://teaching.uic.edu/cate-teaching-guides/assessment-grading-practices/rubrics/",
+  },
+  {
+    id: "[7]",
+    citation:
+      "Emergent Mind Research. (2026). Rubric Formalization in AI and Education.",
+    url: "https://www.emergentmind.com/topics/rubric-formalization",
+  },
+  {
+    id: "[8]",
+    citation:
+      "Emergent Mind Research. (2026). APEX-Agents Benchmark: Evaluating AI Agents in Professional Settings.",
+    url: "https://www.emergentmind.com/topics/apex-agents-benchmark",
+  },
+  {
+    id: "[9]",
+    citation:
+      "Rao, D., & Callison-Burch, C. (2026). Autorubric: A Unified Framework for Rubric-Based LLM Evaluation. arXiv:2603.00077.",
+    url: "https://arxiv.org/abs/2603.00077",
+  },
+  {
+    id: "[10]",
+    citation:
+      "Shen, W. F., et al. (2026). Rethinking Rubric Generation for Improving LLM Judge and Reward Modeling for Open-ended Tasks. arXiv:2602.05125.",
+    url: "https://arxiv.org/abs/2602.05125",
+  },
+  {
+    id: "[11]",
+    citation:
+      "Sanders, K., et al. (2026). Generating Data-Driven Reasoning Rubrics for Domain-Adaptive Reward Modeling. arXiv:2602.06795.",
+    url: "https://arxiv.org/abs/2602.06795",
+  },
+  {
+    id: "[12]",
+    citation:
+      "Schwinn, L., et al. (2026). A Coin Flip for Safety: LLM Judges Fail to Reliably Measure Adversarial Robustness. arXiv:2603.06594.",
+    url: "https://arxiv.org/abs/2603.06594",
+  },
+  {
+    id: "[13]",
+    citation:
+      "Jia, R., et al. (2026). Open Rubric System: Scaling Reinforcement Learning with Pairwise Adaptive Rubric. arXiv:2602.14069.",
+    url: "https://arxiv.org/abs/2602.14069",
+  },
+  {
+    id: "[14]",
+    citation:
+      "Xu, R., et al. (2026). Alternating Reinforcement Learning for Rubric-Based Reward Modeling in Non-Verifiable LLM Post-Training. arXiv:2602.01511.",
+    url: "https://arxiv.org/abs/2602.01511",
+  },
+  {
+    id: "[15]",
+    citation:
+      "Bandel, E., et al. (2026). General Agent Evaluation. arXiv:2602.22953.",
+    url: "https://arxiv.org/abs/2602.22953",
+  },
+  {
+    id: "[16]",
+    citation:
+      "Sharma, M., et al. (2026). ResearchRubrics: A Benchmark of Prompts and Rubrics For Evaluating Deep Research Agents. ICLR 2026.",
+    url: "https://arxiv.org/abs/2603.01562",
+  },
+  {
+    id: "[17]",
+    citation:
+      "El Filali, A., & Bedar, I. (2026). Towards More Standardized AI Evaluation: From Models to Agents. arXiv:2602.18029.",
+    url: "https://arxiv.org/abs/2602.18029",
   },
 ];
 
@@ -322,7 +410,7 @@ export default function RubricHandbook() {
               marginBottom: "1rem",
             }}
           >
-            ARTIFEX LABS · RUBRIC DESIGN HANDBOOK · V1.0 · MARCH 2026
+            ARTIFEX LABS · RUBRIC DESIGN HANDBOOK · V2.0 · MARCH 2026
           </div>
           <h1
             style={{
@@ -349,10 +437,10 @@ export default function RubricHandbook() {
               marginBottom: "2rem",
             }}
           >
-            State-of-the-art practices for AI evaluation rubric design, synthesized from
-            RubricBench (1,147 pairwise comparisons) and APEX-Agents (480 professional tasks).
-            Covers first principles, rubric anatomy, writing process, safety logic, and
-            domain-specific guidelines for benchmark designers, safety teams, and QA engineers.
+            State-of-the-art practices for AI evaluation rubric design, synthesized from 17 peer-reviewed
+            2026 publications including RubricBench, APEX-Agents, Autorubric, RRD, MERG, OpenRS, Rubric-ARM,
+            and ResearchRubrics (ICLR 2026). Covers first principles, advanced frameworks, safety logic,
+            reward modeling, and domain-specific guidelines for benchmark designers, safety teams, and QA engineers.
           </p>
           <div
             style={{
@@ -422,7 +510,7 @@ export default function RubricHandbook() {
                   fontSize: "0.9rem",
                   lineHeight: 1.7,
                   color: "#333333",
-                  margin: 0,
+                  margin: "0 0 1rem",
                 }}
               >
                 The quality of the rubric itself is the major determinant of evaluator reliability.
@@ -431,19 +519,31 @@ export default function RubricHandbook() {
                 substantially outperform model-generated ones — especially when prompts contain
                 implicit constraints, misleading surface cues, or safety-sensitive requirements.
               </p>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.7,
+                  color: "#333333",
+                  margin: 0,
+                }}
+              >
+                Furthermore, Song et al. (2026) formalise the <strong>Evaluation Illusion</strong>: high inter-judge agreement can be driven by shared surface heuristics rather than substantive quality. This handbook incorporates 10 new 2026 peer-reviewed frameworks addressing this and related challenges.
+              </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {[
                 ["~26%", "RUBRIC GAP", "Human vs. model-generated rubric performance delta (RubricBench)"],
                 ["85%", "PEAK ACCURACY", "Frontier judge accuracy with human-annotated rubrics before plateau"],
                 ["2–10", "ITEMS PER RUBRIC", "Typical range for atomic binary criteria. APEX-Agents mean: 4.06"],
+                ["17", "2026 CITATIONS", "Peer-reviewed papers synthesised in this handbook (up to Mar 17, 2026)"],
               ].map(([stat, label, detail], i) => (
                 <div
                   key={label}
                   style={{
                     padding: "1rem",
                     border: "2px solid #000000",
-                    borderBottom: i < 2 ? "none" : "2px solid #000000",
+                    borderBottom: i < 3 ? "none" : "2px solid #000000",
                     background: "#000000",
                   }}
                 >
@@ -543,7 +643,7 @@ export default function RubricHandbook() {
             of verifiable checks that define what success means for a specific
             task. Rubrics make evaluation more transparent, reproducible, and
             resistant to outputs that sound polished without actually solving the
-            problem. Recent state-of-the-art work demonstrates three key
+            problem. Recent state-of-the-art work demonstrates five key
             findings:
           </p>
           <div
@@ -1171,6 +1271,77 @@ export default function RubricHandbook() {
                 accordingly. This is the primary driver of the ~26% Rubric Gap.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 06 NEW: Advanced Rubric Frameworks */}
+      <section style={{ padding: "4rem 2rem", background: "#FFF3EE", borderBottom: "2px solid #FF4D00" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.5rem" }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#FF4D00" }}>
+              SECTION 06 — NEW 2026
+            </span>
+            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 3rem)", textTransform: "uppercase", letterSpacing: "-0.04em", lineHeight: 0.9, color: "#000000", margin: 0 }}>
+              ADVANCED RUBRIC FRAMEWORKS
+            </h2>
+          </div>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#555555", marginBottom: "2rem", lineHeight: 1.6, maxWidth: 800 }}>
+            2026 research has produced unified frameworks, recursive generation methods, and reward-modeling pipelines that go beyond static rubric lists. Key findings synthesised below.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "0", border: "2px solid #000000" }}>
+            {[
+              {
+                id: "AUTORUBRIC [9]",
+                headline: "Unified Framework — Binary / Ordinal / Nominal",
+                body: "Supports configurable-weight criteria with single-judge and multi-judge ensemble evaluation (majority, weighted, unanimous). Includes mitigations for position bias, verbosity bias, and criterion conflation. Rao & Callison-Burch, Feb 2026.",
+              },
+              {
+                id: "RRD [10]",
+                headline: "Recursive Decompose-Filter (+17.7 pts JudgeBench)",
+                body: "Decomposes coarse rubrics into fine-grained discriminative criteria, then filters misaligned and redundant items. Yields +17.7 pts on JudgeBench and +160% reward boost in RL fine-tuning. Shen et al., Feb 2026.",
+              },
+              {
+                id: "MERG [4]",
+                headline: "Knowledge-Grounded — Defeats Evaluation Illusion",
+                body: "Dynamically generates rubrics grounded in domain knowledge. Increases agreement in codified domains (Education, Academic) where knowledge anchors evaluators on shared standards. Song et al., Mar 2026.",
+              },
+              {
+                id: "DATA-DRIVEN [11]",
+                headline: "Reasoning Error Taxonomies (+45% accuracy)",
+                body: "Automatically constructs granular reasoning error rubrics for coding, math. Builds stronger LLM-as-judge reward functions for reasoning model training. +45% accuracy over general LLM judges. Sanders et al., Feb 2026.",
+              },
+              {
+                id: "OPENRS [13]",
+                headline: "RL Alignment — Avoids Scalar Reward Hacking",
+                body: "Pairwise Adaptive Meta-Rubrics (PAMR) + Pointwise Verifiable Rubrics (PVRs) as hard-constraint guardrails for reinforcement learning. Preserves multi-dimensional structure instead of collapsing to a single scalar. Jia et al., Feb 2026.",
+              },
+              {
+                id: "RUBRIC-ARM [14]",
+                headline: "Alternating RL — Joint Rubric + Judge Optimization",
+                body: "Jointly optimises a rubric generator and a judge via alternating RL from preference feedback. Treats rubric generation as a latent action learned to maximise judgment accuracy. State-of-the-art on multiple benchmarks. Xu et al., Feb 2026.",
+              },
+            ].map((fw, i) => (
+              <div
+                key={fw.id}
+                style={{
+                  padding: "1.75rem",
+                  borderRight: (i + 1) % 2 !== 0 ? "2px solid #000000" : "none",
+                  borderBottom: "2px solid #000000",
+                  background: i % 2 === 0 ? "#FFFFFF" : "#FAFAFA",
+                }}
+              >
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", letterSpacing: "0.1em", color: "#FF4D00", textTransform: "uppercase", marginBottom: "0.25rem" }}>
+                  {fw.id}
+                </div>
+                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", margin: "0 0 0.75rem" }}>
+                  {fw.headline}
+                </h3>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.76rem", lineHeight: 1.6, color: "#555555", margin: 0 }}>
+                  {fw.body}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1827,12 +1998,26 @@ export default function RubricHandbook() {
                   fontSize: "0.8rem",
                   lineHeight: 1.6,
                   color: "#444444",
-                  marginBottom: "1.25rem",
+                  marginBottom: "0.75rem",
                 }}
               >
                 In safety-sensitive settings, rubrics must explicitly encode refusal criteria.
                 Without these checks, evaluators invert safety judgments — rewarding detailed,
                 responsive outputs even when content violates policy.
+              </p>
+              <p
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: "0.78rem",
+                  lineHeight: 1.6,
+                  color: "#CC4400",
+                  marginBottom: "1.25rem",
+                  padding: "0.6rem 0.75rem",
+                  border: "1px solid #FFCCAA",
+                  background: "#FFF8F5",
+                }}
+              >
+                <strong>2026 Warning (Schwinn et al.):</strong> LLM judges degrade to near-random performance on adversarial robustness evaluation tasks due to distribution shifts inherent to red-teaming. Human rubric annotation is mandatory for high-stakes adversarial safety decisions.
               </p>
               <div style={{ border: "2px solid #000000" }}>
                 <div
@@ -2509,7 +2694,7 @@ export default function RubricHandbook() {
               marginBottom: "1rem",
             }}
           >
-            PRIMARY REFERENCES
+            PRIMARY REFERENCES — 17 PEER-REVIEWED 2026 PUBLICATIONS
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {REFERENCES.map((ref) => (
