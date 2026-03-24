@@ -17,7 +17,8 @@ export default function SurveySection() {
             </h2>
             <div style={{ maxWidth: 420 }}>
               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#333333", lineHeight: 1.7, margin: "0 0 1rem 0" }}>
-                Validate your understanding of modern AI evaluation methodology. This assessment covers benchmark design, construct validity, LLM-as-Judge methodology, safety evaluation, and agentic evaluation patterns.
+                <strong>2026 Global Alignment: The Stakeholder Inquiry</strong><br /><br />
+                This survey aims to understand your views on AI's impact across various dimensions. We'll adjust the tone and complexity of our questions based on your self-identification. Please feel free to share your honest thoughts. This assessment covers benchmark design, construct validity, LLM-as-Judge methodology, safety evaluation, agentic evaluation patterns, and stakeholder needs for modern AI evaluation frameworks.
               </p>
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" as const }}>
                 {["BENCHMARK DESIGN", "SAFETY EVALS", "AGENTIC PATTERNS", "LLM-AS-JUDGE", "CONSTRUCT VALIDITY"].map(t => (
@@ -35,7 +36,7 @@ export default function SurveySection() {
               <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#333333" }} />
             </div>
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", letterSpacing: "0.08em" }}>
-              ARTIFEX LABS — EVAL KNOWLEDGE ASSESSMENT v1.0
+              ARTIFEX LABS — 2026 STAKEHOLDER INQUIRY v1.0
             </span>
           </div>
           <div>

@@ -22,6 +22,7 @@ const sectionLinks = [
   { label: "Cemetery", href: "#cemetery" },
   { label: "Resources", href: "#resources" },
   { label: "Research", href: "#research" },
+  { label: "Compendium", href: "#compendium" },
   { label: "Assessment", href: "#survey" },
 ];
 
