@@ -31,6 +31,7 @@ const pageLinks = [
   { label: "Safety", href: "/safety" },
   { label: "Multicultural", href: "/multicultural" },
   { label: "Rubric Design", href: "/rubric-design" },
+  { label: "Metrics", href: "/metrics" },
 ];
 
 export default function Nav() {

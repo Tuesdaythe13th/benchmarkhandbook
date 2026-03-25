@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import HarmTaxonomy from "./pages/HarmTaxonomy";
 import Multicultural from "./pages/Multicultural";
 import RubricDesign from "./pages/RubricDesign";
+import MetricsGlossary from "./pages/MetricsGlossary";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path={"/safety"} component={HarmTaxonomy} />
       <Route path={"/multicultural"} component={Multicultural} />
       <Route path={"/rubric-design"} component={RubricDesign} />
+      <Route path={"/metrics"} component={MetricsGlossary} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
