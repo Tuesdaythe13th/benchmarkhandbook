@@ -22,6 +22,7 @@ const sectionLinks = [
   { label: "Cemetery", href: "#cemetery" },
   { label: "Resources", href: "#resources" },
   { label: "Research", href: "#research" },
+  { label: "Compendium", href: "#compendium" },
   { label: "Assessment", href: "#survey" },
 ];
 
@@ -29,7 +30,8 @@ const pageLinks = [
   { label: "Eval Guide", href: "/" },
   { label: "Safety", href: "/safety" },
   { label: "Multicultural", href: "/multicultural" },
-  { label: "Eval Science", href: "/eval-science" },
+  { label: "Rubric Design", href: "/rubric-design" },
+  { label: "Metrics", href: "/metrics" },
 ];
 
 export default function Nav() {

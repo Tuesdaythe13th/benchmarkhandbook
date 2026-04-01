@@ -19,6 +19,7 @@ import GovernanceSection from "@/components/GovernanceSection";
 import GlossarySection from "@/components/GlossarySection";
 import ResourcesSection from "@/components/ResourcesSection";
 import ResearchPapersSection from "@/components/ResearchPapersSection";
+import FirstPrinciplesCompendium from "@/components/FirstPrinciplesCompendium";
 import SurveySection from "@/components/SurveySection";
 import Footer from "@/components/Footer";
 
@@ -62,6 +63,13 @@ export default function Home() {
           "TAUBENCH",
           "BROWSECOMP",
           "PAPERBENCH",
+          "MEDAGENTGYM",
+          "FINGERTIP 20K",
+          "SHADE-ARENA",
+          "CYBENCH",
+          "COUNSELBENCH",
+          "MEDARABENCH",
+          "NIST AI 800-3",
         ]}
         speed={20}
         bg="#FF4D00"
@@ -108,6 +116,14 @@ export default function Home() {
           "IRR CHECKS",
           "SHA-256 INTEGRITY",
           "SIGNED ATTESTATION",
+          "GENERALIZED ACCURACY",
+          "GLMM LATENT ABILITY",
+          "ITEM RESPONSE THEORY",
+          "RUBRICS-AS-REWARDS",
+          "DECEPTIVE ALIGNMENT",
+          "EXECUTION-VERIFIED OUTCOMES",
+          "MICROVM ISOLATION",
+          "AILUMINATE SCORECARD",
         ]}
         speed={25}
         bg="black"
@@ -116,6 +132,7 @@ export default function Home() {
       <GlossarySection />
       <ResourcesSection />
       <ResearchPapersSection />
+      <FirstPrinciplesCompendium />
       <SurveySection />
       <Footer />
     </div>
