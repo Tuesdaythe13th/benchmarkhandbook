@@ -669,6 +669,98 @@ export default function Multicultural() {
         </div>
       </section>
 
+      {/* Fairness Measurement — DIF + Impossibility Theorem */}
+      <section style={{ padding: "4rem 2rem", background: "#FFFFFF", borderTop: "2px solid #000000" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.5rem" }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#FF4D00" }}>FAIRNESS MEASUREMENT</span>
+            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 3rem)", textTransform: "uppercase", letterSpacing: "-0.04em", lineHeight: 0.9, color: "#000000", margin: 0 }}>
+              DIF, THRESHOLDS &amp; THE FAIRNESS IMPOSSIBILITY
+            </h2>
+          </div>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", lineHeight: 1.6, color: "#555555", maxWidth: 700, marginBottom: "2.5rem" }}>
+            Fairness in measurement requires that the evaluation instrument captures the same construct across groups rather than different constructs masquerading under the same label. Two tools are central: Differential Item Functioning analysis (DIF) and the Disparate Impact Ratio (DIR).
+          </p>
+
+          {/* Fairness thresholds by rung */}
+          <div style={{ marginBottom: "2.5rem" }}>
+            <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "1rem" }}>
+              FAIRNESS THRESHOLDS BY CALIBRATION RUNG
+            </h3>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Space Mono', monospace", fontSize: "0.68rem" }}>
+                <thead>
+                  <tr>
+                    {["RUNG", "DISPARATE IMPACT RATIO (DIR)", "PARITY GAP (Δ)", "CULTURAL COVERAGE", "DIF ANALYSIS"].map((h) => (
+                      <th key={h} style={{ background: "#000000", color: "#FF4D00", fontFamily: "'Archivo Black', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em", padding: "0.65rem 1rem", textAlign: "left", border: "1px solid #333333", fontSize: "0.6rem" }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { rung: "EXPLORATORY", dir: "Not required", gap: "Not required", coverage: "Documented limitations", dif: "Not required" },
+                    { rung: "DEVELOPMENT", dir: "DIR ≥ 0.75", gap: "Δ < 0.10", coverage: "≥ 2 cultural frameworks", dif: "Recommended" },
+                    { rung: "PRE-DEPLOYMENT", dir: "DIR ≥ 0.80", gap: "Δ < 0.05", coverage: "Representative of deployment population", dif: "Required" },
+                    { rung: "HIGH-STAKES", dir: "DIR ≥ 0.90", gap: "Δ < 0.03", coverage: "All major frameworks for deployment context", dif: "Required per subgroup" },
+                  ].map((row, i) => (
+                    <tr key={row.rung} style={{ background: i % 2 === 0 ? "#FFFFFF" : "#F8F8F8" }}>
+                      <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Archivo Black', sans-serif", fontSize: "0.65rem", textTransform: "uppercase", color: "#FF4D00", whiteSpace: "nowrap" }}>{row.rung}</td>
+                      <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontSize: "0.68rem", color: "#222222" }}>{row.dir}</td>
+                      <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontSize: "0.68rem", color: "#222222" }}>{row.gap}</td>
+                      <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: "#555555" }}>{row.coverage}</td>
+                      <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontSize: "0.68rem", color: "#444444" }}>{row.dif}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.52rem", color: "#888888", marginTop: "0.5rem" }}>
+              DIR ≥ 0.80 at Pre-deployment derives from the US four-fifths rule (29 C.F.R. § 1607.4D). EU AI Act non-discrimination requirements should be mapped to this tier structure; apply the more stringent standard.
+            </p>
+          </div>
+
+          {/* DIF + Impossibility */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "#000000", border: "2px solid #000000", marginBottom: "2rem" }}>
+            <div style={{ background: "#FFFFFF", padding: "1.75rem" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", marginBottom: "0.75rem" }}>DIFFERENTIAL ITEM FUNCTIONING (DIF)</div>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: "#444444", marginBottom: "0.75rem" }}>
+                DIF tests whether items function differently across groups after conditioning on overall trait level. An item is functioning fairly if it is equally difficult for two systems with the same overall ability. An item that is systematically easier for one group — after controlling for ability — exhibits DIF and may be introducing construct-irrelevant variance.
+              </p>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: "#444444", margin: 0 }}>
+                In AI evaluation, DIF can be adapted to language groups, demographic contexts, cultural frameworks, or normative traditions. DIF greater than 0.5 logits on any item triggers Level 2 Remediation under the Governance-Action Protocol.
+              </p>
+            </div>
+            <div style={{ background: "#FFFFFF", padding: "1.75rem", borderLeft: "1px solid #000000" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#FF4D00", marginBottom: "0.75rem" }}>THE FAIRNESS IMPOSSIBILITY THEOREM</div>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: "#444444", marginBottom: "0.75rem" }}>
+                Chouldechova (2017) proved that for binary classifiers with different base rates across groups, <strong>demographic parity, equalized odds, and calibration cannot all be simultaneously satisfied</strong>.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "0.75rem" }}>
+                {[
+                  "Demographic parity: equal selection rates across groups",
+                  "Equalized odds: equal true positive and false positive rates",
+                  "Calibration: equal predictive value across groups",
+                ].map((f, i) => (
+                  <div key={i} style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.58rem", color: "#333333" }}>→ {f}</div>
+                ))}
+              </div>
+              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: "#666666", margin: 0 }}>
+                The chosen fairness metrics must be explicitly stated, justified relative to the deployment context, and their limitations documented in the Benchmark Bill of Materials.
+              </p>
+            </div>
+          </div>
+
+          {/* Perspectivist measurement */}
+          <div style={{ background: "#FFF3EE", border: "2px solid #000000", padding: "1.75rem" }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "0.5rem" }}>PERSPECTIVIST MEASUREMENT</div>
+            <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1rem", textTransform: "uppercase", letterSpacing: "-0.03em", color: "#000000", margin: "0 0 0.75rem" }}>FOR CONTESTED CONSTRUCTS, REPORT STRUCTURE — NOT SPURIOUS CONSENSUS</h3>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", lineHeight: 1.55, color: "#444444", margin: 0 }}>
+              For constructs defined differently by different communities — moral appropriateness, cultural sensitivity, political neutrality — forcing a scalar score imposes false consensus. Perspectivist measurement reports disagreement structure, framework-conditioned judgments, and subgroup-specific validity limitations rather than a collapsed aggregate. Metrological honesty sometimes requires structured pluralism rather than scalar simplification.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

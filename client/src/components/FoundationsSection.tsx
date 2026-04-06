@@ -383,6 +383,103 @@ export default function FoundationsSection() {
             ))}
           </div>
         </div>
+
+        {/* Three Structural Gaps */}
+        <div style={{ marginTop: "4rem", paddingTop: "3rem", borderTop: "2px solid #000000" }}>
+          <h3
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#FF4D00",
+              marginBottom: "0.5rem",
+            }}
+          >
+            THREE STRUCTURAL GAPS IN CURRENT EVALUATION PRACTICE
+          </h3>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#555555", lineHeight: 1.55, maxWidth: 680, marginBottom: "2rem" }}>
+            These gaps are not hypothetical — they are documented in the empirical literature. They interact and compound. Addressing one while ignoring the others produces evaluation that is rigorous in one dimension and misleading in others.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1px", background: "#000000", border: "2px solid #000000", marginBottom: "2.5rem" }}>
+            {[
+              {
+                gap: "EXECUTION GAP",
+                def: "Distance between benchmark performance and real-world task completion.",
+                detail: "Benchmarks present short, well-defined tasks in controlled environments; deployment involves long-horizon, open-ended tasks in noisy, interactive settings. Especially severe for agentic settings requiring planning, error recovery, tool use, and dynamic interaction.",
+                cite: "Liang et al. (2023) · Srivastava et al. (2023)",
+              },
+              {
+                gap: "VALIDITY GAP",
+                def: "Distance between what an evaluation claims to measure and what it actually measures.",
+                detail: "Arises when the instrument captures construct-irrelevant variance — superficial features of the test format masquerading as signal. Compounded when benchmarks are used beyond their design scope (English benchmark cited as multilingual evidence; text benchmark applied to multimodal pipelines).",
+                cite: "Zheng et al. (2024) — position bias, verbosity bias in LLM judges",
+              },
+              {
+                gap: "REPRESENTATION GAP",
+                def: "Distance between who is represented in evaluation design and who is affected by deployment.",
+                detail: "Evaluation datasets, rubrics, annotators, and norms drawn from populations that may not reflect deployment diversity. Not merely a fairness concern — a validity concern. A score obtained on one population provides limited evidence about a different population.",
+                cite: "Blodgett et al. (2020) · Joshi et al. (2020)",
+              },
+            ].map((g) => (
+              <div key={g.gap} style={{ background: "#FFFFFF", padding: "1.75rem" }}>
+                <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#FF4D00", marginBottom: "0.4rem" }}>{g.gap}</div>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", color: "#000000", marginBottom: "0.75rem", letterSpacing: "0.02em" }}>{g.def}</div>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.55, color: "#444444", margin: "0 0 0.75rem" }}>{g.detail}</p>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.52rem", color: "#888888", letterSpacing: "0.04em" }}>→ {g.cite}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Why Measure / Why Not */}
+          <h3
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#FF4D00",
+              marginBottom: "0.5rem",
+            }}
+          >
+            PROPORTIONALITY ASSESSMENT — WHY MEASURE? WHY NOT?
+          </h3>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#555555", lineHeight: 1.55, maxWidth: 680, marginBottom: "1.5rem" }}>
+            Before any instrument is designed, there is a prior obligation: to ask whether the measurement should exist at all. Every metric selects a viewpoint, rewards certain behaviors, and creates incentives that shape the thing it claims to merely observe.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "#000000", border: "2px solid #000000" }}>
+            <div style={{ background: "#FFFFFF", padding: "1.75rem" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", marginBottom: "1rem" }}>5 REASONS TO MEASURE</div>
+              {[
+                { n: "01", reason: "To support a decision that depends on the quality — procurement, deployment, regulatory approval." },
+                { n: "02", reason: "To detect a failure mode that would otherwise remain hidden — brittleness, cultural bias, sycophancy." },
+                { n: "03", reason: "To enable comparison across systems or over time — with a stable, shared instrument and narrow uncertainty intervals." },
+                { n: "04", reason: "To make a value-laden trade-off explicit — forcing normative choices into the open for democratic deliberation." },
+                { n: "05", reason: "To provide a basis for contestation and improvement — concrete evidence that can be challenged and refined." },
+              ].map((item) => (
+                <div key={item.n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", minWidth: 20 }}>{item.n}</span>
+                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: "#333333" }}>{item.reason}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: "#FFFFFF", padding: "1.75rem", borderLeft: "1px solid #000000" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#FF4D00", marginBottom: "1rem" }}>5 REASONS NOT TO MEASURE</div>
+              {[
+                { n: "01", reason: "The measurement would be misinterpreted as a verdict it cannot support — a narrow safety score read as a global safety guarantee." },
+                { n: "02", reason: "The construct is too contested to be measured without silencing legitimate perspectives — entrenching one worldview." },
+                { n: "03", reason: "The measurement would incentivize gaming rather than genuine improvement (Goodhart's Law)." },
+                { n: "04", reason: "The cost of measurement exceeds the value of the decision it supports — for low-stakes decisions, elaborate audits are not justified." },
+                { n: "05", reason: "The measurement would produce a false sense of precision for an inherently fuzzy, context-dependent quality." },
+              ].map((item) => (
+                <div key={item.n} style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem", alignItems: "flex-start" }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#FF4D00", minWidth: 20 }}>{item.n}</span>
+                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.5, color: "#333333" }}>{item.reason}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

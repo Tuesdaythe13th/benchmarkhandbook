@@ -286,6 +286,98 @@ export default function BenchmarkCemetery() {
             );
           })}
         </div>
+
+        {/* BeTaL Loop */}
+        <div style={{ marginTop: "4rem", paddingTop: "3rem", borderTop: "2px solid #333333" }}>
+          <h3
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#FF4D00",
+              marginBottom: "0.5rem",
+            }}
+          >
+            THE BETAL LOOP — BENCHMARK-TUNING AS A CALIBRATION CYCLE
+          </h3>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", color: "#888888", lineHeight: 1.55, maxWidth: 680, marginBottom: "2rem" }}>
+            Static benchmarks decay. Items leak into training data. The difficulty distribution drifts as models improve. The BeTaL Loop treats benchmark design as a continuous calibration cycle rather than a one-time authoring event.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "#333333", border: "1px solid #333333", marginBottom: "2rem" }}>
+            {[
+              { step: "01 · DESIGN", body: "Select the initial item set from the library using maximum-information IRT sampling. Tag each item with construct label, difficulty parameter (b), discrimination parameter (a), and contamination-risk flag." },
+              { step: "02 · ADMINISTER", body: "Present the item set under controlled conditions — fixed random seed (where applicable), fixed prompt template, SHA-256 hashed environment specification. Record binary responses." },
+              { step: "03 · ANALYZE", body: "Fit a 2PL IRT model to responses. Compute latent-trait estimate θ̂ and its standard error SE(θ̂). Flag items with low information as uninformative. Flag items with difficulty drift > 0.5 logits from calibration baseline as potentially contaminated or saturated." },
+              { step: "04 · RECALIBRATE", body: "Retire flagged items. Generate replacement items at target difficulty (θ̂ ± 1 logit). Update the item library. If SE(θ̂) > SE_target and iteration limit not reached, return to Step 2; otherwise return θ̂ ± k · SE(θ̂) at the appropriate coverage factor." },
+            ].map((s, i) => (
+              <div key={i} style={{ background: "#111111", padding: "1.5rem 2rem", display: "grid", gridTemplateColumns: "180px 1fr", gap: "1.5rem", alignItems: "start" }}>
+                <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#FF4D00" }}>{s.step}</div>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.55, color: "#AAAAAA", margin: 0 }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ overflowX: "auto", marginBottom: "2rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Space Mono', monospace", fontSize: "0.68rem" }}>
+              <thead>
+                <tr>
+                  {["RUNG", "SE(θ̂) TARGET", "MAX ITERATIONS", "COVERAGE FACTOR k", "CI"].map((h) => (
+                    <th key={h} style={{ background: "#222222", color: "#FF4D00", fontFamily: "'Archivo Black', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em", padding: "0.65rem 0.85rem", textAlign: "left", border: "1px solid #444444", fontSize: "0.58rem" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { rung: "EXPLORATORY", se: "≤ 0.5 logits", iters: "2", k: "1.65", ci: "90%" },
+                  { rung: "DEVELOPMENT", se: "≤ 0.4 logits", iters: "3", k: "2.00", ci: "95%" },
+                  { rung: "PRE-DEPLOYMENT", se: "≤ 0.3 logits", iters: "5", k: "2.00", ci: "95%" },
+                  { rung: "HIGH-STAKES", se: "≤ 0.2 logits", iters: "10", k: "2.58", ci: "99% (~±0.5 logits)" },
+                ].map((row, i) => (
+                  <tr key={row.rung} style={{ background: i % 2 === 0 ? "#1a1a1a" : "#222222" }}>
+                    <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontFamily: "'Archivo Black', sans-serif", fontSize: "0.65rem", textTransform: "uppercase", color: "#FF4D00", whiteSpace: "nowrap" }}>{row.rung}</td>
+                    <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#CCCCCC" }}>{row.se}</td>
+                    <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#AAAAAA" }}>{row.iters}</td>
+                    <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#AAAAAA" }}>{row.k}</td>
+                    <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#888888" }}>{row.ci}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* BENCH BOM */}
+          <div style={{ border: "2px solid #FF4D00", padding: "2rem", background: "#0d0d0d" }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "0.75rem" }}>
+              BENCHMARK BILL OF MATERIALS — BENCH BOM
+            </div>
+            <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "-0.03em", color: "#FFFFFF", margin: "0 0 0.75rem" }}>
+              METROLOGICAL PROVENANCE FOR EVERY EVALUATION
+            </h3>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.8rem", lineHeight: 1.55, color: "#888888", margin: "0 0 1.5rem" }}>
+              To prevent benchmark-washing, every evaluation must be accompanied by a Benchmark Bill of Materials. It is not supplementary material — it is part of the result.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1px", background: "#333333" }}>
+              {[
+                { field: "CONSTRUCT SPECIFICATION", desc: "Target construct(s), operational definitions, scope boundaries, explicit limitations" },
+                { field: "ITEM LIBRARY", desc: "Full item list with IRT difficulty (b) and discrimination (a) parameters, version identifier, contamination-risk flags" },
+                { field: "BOOLEAN RUBRIC ITEMS", desc: "APBR items with binary criteria, organized by construct, with aggregation method" },
+                { field: "VALUE TAGS", desc: "Schwartz value labels + audience scopes, inter-tagger reliability stats, list of value-ambiguous items" },
+                { field: "CALIBRATION RUNG", desc: "Stated rung with justification; audience specification with explicit non-supported uses" },
+                { field: "DESIDERATA METRICS", desc: "κ, PSI, validity evidence, fairness (DIR, Δ, DIF), uncertainty budget, reproducibility artifacts" },
+                { field: "PROVENANCE", desc: "SHA-256 hashes for all artifacts (code, data, rubric, prompts, environment); dataset origins and transformations" },
+                { field: "ERROR BUDGET", desc: "Quantitative estimates for all 5 active error sources; combined uncertainty with disclosure" },
+                { field: "GOVERNANCE STATUS", desc: "Active / Flagged / Under Remediation / Downgraded / Retired — with protocol action history" },
+                { field: "MAINTENANCE SCHEDULE", desc: "Next recalibration, contamination check, fairness audit, and value-tag reliability audit dates" },
+              ].map((item) => (
+                <div key={item.field} style={{ background: "#111111", padding: "1.25rem" }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "0.4rem" }}>{item.field}</div>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", lineHeight: 1.4, color: "#AAAAAA", margin: 0 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
