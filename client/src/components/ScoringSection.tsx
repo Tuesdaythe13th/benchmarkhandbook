@@ -459,6 +459,125 @@ export default function ScoringSection() {
             ))}
           </div>
         </div>
+
+        {/* Measurement Error Budget */}
+        <div style={{ marginTop: "4rem", paddingTop: "3rem", borderTop: "2px solid #000000" }}>
+          <h3
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#FF4D00",
+              marginBottom: "0.5rem",
+            }}
+          >
+            THE MEASUREMENT ERROR BUDGET
+          </h3>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "0.85rem",
+              lineHeight: 1.6,
+              color: "#444444",
+              maxWidth: 680,
+              marginBottom: "2rem",
+            }}
+          >
+            <strong>The number is not the measurement.</strong> The measurement is the number together with an explicit account of how far that number might deviate from the truth. Every score must be accompanied by a structured error budget enumerating five primary sources.
+          </p>
+
+          {/* Aleatoric vs Epistemic */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1px",
+              background: "#000000",
+              border: "2px solid #000000",
+              marginBottom: "2rem",
+            }}
+          >
+            {[
+              {
+                type: "ALEATORIC UNCERTAINTY",
+                latin: "From alea — 'dice'",
+                desc: "Irreducible variability intrinsic to the phenomenon. A model's response to an ambiguous prompt may genuinely vary; a rater may score differently on different days because the item is legitimately ambiguous. This is not noise to be eliminated — it must be quantified.",
+                action: "Document and report. Cannot be reduced by improving the instrument.",
+              },
+              {
+                type: "EPISTEMIC UNCERTAINTY",
+                latin: "From epistēmē — 'knowledge'",
+                desc: "Reducible variability from limitations in the instrument, the sample, the procedure, or the evaluator's knowledge. A benchmark with too few items produces high sampling variance. A rubric with vague criteria produces high rater variance.",
+                action: "Fix the instrument. Add items, sharpen rubric criteria, train raters, control the test environment.",
+              },
+            ].map((u) => (
+              <div key={u.type} style={{ background: "#FFFFFF", padding: "1.75rem" }}>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", color: "#888888", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>{u.latin}</div>
+                <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", marginBottom: "0.75rem" }}>{u.type}</div>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.5, color: "#444444", margin: "0 0 0.75rem" }}>{u.desc}</p>
+                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.58rem", color: "#FF4D00", textTransform: "uppercase", letterSpacing: "0.04em" }}>→ {u.action}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* 5 Error sources */}
+          <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "1rem" }}>
+            TABLE V.3 — FIVE PRIMARY ERROR SOURCES
+          </h3>
+          <div style={{ overflowX: "auto", marginBottom: "2rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Space Mono', monospace", fontSize: "0.68rem" }}>
+              <thead>
+                <tr>
+                  {["SOURCE", "DESCRIPTION", "TYPE", "MITIGATION"].map((h) => (
+                    <th key={h} style={{ background: "#000000", color: "#FF4D00", fontFamily: "'Archivo Black', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em", padding: "0.65rem 1rem", textAlign: "left", border: "1px solid #222222", fontSize: "0.6rem" }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { src: "CONSTRUCT UNDERSPECIFICATION", desc: "Target construct defined loosely enough that different evaluators measure different things while believing they measure the same thing.", type: "Epistemic", fix: "Sharpen construct definition; validity desideratum" },
+                  { src: "SAMPLING ERROR", desc: "Finite item sets introduce variance. For proportion p on n items: SE ≈ √(p(1−p)/n). Two models at 87% vs 89% on 200 items are statistically indistinguishable.", type: "Both", fix: "Increase item count; report Wilson confidence intervals" },
+                  { src: "INSTRUMENT BIAS", desc: "Systematic offsets from format or framing. MCQ inflates scores for format-recognition heuristics. Pairwise protocols exhibit position and verbosity bias.", type: "Epistemic", fix: "Multiple formats; position randomization; judge calibration" },
+                  { src: "RATER VARIANCE", desc: "Inter-rater disagreement is a strict upper bound on interpretability. If κ = 0.50, approximately half the score variance is attributable to rater disagreement, not model behavior.", type: "Both", fix: "Rater training; rubric precision; inter-rater reliability reporting" },
+                  { src: "DISTRIBUTIONAL SHIFT", desc: "Gap between measurement context and deployment context. Score measured in a controlled sandbox may not reflect behavior in production pipelines or after silent model updates.", type: "Aleatoric", fix: "Deployment-context evaluation; drift monitoring; regular recalibration" },
+                ].map((row, i) => (
+                  <tr key={row.src} style={{ background: i % 2 === 0 ? "#FFFFFF" : "#F8F8F8" }}>
+                    <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Archivo Black', sans-serif", fontSize: "0.65rem", textTransform: "uppercase", color: "#000000", whiteSpace: "nowrap" }}>{row.src}</td>
+                    <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", color: "#333333", lineHeight: 1.4 }}>{row.desc}</td>
+                    <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", color: "#FF4D00", whiteSpace: "nowrap" }}>{row.type}</td>
+                    <td style={{ padding: "0.7rem 1rem", border: "1px solid #DDDDDD", fontFamily: "'Inter', sans-serif", fontSize: "0.72rem", color: "#666666", lineHeight: 1.4 }}>{row.fix}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 4-step budget process */}
+          <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "1rem" }}>
+            FOUR-STEP ERROR BUDGET PROCESS
+          </h3>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", background: "#000000", border: "2px solid #000000" }}>
+            {[
+              { step: "01", title: "ENUMERATE", body: "List which of the five sources are active for this specific evaluation. Fully automated benchmarks with deterministic decoding eliminate rater variance and run instability — but do nothing about construct underspecification, sampling error, instrument bias, or distributional shift." },
+              { step: "02", title: "ESTIMATE MAGNITUDES", body: "Provide a standard deviation, confidence interval, or variance component for each active source. At Exploratory rung: categorical judgment (negligible/moderate/dominant) with rationale. At Pre-deployment/High-stakes: quantitative estimates via split-half reliability, bootstrap resampling, or GLMM variance decomposition." },
+              { step: "03", title: "COMBINE", body: "Under independence: total uncertainty ≈ √(σ₁² + σ₂² + … + σₖ²). When sources are correlated — common when construct underspecification and instrument bias co-vary — report both an independent-source estimate and a conservative correlated-source upper bound." },
+              { step: "04", title: "DISCLOSE", body: "Present the error budget alongside the primary score in the Benchmark Bill of Materials. The error budget is not supplementary material. A score whose uncertainty budget exceeds the decision margin it is cited to support cannot rationally support that decision." },
+            ].map((s) => (
+              <div key={s.step} style={{ background: "#FFFFFF", padding: "1.5rem 2rem", display: "grid", gridTemplateColumns: "auto 1fr", gap: "1.5rem", alignItems: "start", transition: "background 0.15s linear" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#fff3ee"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#FFFFFF"; }}>
+                <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "2.2rem", letterSpacing: "-0.04em", color: "#FF4D00", lineHeight: 1 }}>{s.step}</div>
+                <div>
+                  <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", marginBottom: "0.4rem" }}>{s.title}</div>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", lineHeight: 1.5, color: "#555555", margin: 0 }}>{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

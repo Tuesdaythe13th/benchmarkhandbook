@@ -686,6 +686,137 @@ export default function EvalScience() {
         </div>
       </section>
 
+      {/* Calibration Hierarchy + Conjunction Requirement */}
+      <section
+        style={{
+          padding: "4rem 2rem",
+          background: "#111111",
+          borderBottom: "2px solid #FF4D00",
+        }}
+      >
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.5rem" }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#FF4D00" }}>
+              SECTION 06A
+            </span>
+            <h2 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "clamp(1.8rem, 3.5vw, 3rem)", textTransform: "uppercase", letterSpacing: "-0.04em", lineHeight: 0.9, color: "#FFFFFF", margin: 0 }}>
+              CALIBRATION HIERARCHY &amp; CONJUNCTION REQUIREMENT
+            </h2>
+          </div>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.85rem", color: "#888888", marginBottom: "2.5rem", lineHeight: 1.5, maxWidth: 720 }}>
+            Evidentiary requirements must scale with deployment stakes. The Calibration Hierarchy encodes this principle across four rungs. The Conjunction Requirement enforces that all desiderata at a given rung must be satisfied simultaneously — strength on one cannot compensate for failure on another.
+          </p>
+
+          {/* Calibration Hierarchy table */}
+          <div style={{ marginBottom: "3rem" }}>
+            <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "1rem" }}>
+              TABLE 6A.1 — CALIBRATION HIERARCHY
+            </h3>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Space Mono', monospace", fontSize: "0.72rem" }}>
+                <thead>
+                  <tr>
+                    {["RUNG", "PRIMARY USE", "REQUIRED DESIDERATA", "EXAMPLE CONTEXT"].map((h) => (
+                      <th key={h} style={{ background: "#FF4D00", color: "#000000", fontFamily: "'Archivo Black', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em", padding: "0.75rem 1rem", textAlign: "left", border: "1px solid #FF4D00", fontSize: "0.65rem" }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { rung: "EXPLORATORY", use: "Internal research, informal comparison, early prototyping", desiderata: "Reproducibility", example: "Lab experiments, pre-publication ablations" },
+                    { rung: "DEVELOPMENT", use: "Model iteration, internal gating, A/B testing", desiderata: "+ Reliability, Validity", example: "Release-candidate regression checks" },
+                    { rung: "PRE-DEPLOYMENT", use: "Procurement, regulatory audits, staged pilots", desiderata: "+ Uncertainty, Fairness", example: "Enterprise procurement evaluation" },
+                    { rung: "HIGH-STAKES", use: "Clinical, legal, financial, safety-critical deployment", desiderata: "All six (incl. Practicality)", example: "Medical AI certification, judicial tools" },
+                  ].map((row, i) => (
+                    <tr key={row.rung} style={{ background: i % 2 === 0 ? "#1a1a1a" : "#222222" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "#2a1a0a"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = i % 2 === 0 ? "#1a1a1a" : "#222222"; }}>
+                      <td style={{ padding: "0.75rem 1rem", border: "1px solid #333333", fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#FF4D00", whiteSpace: "nowrap" }}>{row.rung}</td>
+                      <td style={{ padding: "0.75rem 1rem", border: "1px solid #333333", fontFamily: "'Inter', sans-serif", fontSize: "0.78rem", color: "#CCCCCC", lineHeight: 1.4 }}>{row.use}</td>
+                      <td style={{ padding: "0.75rem 1rem", border: "1px solid #333333", fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", color: "#AAAAAA" }}>{row.desiderata}</td>
+                      <td style={{ padding: "0.75rem 1rem", border: "1px solid #333333", fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", color: "#888888" }}>{row.example}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Tiered thresholds */}
+          <div style={{ marginBottom: "3rem" }}>
+            <h3 style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "1rem" }}>
+              TABLE 6A.2 — TIERED KINETIC THRESHOLDS PER DESIDERATUM
+            </h3>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'Space Mono', monospace", fontSize: "0.68rem" }}>
+                <thead>
+                  <tr>
+                    {["DESIDERATUM", "EXPLORATORY", "DEVELOPMENT", "PRE-DEPLOYMENT", "HIGH-STAKES"].map((h) => (
+                      <th key={h} style={{ background: "#222222", color: "#FF4D00", fontFamily: "'Archivo Black', sans-serif", textTransform: "uppercase", letterSpacing: "-0.02em", padding: "0.65rem 0.85rem", textAlign: "left", border: "1px solid #444444", fontSize: "0.6rem" }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { dim: "RELIABILITY", e: "κ ≥ 0.40 · PSI ≥ 0.30", d: "κ ≥ 0.60 · PSI ≥ 0.50", p: "κ ≥ 0.75 · PSI ≥ 0.70", h: "κ ≥ 0.80 · PSI ≥ 0.80" },
+                    { dim: "VALIDITY", e: "Construct definition documented", d: "+ Convergent validity evidence", p: "+ Discriminant validity; confounds listed", h: "+ Criterion validity; independent expert review" },
+                    { dim: "UNCERTAINTY", e: "90% interval reported", d: "95% interval; narrower than decision margin", p: "95% interval; must be < decision margin", h: "99% interval; ≤ 50% of decision margin" },
+                    { dim: "FAIRNESS", e: "—", d: "DIR ≥ 0.75 · Δ < 0.10", p: "DIR ≥ 0.80 · Δ < 0.05 · DIF required", h: "DIR ≥ 0.90 · Δ < 0.03 · DIF per subgroup" },
+                    { dim: "REPRODUCIBILITY", e: "Artifacts available on request", d: "SHA-256 hashes · public repo", p: "+ Full re-run within stated interval", h: "+ Independent third-party replication" },
+                    { dim: "PRACTICALITY", e: "—", d: "≤ 500 ms/item · within 20× comparable cost", p: "≤ 200 ms/item · within 10× comparable cost", h: "≤ 200 ms/item · cost-benefit justified by governance body" },
+                  ].map((row, i) => (
+                    <tr key={row.dim} style={{ background: i % 2 === 0 ? "#1a1a1a" : "#222222" }}>
+                      <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontFamily: "'Archivo Black', sans-serif", fontSize: "0.65rem", textTransform: "uppercase", color: "#FF4D00", whiteSpace: "nowrap" }}>{row.dim}</td>
+                      <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#666666" }}>{row.e}</td>
+                      <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#888888" }}>{row.d}</td>
+                      <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#AAAAAA" }}>{row.p}</td>
+                      <td style={{ padding: "0.65rem 0.85rem", border: "1px solid #333333", fontSize: "0.65rem", color: "#FFFFFF" }}>{row.h}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", color: "#666666", marginTop: "0.75rem", lineHeight: 1.5 }}>
+              DIR = Disparate Impact Ratio · Δ = Demographic Parity Gap · PSI = Prompt-Sensitivity Index · DIF = Differential Item Functioning · κ = Cohen's kappa
+            </p>
+          </div>
+
+          {/* Conjunction Requirement callout */}
+          <div style={{ border: "2px solid #FF4D00", padding: "2rem", background: "#0d0d0d" }}>
+            <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "0.75rem" }}>
+              CRITICAL PRINCIPLE — THE CONJUNCTION REQUIREMENT
+            </div>
+            <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "-0.03em", color: "#FFFFFF", margin: "0 0 1rem" }}>
+              ALL REQUIRED DESIDERATA MUST BE SATISFIED SIMULTANEOUSLY
+            </h3>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.82rem", lineHeight: 1.65, color: "#AAAAAA", margin: "0 0 1.25rem" }}>
+              The Conjunction Requirement rejects compensatory reasoning across desiderata. An evaluation cannot "pass" by excelling on three dimensions while ignoring the other three.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1px", background: "#333333" }}>
+              {[
+                { label: "RELIABLE BUT INVALID", consequence: "Consistently wrong. Measures the wrong thing with great precision." },
+                { label: "VALID BUT IRREPRODUCIBLE", consequence: "A one-time anecdote. Cannot be verified by anyone else." },
+                { label: "VALID + RELIABLE BUT UNFAIR", consequence: "A well-calibrated instrument of inequity." },
+                { label: "MEETS ALL BUT UNCERTAINTY TOO WIDE", consequence: "A guess dressed as a measurement — cannot support the decision." },
+              ].map((item) => (
+                <div key={item.label} style={{ background: "#111111", padding: "1.25rem" }}>
+                  <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase", color: "#FF4D00", marginBottom: "0.4rem" }}>
+                    ✗ {item.label}
+                  </div>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.75rem", lineHeight: 1.4, color: "#AAAAAA", margin: 0 }}>
+                    {item.consequence}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 7: Open Questions */}
       <section
         style={{
