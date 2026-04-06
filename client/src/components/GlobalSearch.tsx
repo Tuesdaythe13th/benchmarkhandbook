@@ -75,6 +75,14 @@ const PAPER_RESULTS: SearchResult[] = [
   { id: "p38", type: "paper", title: "Scaling LLM Test-Time Compute Optimally", subtitle: "Snell et al. — NeurIPS 2024 — Benchmark Design", navigate: "/", anchor: "#research" },
   { id: "p39", type: "paper", title: "MMMU-Pro: Robust Multimodal Understanding Benchmark", subtitle: "Yue et al. — ICLR 2025 — Benchmark Design", navigate: "/", anchor: "#research" },
   { id: "p40", type: "paper", title: "FRAMES: Factuality, Retrieval & Reasoning Evaluation", subtitle: "Krishna et al. — Google 2024 — Benchmark Design", navigate: "/", anchor: "#research" },
+  { id: "p41", type: "paper", title: "Establishing Best Practices for Rigorous Agentic Benchmarks (ABC)", subtitle: "Zhu et al. — arXiv 2025 — Agentic Evaluation", navigate: "/", anchor: "#research" },
+  { id: "p42", type: "paper", title: "Safety by Measurement: Systematic Review of AI Safety Evaluation", subtitle: "Grey & Segerie — arXiv 2025 — Safety & Governance", navigate: "/", anchor: "#research" },
+  { id: "p43", type: "paper", title: "How Should AI Safety Benchmarks Benchmark Safety?", subtitle: "Yu et al. — arXiv 2026 — Safety & Governance", navigate: "/", anchor: "#research" },
+  { id: "p44", type: "paper", title: "Berkeley Function Calling Leaderboard (BFCL) V4", subtitle: "Patil et al. — ICML 2025 — Agentic Evaluation", navigate: "/", anchor: "#research" },
+  { id: "p45", type: "paper", title: "MultiAgentBench: Collaboration and Competition of LLM Agents", subtitle: "Du et al. — ACL 2025 — Agentic Evaluation", navigate: "/", anchor: "#research" },
+  { id: "p46", type: "paper", title: "Video-MME: Comprehensive Video Evaluation for Multi-Modal LLMs", subtitle: "Fu, Dai et al. — CVPR 2025 — Benchmark Design", navigate: "/", anchor: "#research" },
+  { id: "p47", type: "paper", title: "Benchmarking LLMs Under Data Contamination: Static to Dynamic", subtitle: "Chen et al. — EMNLP 2025 — Benchmark Design", navigate: "/", anchor: "#research" },
+  { id: "p48", type: "paper", title: "Red Teaming LLMs as Socio-Technical Practice", subtitle: "Garcia et al. — CHI 2026 — Safety & Governance", navigate: "/", anchor: "#research" },
 ];
 
 // Glossary terms index for search
