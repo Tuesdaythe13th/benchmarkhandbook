@@ -6,25 +6,25 @@
 const safetyDimensions = [
   {
     dim: "JAILBREAK RESISTANCE",
-    desc: "Measures how well a model resists adversarial prompts designed to bypass safety guardrails.",
+    desc: "Measures how well a model resists adversarial prompts designed to bypass safety guardrails. STAR (ICLR 2026) demonstrates that latent-space attacks achieve 89% ASR on robustly trained models.",
     metric: "Attack Success Rate (ASR)",
-    benchmark: "StrongREJECT, WildGuard",
+    benchmark: "StrongREJECT, WildGuard, AgentHarm",
   },
   {
     dim: "HALLUCINATION RATE",
-    desc: "Measures the frequency of confident, factually incorrect outputs. Critical for high-stakes domains.",
+    desc: "Measures the frequency of confident, factually incorrect outputs. Critical for high-stakes domains. FACTS Grounding (Google DeepMind, 2025) specifically measures grounding fidelity to source material.",
     metric: "Factual Accuracy Score",
-    benchmark: "FaithEval, HaluEval",
+    benchmark: "FaithEval, HaluEval, FACTS Grounding",
   },
   {
     dim: "FALSE REFUSAL RATE",
-    desc: "Measures over-refusal: how often a model refuses legitimate, benign requests.",
-    metric: "Over-Refusal Rate",
+    desc: "Measures over-refusal: how often a model refuses legitimate, benign requests. Yu et al. (2026) found 68% of safety benchmarks omit this dimension, creating false safety impressions.",
+    metric: "Over-Refusal Rate (FRR)",
     benchmark: "CoCoNot, XSTest",
   },
   {
     dim: "BIAS & FAIRNESS",
-    desc: "Measures performance disparities across demographic groups, languages, and cultural contexts.",
+    desc: "Measures performance disparities across demographic groups, languages, and cultural contexts. GlobalMMLU (2024) enables cross-cultural fairness measurement across 42 languages.",
     metric: "Demographic Parity Gap",
     benchmark: "BBQ, GlobalMMLU, WinoBias",
   },
@@ -39,6 +39,18 @@ const safetyDimensions = [
     desc: "Measures whether a model reveals memorized private training data under adversarial prompting.",
     metric: "Memorization Rate",
     benchmark: "Carlini et al. extraction attacks",
+  },
+  {
+    dim: "DOMAIN SAFETY",
+    desc: "Measures appropriate, safe behavior in high-stakes professional domains (healthcare, legal, finance). HealthBench (OpenAI, 2025) covers emergency referrals, global health, and uncertainty communication across 5,000 realistic scenarios.",
+    metric: "Domain-Appropriate Response Rate",
+    benchmark: "HealthBench, CounselBench",
+  },
+  {
+    dim: "AGENTIC ALIGNMENT",
+    desc: "Measures whether agentic models maintain safe behavior under autonomy — resistance to sabotage, misuse cooperation, and self-preservation instincts. Documented empirically in the 2026 Anthropic–OpenAI joint evaluation.",
+    metric: "Sabotage Propensity Score",
+    benchmark: "SHADE-Arena, AgentHarm",
   },
 ];
 
@@ -99,6 +111,10 @@ const antiPatterns = [
   {
     pattern: "STALE BENCHMARKS",
     desc: "Continuing to report results on saturated benchmarks to appear competitive. Mitigation: mandatory status disclosure.",
+  },
+  {
+    pattern: "SAFETYWASHING",
+    desc: "Selectively reporting favorable safety metrics while omitting over-refusal, domain safety, or agentic alignment measures. Named in Grey & Segerie (2025) as a systemic risk. Mitigation: require full-dimension safety disclosure including false refusal rates.",
   },
 ];
 

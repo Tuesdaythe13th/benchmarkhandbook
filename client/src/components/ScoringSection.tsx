@@ -90,31 +90,31 @@ const behavioralFamilies = [
     num: "01",
     family: "KNOWLEDGE & REASONING",
     desc: "Factual recall, multi-step logical inference, causal reasoning, and scientific problem-solving.",
-    benchmarks: ["MMLU-Pro", "GPQA Diamond", "ARC Challenge", "MuSR"],
+    benchmarks: ["MMLU-Pro", "GPQA Diamond", "Humanity's Last Exam", "MuSR", "ZebraLogic"],
   },
   {
     num: "02",
     family: "INSTRUCTION FOLLOWING",
     desc: "Adherence to explicit formatting constraints, multi-turn context maintenance, and constraint satisfaction.",
-    benchmarks: ["IFEval", "IFBench", "CoCoNot"],
+    benchmarks: ["IFEval", "MultiChallenge", "CoCoNot"],
   },
   {
     num: "03",
     family: "MATHEMATICAL REASONING",
     desc: "Symbolic manipulation, proof construction, numerical computation, and olympiad-level problem solving.",
-    benchmarks: ["MATH-500", "AIME 2025", "GSM8K", "FrontierMath"],
+    benchmarks: ["MATH-500", "AIME 2024/2025", "MathArena", "FrontierMath"],
   },
   {
     num: "04",
     family: "CODE GENERATION",
     desc: "Functional code synthesis, bug repair, test generation, and end-to-end software engineering.",
-    benchmarks: ["HumanEval+", "LiveCodeBench", "SWE-Bench Verified"],
+    benchmarks: ["LiveCodeBench", "SWE-Bench Verified", "BigCodeBench", "LiveCodeBench Pro"],
   },
   {
     num: "05",
     family: "AGENTIC BEHAVIOR",
     desc: "Tool use, planning, multi-step task completion, web navigation, and collaborative multi-agent tasks.",
-    benchmarks: ["GAIA", "TauBench", "BFCL v3", "BrowseComp"],
+    benchmarks: ["GAIA", "TauBench", "BFCL v3", "BrowseComp", "PaperBench"],
   },
 ];
 
