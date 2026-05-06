@@ -1,269 +1,22 @@
 /*
  * BenchmarksSection — Benchmark catalog by category
- * White background | Tabbed by domain | Benchmark pills
+ * White background | Tabbed by domain | Benchmark pills with paper links
+ * 2026 edition — uses shared benchmarks.ts data
  */
 
 import { useState } from "react";
+import { categories, statusColors } from "../data/benchmarks";
 
-interface Benchmark {
-  name: string;
-  year: string;
-  desc: string;
-  status: "ACTIVE" | "SATURATED" | "EMERGING" | "CAUTION";
-  type: string;
-}
-
-const categories: { id: string; label: string; benchmarks: Benchmark[] }[] = [
-  {
-    id: "reasoning",
-    label: "REASONING",
-    benchmarks: [
-      {
-        name: "ARC Challenge",
-        year: "2018",
-        desc: "Grade school science MCQA built from human tests. Adversarially constructed for word co-occurrence systems. Still used for pretraining ablations.",
-        status: "SATURATED",
-        type: "MCQA",
-      },
-      {
-        name: "HellaSwag",
-        year: "2019",
-        desc: "Requires selecting the correct next sentence from adversarial choices. Tests physical commonsense grounding via ActivityNet captions and WikiHow tutorials.",
-        status: "SATURATED",
-        type: "MCQA",
-      },
-      {
-        name: "WinoGrande",
-        year: "2019",
-        desc: "Crowdsourced pronoun resolution using adversarial pairs. Tests commonsense reasoning through fill-in-the-blank format.",
-        status: "SATURATED",
-        type: "MCQA",
-      },
-      {
-        name: "MuSR",
-        year: "2023",
-        desc: "Complex reasoning instances including 1000-word murder mysteries using neurosymbolic generation. Tests multi-step logical inference.",
-        status: "ACTIVE",
-        type: "GENERATIVE",
-      },
-      {
-        name: "ZebraLogic",
-        year: "2024",
-        desc: "Algorithmically produced logic grid puzzles using SAT solvers. Virtually infinite generation prevents contamination.",
-        status: "ACTIVE",
-        type: "GENERATIVE",
-      },
-    ],
-  },
-  {
-    id: "knowledge",
-    label: "KNOWLEDGE",
-    benchmarks: [
-      {
-        name: "MMLU",
-        year: "2020",
-        desc: "Massive Multitask Language Understanding. Reached saturation/contamination. Issues: incomplete questions, incorrect ground truths, americano-centrism.",
-        status: "SATURATED",
-        type: "MCQA",
-      },
-      {
-        name: "MMLU-Pro",
-        year: "2024",
-        desc: "Extended MMLU with more complex questions and additional answer choices. The main community replacement for MMLU. Used for pretraining evaluations.",
-        status: "ACTIVE",
-        type: "MCQA",
-      },
-      {
-        name: "GPQA Diamond",
-        year: "2023",
-        desc: "PhD-level questions in biology, chemistry, and physics. Designed to be answerable only by domain experts. Starting to reach contamination.",
-        status: "CAUTION",
-        type: "MCQA",
-      },
-      {
-        name: "Humanity's Last Exam",
-        year: "2024",
-        desc: "2,500 crowdsourced expert questions across domains. Mostly private. Requires both complex knowledge and reasoning. Not yet broken.",
-        status: "ACTIVE",
-        type: "GENERATIVE",
-      },
-      {
-        name: "GlobalMMLU",
-        year: "2024",
-        desc: "MMLU translated and annotated for cultural bias. Enables cross-cultural evaluation and bias detection.",
-        status: "ACTIVE",
-        type: "MCQA",
-      },
-    ],
-  },
-  {
-    id: "math",
-    label: "MATH",
-    benchmarks: [
-      {
-        name: "GSM8K",
-        year: "2021",
-        desc: "Grade school math problems. Extended by GSM1K (contamination test), GSM-Plus (adversarial), and GSM-Symbolic (template-based, infinite generation).",
-        status: "SATURATED",
-        type: "GENERATIVE",
-      },
-      {
-        name: "MATH-500",
-        year: "2021",
-        desc: "Representative 500-problem subset of MATH Olympiad problems. Sampled to avoid overfitting. Recommended for pretraining evaluations.",
-        status: "ACTIVE",
-        type: "GENERATIVE",
-      },
-      {
-        name: "AIME 2024/2025",
-        year: "2024",
-        desc: "American Mathematics Olympiad datasets. Renewed annually with equivalent difficulty, enabling contamination detection by comparing year-over-year results.",
-        status: "ACTIVE",
-        type: "GENERATIVE",
-      },
-      {
-        name: "Math-Arena",
-        year: "2025",
-        desc: "Up-to-date compilation of competitions and olympiads, including AIME25. Regularly actualized. Recommended for post-training evaluation.",
-        status: "EMERGING",
-        type: "GENERATIVE",
-      },
-      {
-        name: "FrontierMath",
-        year: "2024",
-        desc: "Considerably harder math problems written individually by mathematicians. Theoretically private. Caution: OpenAI reportedly had access to parts of the dataset.",
-        status: "CAUTION",
-        type: "GENERATIVE",
-      },
-    ],
-  },
-  {
-    id: "code",
-    label: "CODE",
-    benchmarks: [
-      {
-        name: "HumanEval+",
-        year: "2023",
-        desc: "EvalPlus extension of HumanEval with more test cases and bug fixes. Includes sandbox for safe code execution. Introduced pass@k estimator.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "MBPP+",
-        year: "2023",
-        desc: "EvalPlus extension of MBPP (1K crowdsourced Python problems). Additional test cases and fixed bugs from the original dataset.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "LiveCodeBench",
-        year: "2024",
-        desc: "Stores problem creation date to compare performance on pre/post-training problems. Excellent contamination-free benchmark via temporal separation.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "SWE-Bench Verified",
-        year: "2024",
-        desc: "Higher quality subset of SWE-Bench for real-world software engineering tasks. Tests end-to-end code repair on actual GitHub issues.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "AiderBench",
-        year: "2024",
-        desc: "Evaluates code assistant usefulness in realistic development scenarios. Recommended alongside LiveCodeBench for final model evaluation.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-    ],
-  },
-  {
-    id: "instruction",
-    label: "INSTRUCTION",
-    benchmarks: [
-      {
-        name: "IFEval",
-        year: "2023",
-        desc: "Models follow formatting instructions (keywords, punctuation, word counts, markdown). Each condition verified programmatically — rare strict generative eval without a judge.",
-        status: "ACTIVE",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "IFBench",
-        year: "2025",
-        desc: "Extension of IFEval with broader instruction types and harder constraints. Recommended for comparing post-trained models.",
-        status: "EMERGING",
-        type: "FUNCTIONAL",
-      },
-      {
-        name: "CoCoNot",
-        year: "2024",
-        desc: "Tests non-compliance: models evaluated on underspecified, unanswerable, or unsafe requests. Measures over-refusal and appropriate boundary-setting.",
-        status: "ACTIVE",
-        type: "CLASSIFICATION",
-      },
-    ],
-  },
-  {
-    id: "agentic",
-    label: "AGENTIC",
-    benchmarks: [
-      {
-        name: "GAIA",
-        year: "2023",
-        desc: "Kickstarted modern agentic evaluation. Models use tools, reasoning, and retrieval to solve real-life queries. 3 difficulty levels; Level 1 now saturated.",
-        status: "ACTIVE",
-        type: "AGENT",
-      },
-      {
-        name: "TauBench",
-        year: "2024",
-        desc: "Evaluates tool-use in retail and airline domains. Correct when actions update database correctly AND user query is answered. LLM-mocked user.",
-        status: "ACTIVE",
-        type: "AGENT",
-      },
-      {
-        name: "BFCL v3",
-        year: "2025",
-        desc: "Berkeley Function Calling Leaderboard. 4 subsets: single-turn, crowdsourced real calls, multi-turn, and agentic (web search, memory, SQL). Uses AST + execution matching.",
-        status: "ACTIVE",
-        type: "TOOL-CALL",
-      },
-      {
-        name: "BrowseComp",
-        year: "2025",
-        desc: "Tests web-based information retrieval. Questions constructed from results, with varying difficulty. Tests if models can find specific answers using online tools.",
-        status: "EMERGING",
-        type: "AGENT",
-      },
-      {
-        name: "HELMET",
-        year: "2024",
-        desc: "Combines RAG, QA, recall, citation generation, summarization, and reranking into a single long-context dataset. Still discriminative in 2025.",
-        status: "ACTIVE",
-        type: "LONG-CONTEXT",
-      },
-      {
-        name: "ARC-AGI3",
-        year: "2025",
-        desc: "Latest version with entire new games requiring exploration, complex planning, and memory management. Still in development. Recommended when released.",
-        status: "EMERGING",
-        type: "GAME",
-      },
-    ],
-  },
-];
-
-const statusColors: Record<string, { bg: string; color: string }> = {
-  ACTIVE: { bg: "#000000", color: "#FFFFFF" },
-  SATURATED: { bg: "#888888", color: "#FFFFFF" },
-  EMERGING: { bg: "#FF4D00", color: "#000000" },
-  CAUTION: { bg: "#FFD700", color: "#000000" },
+const STATUS_TOOLTIPS: Record<string, string> = {
+  ACTIVE: "Discriminative — still separates strong from weak models. Recommended for current evaluations.",
+  SATURATED: "Lost discriminative power — most frontier models score near ceiling. Use only for pretraining ablations.",
+  EMERGING: "Newly released and recommended — not yet widely adopted but addresses gaps in the current suite.",
+  CAUTION: "Use with caution — known contamination risk, construct validity concerns, or documented gaming.",
 };
 
 export default function BenchmarksSection() {
   const [activeTab, setActiveTab] = useState("reasoning");
+  const [hoveredStatus, setHoveredStatus] = useState<string | null>(null);
 
   const activeCategory = categories.find((c) => c.id === activeTab)!;
 
@@ -296,7 +49,7 @@ export default function BenchmarksSection() {
           >
             BENCHMARK
             <br />
-            CATALOG 2025
+            CATALOG 2026
           </h2>
         </div>
 
@@ -311,20 +64,20 @@ export default function BenchmarksSection() {
           }}
         >
           A curated reference of benchmarks organized by capability domain. Status indicators reflect
-          current community usage: <strong>ACTIVE</strong> (discriminative), <strong>SATURATED</strong> (lost discriminative power),
-          <strong> EMERGING</strong> (recommended), <strong>CAUTION</strong> (contamination risk).
+          current community usage — hover any badge for its definition. <strong>ACTIVE</strong> (discriminative),{" "}
+          <strong>SATURATED</strong> (lost discriminative power),{" "}
+          <strong>EMERGING</strong> (recommended, newly released),{" "}
+          <strong>CAUTION</strong> (contamination or validity risk).
         </p>
 
-        {/* Status legend */}
-        <div style={{ display: "flex", gap: "0.75rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+        {/* Status legend with hover tooltips */}
+        <div style={{ display: "flex", gap: "0.75rem", marginBottom: "2rem", flexWrap: "wrap", alignItems: "flex-start" }}>
           {Object.entries(statusColors).map(([status, colors]) => (
             <div
               key={status}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-              }}
+              style={{ position: "relative" }}
+              onMouseEnter={() => setHoveredStatus(status)}
+              onMouseLeave={() => setHoveredStatus(null)}
             >
               <span
                 style={{
@@ -334,12 +87,36 @@ export default function BenchmarksSection() {
                   fontSize: "0.55rem",
                   letterSpacing: "0.06em",
                   textTransform: "uppercase",
-                  padding: "0.15rem 0.5rem",
+                  padding: "0.25rem 0.6rem",
                   fontWeight: 700,
+                  cursor: "help",
+                  display: "inline-block",
+                  border: status === "SATURATED" ? "1px solid #cccccc" : "none",
                 }}
               >
                 {status}
               </span>
+              {hoveredStatus === status && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "calc(100% + 8px)",
+                    left: 0,
+                    zIndex: 100,
+                    background: "#000000",
+                    color: "#FFFFFF",
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "0.72rem",
+                    lineHeight: 1.4,
+                    padding: "0.6rem 0.9rem",
+                    width: 220,
+                    border: "1px solid #FF4D00",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {STATUS_TOOLTIPS[status]}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -383,7 +160,7 @@ export default function BenchmarksSection() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
             gap: "1px",
             background: "#000000",
             border: "2px solid #000000",
@@ -399,6 +176,9 @@ export default function BenchmarksSection() {
                   padding: "1.75rem",
                   transition: "transform 0.15s linear, box-shadow 0.15s linear",
                   position: "relative",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.6rem",
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
@@ -419,7 +199,6 @@ export default function BenchmarksSection() {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    marginBottom: "0.75rem",
                     gap: "0.5rem",
                   }}
                 >
@@ -447,6 +226,7 @@ export default function BenchmarksSection() {
                       padding: "0.15rem 0.4rem",
                       flexShrink: 0,
                       fontWeight: 700,
+                      border: bench.status === "SATURATED" ? "1px solid #cccccc" : "none",
                     }}
                   >
                     {bench.status}
@@ -457,8 +237,9 @@ export default function BenchmarksSection() {
                 <div
                   style={{
                     display: "flex",
-                    gap: "0.75rem",
-                    marginBottom: "0.75rem",
+                    gap: "0.6rem",
+                    flexWrap: "wrap",
+                    alignItems: "center",
                   }}
                 >
                   <span
@@ -485,19 +266,91 @@ export default function BenchmarksSection() {
                   >
                     {bench.type}
                   </span>
+                  {bench.examples && (
+                    <span
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "0.5rem",
+                        letterSpacing: "0.04em",
+                        color: "#AAAAAA",
+                      }}
+                    >
+                      {bench.examples} examples
+                    </span>
+                  )}
                 </div>
 
                 <p
                   style={{
                     fontFamily: "'Inter', sans-serif",
                     fontSize: "0.78rem",
-                    lineHeight: 1.5,
+                    lineHeight: 1.55,
                     color: "#444444",
                     margin: 0,
+                    flex: 1,
                   }}
                 >
                   {bench.desc}
                 </p>
+
+                {/* Footer row: license + paper link */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "0.5rem",
+                    marginTop: "0.25rem",
+                    paddingTop: "0.6rem",
+                    borderTop: "1px solid #EEEEEE",
+                  }}
+                >
+                  {bench.license && (
+                    <span
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "0.48rem",
+                        letterSpacing: "0.04em",
+                        color: "#BBBBBB",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {bench.license}
+                    </span>
+                  )}
+                  {bench.paper && (
+                    <a
+                      href={bench.paper}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      style={{
+                        fontFamily: "'Space Mono', monospace",
+                        fontSize: "0.5rem",
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                        color: "#FF4D00",
+                        textDecoration: "none",
+                        border: "1px solid #FF4D00",
+                        padding: "0.2rem 0.5rem",
+                        transition: "background 0.1s linear, color 0.1s linear",
+                        flexShrink: 0,
+                      }}
+                      onMouseEnter={(e) => {
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.background = "#FF4D00";
+                        el.style.color = "#000000";
+                      }}
+                      onMouseLeave={(e) => {
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.background = "transparent";
+                        el.style.color = "#FF4D00";
+                      }}
+                    >
+                      PAPER ↗
+                    </a>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -537,6 +390,7 @@ export default function BenchmarksSection() {
             Mitigations: canary strings (like BigBench), encrypted/gated access, dynamic benchmarks with regular updates,
             and post-hoc contamination detection via generation perplexity or adversarial prompt variants.
             A contaminated dataset can still provide signal during training — contamination does not equal uselessness.
+            See Chen et al. EMNLP 2025 for the definitive taxonomy of contamination types.
           </p>
         </div>
       </div>
