@@ -37,6 +37,7 @@ const pageLinks = [
   { label: "Multicultural", href: "/multicultural" },
   { label: "Rubric Design", href: "/rubric-design" },
   { label: "Metrics",       href: "/metrics" },
+  { label: "Doctrine",      href: "/doctrine" },
 ];
 
 // Map anchor → section element id (strip the #)
