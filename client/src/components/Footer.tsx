@@ -69,9 +69,9 @@ export default function Footer() {
           </div>
           {[
             { label: "DOC ID", value: "BBGFM-2026-001" },
-            { label: "VERSION", value: "1.0.0" },
+            { label: "VERSION", value: "2.0.0" },
             { label: "STATUS", value: "PUBLIC REFERENCE" },
-            { label: "REVISED", value: "FEB 2026" },
+            { label: "REVISED", value: "MAY 6, 2026" },
           ].map((item) => (
             <div
               key={item.label}
