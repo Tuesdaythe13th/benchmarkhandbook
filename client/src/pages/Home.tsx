@@ -21,6 +21,9 @@ import ResourcesSection from "@/components/ResourcesSection";
 import ResearchPapersSection from "@/components/ResearchPapersSection";
 import FirstPrinciplesCompendium from "@/components/FirstPrinciplesCompendium";
 import SurveySection from "@/components/SurveySection";
+import KineticThresholdSection from "@/components/KineticThresholdSection";
+import CalibrationGovernanceSection from "@/components/CalibrationGovernanceSection";
+import LegalAdmissibilitySection from "@/components/LegalAdmissibilitySection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -98,42 +101,86 @@ export default function Home() {
       />
       <BenchmarkCemetery />
       <AgenticSection />
-      <ScoringSection />
-      <GovernanceSection />
       <MarqueeTicker
         items={[
-          "CONSTRUCT VALIDITY",
-          "DATA LEAKAGE",
-          "BENCHMARK SATURATION",
-          "CONTAMINATION DETECTION",
-          "JUDGE DRIFT",
-          "HALLUCINATION RATE",
-          "JAILBREAK RESISTANCE",
-          "PERTURBATION VARIANCE",
-          "LOGIC COLLAPSE RATE",
-          "FALSE REFUSAL RATE",
-          "CANARY STRINGS",
-          "IRR CHECKS",
-          "SHA-256 INTEGRITY",
-          "SIGNED ATTESTATION",
-          "GENERALIZED ACCURACY",
-          "GLMM LATENT ABILITY",
-          "ITEM RESPONSE THEORY",
-          "RUBRICS-AS-REWARDS",
-          "DECEPTIVE ALIGNMENT",
-          "EXECUTION-VERIFIED OUTCOMES",
-          "MICROVM ISOLATION",
-          "AILUMINATE SCORECARD",
+          "TRAJECTORY METRICS",
+          "DESIGN PATTERNS",
+          "GOOGLE ADK",
+          "SYSTEM 2 REASONING",
+          "HUMAN EVALUATION",
+          "RUBRIC DESIGN",
+          "GALILEO ACTION ADVANCEMENT",
+          "PRODUCTION STACK",
+        ]}
+        speed={25}
+        bg="#FF4D00"
+        color="black"
+      />
+      <ScoringSection />
+      <MarqueeTicker
+        items={[
+          "LLM-AS-JUDGE",
+          "SCORING METHODS",
+          "JUDGE BIASES",
+          "BEHAVIORAL FAMILIES",
+          "VALIDITY CHECKLIST",
+          "CONSTRUCT ALIGNMENT",
         ]}
         speed={25}
         bg="black"
         color="white"
       />
+      <GovernanceSection />
       <GlossarySection />
       <ResourcesSection />
       <ResearchPapersSection />
-      <FirstPrinciplesCompendium />
       <SurveySection />
+      <FirstPrinciplesCompendium />
+      <MarqueeTicker
+        items={[
+          "MEASUREMENT IS NEVER NEUTRAL",
+          "EVERY CHOICE ENCODES VALUES",
+          "FAIRNESS IS NOT A CHECKBOX",
+          "JUSTICE IS INSTITUTIONAL CONCERN",
+          "REPRESENTATION GAP RENDERS FAILURE INVISIBLE",
+        ]}
+        speed={30}
+        bg="#FF4D00"
+        color="black"
+      />
+      <KineticThresholdSection />
+      <MarqueeTicker
+        items={[
+          "RELIABILITY",
+          "VALIDITY",
+          "UNCERTAINTY",
+          "FAIRNESS",
+          "REPRODUCIBILITY",
+          "PRACTICALITY",
+          "CONJUNCTION REQUIREMENT",
+        ]}
+        speed={30}
+        bg="black"
+        color="#FF4D00"
+      />
+      <CalibrationGovernanceSection />
+      <MarqueeTicker
+        items={[
+          "EXPLORATORY",
+          "DEVELOPMENT",
+          "PRE-DEPLOYMENT",
+          "HIGH-STAKES",
+          "FLAG",
+          "REMEDIATE",
+          "ESCALATE",
+          "DOWNGRADE",
+          "RETIRE",
+        ]}
+        speed={30}
+        bg="#FF4D00"
+        color="black"
+      />
+      <LegalAdmissibilitySection />
       <Footer />
     </div>
   );

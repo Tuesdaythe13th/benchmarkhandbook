@@ -26,6 +26,9 @@ const sectionLinks = [
   { label: "Research",    href: "#research" },
   { label: "Compendium",  href: "#compendium" },
   { label: "Assessment",  href: "#survey" },
+  { label: "Kinetic",     href: "#kinetic-threshold" },
+  { label: "Calibration", href: "#calibration-governance" },
+  { label: "Legal",       href: "#legal-admissibility" },
 ];
 
 const pageLinks = [
