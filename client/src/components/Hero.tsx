@@ -97,7 +97,7 @@ export default function Hero() {
               color: "#888888",
             }}
           >
-              LAST UPDATED: MARCH 10, 2026
+              LAST UPDATED: MAY 6, 2026
           </span>
         </div>
 

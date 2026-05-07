@@ -12,6 +12,7 @@ import FoundationsSection from "@/components/FoundationsSection";
 import BbomSection from "@/components/BbomSection";
 import BenchmarksSection from "@/components/BenchmarksSection";
 import BenchmarkSelector from "@/components/BenchmarkSelector";
+import AdvancedBenchmarkSearch from "@/components/AdvancedBenchmarkSearch";
 import BenchmarkCemetery from "@/components/BenchmarkCemetery";
 import AgenticSection from "@/components/AgenticSection";
 import ScoringSection from "@/components/ScoringSection";
@@ -83,7 +84,7 @@ export default function Home() {
         color="black"
       />
       <BenchmarksSection />
-      <BenchmarkSelector />
+      <AdvancedBenchmarkSearch />
       <MarqueeTicker
         items={[
           "MMLU R.I.P. 2024",
