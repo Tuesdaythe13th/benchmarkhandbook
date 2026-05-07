@@ -24,6 +24,10 @@ import SurveySection from "@/components/SurveySection";
 import KineticThresholdSection from "@/components/KineticThresholdSection";
 import CalibrationGovernanceSection from "@/components/CalibrationGovernanceSection";
 import LegalAdmissibilitySection from "@/components/LegalAdmissibilitySection";
+import LLMJudgeBiasSection from "@/components/LLMJudgeBiasSection";
+import MultilingualSafetySection from "@/components/MultilingualSafetySection";
+import BenchmarkDecayAnalysis from "@/components/BenchmarkDecayAnalysis";
+import APBRMethodology from "@/components/APBRMethodology";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -125,6 +129,64 @@ export default function Home() {
           "BEHAVIORAL FAMILIES",
           "VALIDITY CHECKLIST",
           "CONSTRUCT ALIGNMENT",
+        ]}
+        speed={25}
+        bg="black"
+        color="white"
+      />
+      <LLMJudgeBiasSection />
+      <MarqueeTicker
+        items={[
+          "POSITION BIAS",
+          "VERBOSITY BIAS",
+          "SELF-ENHANCEMENT",
+          "AUTHORITY BIAS",
+          "DISTRACTION BIAS",
+          "CHAIN-OF-THOUGHT BIAS",
+          "REFINED-VERSION CUES",
+        ]}
+        speed={25}
+        bg="#FF4D00"
+        color="black"
+      />
+      <MultilingualSafetySection />
+      <MarqueeTicker
+        items={[
+          "ENGLISH SAFETY ≠ GLOBAL SAFETY",
+          "LANGUAGE GAP EXPANDING",
+          "MIXED-LANGUAGE BYPASS RATES",
+          "CULTURAL CONTEXT MATTERS",
+          "MULTILINGUAL RED-TEAMING REQUIRED",
+          "DATASET AVAILABILITY CRITICAL",
+        ]}
+        speed={25}
+        bg="black"
+        color="white"
+      />
+      <BenchmarkDecayAnalysis />
+      <MarqueeTicker
+        items={[
+          "MMLU R.I.P.",
+          "HELLASWAG R.I.P.",
+          "GSM8K R.I.P.",
+          "BENCHMARK SATURATION",
+          "GOODHART'S LAW IN ACTION",
+          "PRIVATE BENCHMARKS ONLY",
+          "CONTINUOUS REFRESH REQUIRED",
+        ]}
+        speed={25}
+        bg="#FF4D00"
+        color="black"
+      />
+      <APBRMethodology />
+      <MarqueeTicker
+        items={[
+          "APBR",
+          "BINARY CRITERIA",
+          "ADAPTIVE FILTERING",
+          "50% FASTER",
+          "HIGHER RELIABILITY",
+          "EXPERT-LEVEL ACCURACY",
         ]}
         speed={25}
         bg="black"

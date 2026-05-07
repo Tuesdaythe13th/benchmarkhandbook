@@ -9,6 +9,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "wouter";
 import GlobalSearch from "./GlobalSearch";
+import EnhancedSearch from "./EnhancedSearch";
 
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310419663032006760/EoGLXC7cPBSriFrc6BxMDm/artifxnoportland_eb8df859.png";
 
@@ -96,10 +97,13 @@ export default function Nav() {
         e.preventDefault();
         setSearchOpen((v) => !v);
       }
+      if (e.key === "Escape" && searchOpen) {
+        setSearchOpen(false);
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [searchOpen]);
 
   const handleSectionClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -119,6 +123,8 @@ export default function Nav() {
   );
 
   const isHome = location === "/";
+
+  const handleSearchClose = () => setSearchOpen(false);
 
   return (
     <>
@@ -334,7 +340,16 @@ export default function Nav() {
       </nav>
 
       {/* Global search overlay */}
-      <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {searchOpen && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) handleSearchClose();
+          }}
+          style={{ position: "fixed", inset: 0, zIndex: 40 }}
+        >
+          <EnhancedSearch />
+        </div>
+      )}
     </>
   );
 }
