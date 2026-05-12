@@ -10,6 +10,7 @@ import Multicultural from "./pages/Multicultural";
 import RubricDesign from "./pages/RubricDesign";
 import MetricsGlossary from "./pages/MetricsGlossary";
 import MasterDoctrine from "./pages/MasterDoctrine";
+import SiteMapNavigator from "./components/SiteMapNavigator";
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <SiteMapNavigator />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

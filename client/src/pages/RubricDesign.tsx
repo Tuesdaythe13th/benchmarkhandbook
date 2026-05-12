@@ -10,6 +10,9 @@ import { useState } from "react";
 import MarqueeTicker from "@/components/MarqueeTicker";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
+import CoreStepsChecklist from "@/components/CoreStepsChecklist";
+import LatentConstructDiagram from "@/components/LatentConstructDiagram";
+import IAAMetricsTable from "@/components/IAAMetricsTable";
 
 const ANTI_PATTERNS = [
   { name: "CHECKLIST BLOAT", desc: "Rubric becomes long and repetitive, making evaluation noisy rather than precise. Signal drowns in volume." },
@@ -693,6 +696,15 @@ export default function RubricDesign() {
           </div>
         </div>
       </section>
+
+      {/* NEW SECTION: 24 CORE STEPS */}
+      <CoreStepsChecklist />
+
+      {/* NEW SECTION: LATENT CONSTRUCT OPERATIONALIZATION */}
+      <LatentConstructDiagram />
+
+      {/* NEW SECTION: IAA METRICS */}
+      <IAAMetricsTable />
 
       {/* Adaptive Precise Boolean Rubrics */}
       <section style={{ padding: "4rem 2rem", background: "#FFFFFF", borderTop: "2px solid #000000" }}>
