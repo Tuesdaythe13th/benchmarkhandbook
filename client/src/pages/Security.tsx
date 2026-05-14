@@ -8,6 +8,7 @@
 import Nav from "@/components/Nav";
 import MarqueeTicker from "@/components/MarqueeTicker";
 import Footer from "@/components/Footer";
+import { JailbreakSunburstChart } from "@/components/JailbreakSunburstChart";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { ArrowLeft } from "lucide-react";
@@ -358,14 +359,18 @@ export default function Security() {
         </div>
       </div>
 
-      <MarqueeTicker
-        items={["SOCIAL ENGINEERING", "ADVERSARIAL OPTIMIZATION", "OBFUSCATION", "MULTI-TURN ESCALATION", "ARCHITECTURAL EXPLOITS", "MULTIMODAL INJECTION", "SUPPLY-CHAIN COMPROMISE", "REASONING MODEL ATTACKS"]}
-        speed={25}
-        bg="#000000"
-        color="#FF4D00"
-      />
+      {/* Interactive Jailbreak Sunburst Chart */}
+      <section style={{ padding: "4rem 2rem", background: "#FFFFFF", borderTop: "2px solid #000000", borderBottom: "2px solid #000000" }}>
+        <div style={{ maxWidth: 1440, margin: "0 auto" }}>
+          <div style={{ marginBottom: "2rem" }}>
+            <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.8rem", textTransform: "uppercase", letterSpacing: "-0.02em", color: "#000000", margin: "0 0 0.5rem" }}>Interactive Taxonomy Visualization</h3>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "0.9rem", color: "#666666", margin: 0 }}>Click on any family to explore subcategories and techniques with attack success rates.</p>
+          </div>
+          <JailbreakSunburstChart />
+        </div>
+      </section>
 
-      {/* Section 01 — Overview */}
+      {/* Section 01 — Overview (Moved after chart) */}
       <section style={{ padding: "4rem 2rem", maxWidth: 1440, margin: "0 auto" }}>
         <SectionHeader
           number="01"
