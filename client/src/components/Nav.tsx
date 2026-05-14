@@ -35,6 +35,8 @@ const sectionLinks = [
 const pageLinks = [
   { label: "Eval Guide",    href: "/" },
   { label: "Safety",        href: "/safety" },
+  { label: "Security",      href: "/security" },
+  { label: "Risk",          href: "/risk" },
   { label: "Multicultural", href: "/multicultural" },
   { label: "Rubric Design", href: "/rubric-design" },
   { label: "Metrics",       href: "/metrics" },
