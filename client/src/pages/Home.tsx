@@ -29,6 +29,8 @@ import LLMJudgeBiasSection from "@/components/LLMJudgeBiasSection";
 import MultilingualSafetySection from "@/components/MultilingualSafetySection";
 import BenchmarkDecayAnalysis from "@/components/BenchmarkDecayAnalysis";
 import APBRMethodology from "@/components/APBRMethodology";
+import { BbomFlowchart } from "@/components/BbomFlowchart";
+import { BenchmarkSankey } from "@/components/BenchmarkSankey";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -53,6 +55,9 @@ export default function Home() {
       />
       <FoundationsSection />
       <BbomSection />
+      <div style={{ padding: "4rem 2rem", maxWidth: "1440px", margin: "0 auto" }}>
+        <BbomFlowchart />
+      </div>
       <MarqueeTicker
         items={[
           "MMLU-PRO",
@@ -85,6 +90,9 @@ export default function Home() {
       />
       <BenchmarksSection />
       <AdvancedBenchmarkSearch />
+      <div style={{ padding: "4rem 2rem", maxWidth: "1440px", margin: "0 auto" }}>
+        <BenchmarkSankey />
+      </div>
       <MarqueeTicker
         items={[
           "MMLU R.I.P. 2024",
