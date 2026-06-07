@@ -11,6 +11,7 @@ import RubricDesign from "./pages/RubricDesign";
 import MetricsGlossary from "./pages/MetricsGlossary";
 import MasterDoctrine from "./pages/MasterDoctrine";
 import Security from "./pages/Security";
+import Jailbreaks from "./pages/Jailbreaks";
 import Risk from "./pages/Risk";
 import SiteMapNavigator from "./components/SiteMapNavigator";
 
@@ -20,6 +21,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/safety"} component={HarmTaxonomy} />
       <Route path={"/security"} component={Security} />
+      <Route path={"/jailbreaks"} component={Jailbreaks} />
       <Route path={"/risk"} component={Risk} />
       <Route path={"/multicultural"} component={Multicultural} />
       <Route path={"/rubric-design"} component={RubricDesign} />

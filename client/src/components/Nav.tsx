@@ -11,7 +11,7 @@ import { useLocation } from "wouter";
 import GlobalSearch from "./GlobalSearch";
 import EnhancedSearch from "./EnhancedSearch";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310419663032006760/EoGLXC7cPBSriFrc6BxMDm/artifxnoportland_eb8df859.png";
+const LOGO_URL = "/logo-new.svg";
 
 const sectionLinks = [
   { label: "Foundations", href: "#foundations" },
@@ -36,6 +36,7 @@ const pageLinks = [
   { label: "Eval Guide",    href: "/" },
   { label: "Safety",        href: "/safety" },
   { label: "Security",      href: "/security" },
+  { label: "Jailbreaks",    href: "/jailbreaks" },
   { label: "Risk",          href: "/risk" },
   { label: "Multicultural", href: "/multicultural" },
   { label: "Rubric Design", href: "/rubric-design" },
