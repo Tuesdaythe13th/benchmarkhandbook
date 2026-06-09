@@ -199,41 +199,41 @@ const SECTION_INFO = {
   A: {
     title: "Rubric Engineering & Annotation Operations",
     subtitle: "The Instrument & The Operators",
-    color: "from-orange-500 to-red-500",
-    bgColor: "bg-orange-50",
-    textColor: "text-orange-900",
+    color: "",
+    bgColor: "bg-white",
+    textColor: "text-black",
     steps: 12,
   },
   B: {
     title: "Statistical Reliability & Integrity Engineering",
     subtitle: "Measurement Rigor & Validation",
-    color: "from-blue-500 to-cyan-500",
-    bgColor: "bg-blue-50",
-    textColor: "text-blue-900",
+    color: "",
+    bgColor: "bg-white",
+    textColor: "text-black",
     steps: 6,
   },
   C: {
     title: "Psychometric Validity Auditing",
     subtitle: "Measuring the Latent Target",
-    color: "from-purple-500 to-pink-500",
-    bgColor: "bg-purple-50",
-    textColor: "text-purple-900",
+    color: "",
+    bgColor: "bg-white",
+    textColor: "text-black",
     steps: 2,
   },
   D: {
     title: "Automated LLM Judges",
     subtitle: "Strictly Human-Validated Infrastructure",
-    color: "from-green-500 to-emerald-500",
-    bgColor: "bg-green-50",
-    textColor: "text-green-900",
+    color: "",
+    bgColor: "bg-white",
+    textColor: "text-black",
     steps: 2,
   },
   E: {
     title: "Temporal Integrity & Governance Lifecycles",
     subtitle: "Lifecycle Management & Expiration",
-    color: "from-indigo-500 to-violet-500",
-    bgColor: "bg-indigo-50",
-    textColor: "text-indigo-900",
+    color: "",
+    bgColor: "bg-white",
+    textColor: "text-black",
     steps: 2,
   },
 };
@@ -245,14 +245,14 @@ const StepCard: React.FC<{ step: Step; isExpanded: boolean; onToggle: () => void
 }) => {
   return (
     <div
-      className="mb-3 border-l-4 border-gray-300 hover:border-orange-500 transition-all cursor-pointer group"
+      className="mb-3 border-2 border-black hover:shadow-[4px_4px_0_#000] transition-all cursor-pointer group rounded-none"
       onClick={onToggle}
     >
-      <div className="bg-white p-4 hover:bg-gray-50 transition-colors">
+      <div className="bg-white p-4 hover:bg-[#FFF5F0] transition-colors">
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 mt-1">
             {step.completed ? (
-              <CheckCircle2 size={20} className="text-green-600" />
+              <CheckCircle2 size={20} className="text-black" />
             ) : (
               <Circle size={20} className="text-gray-400 group-hover:text-orange-500" />
             )}
@@ -260,7 +260,7 @@ const StepCard: React.FC<{ step: Step; isExpanded: boolean; onToggle: () => void
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded">
+              <span className="text-sm font-bold text-black bg-[#FF4D00] px-2 py-1 rounded-none font-mono border border-black">
                 {step.number.toString().padStart(2, "0")}
               </span>
               <h4 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
@@ -278,7 +278,7 @@ const StepCard: React.FC<{ step: Step; isExpanded: boolean; onToggle: () => void
         </div>
 
         {isExpanded && (
-          <div className="mt-3 ml-8 pt-3 border-t border-gray-200">
+          <div className="mt-3 ml-8 pt-3 border-t border-black">
             <p className="text-sm text-gray-700 leading-relaxed">{step.description}</p>
           </div>
         )}
@@ -321,12 +321,12 @@ export default function CoreStepsChecklist() {
   }));
 
   return (
-    <div className="w-full py-12 px-4 bg-gradient-to-b from-white to-gray-50">
+    <div className="w-full py-12 px-4 bg-white">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-12">
           <div className="inline-block mb-4">
-            <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+            <span className="bg-[#FF4D00] text-black border border-black px-3 py-1 rounded-none text-sm font-mono font-bold inline-block">
               ARTIFEX LABS CONCEPT
             </span>
           </div>
@@ -340,15 +340,15 @@ export default function CoreStepsChecklist() {
           </p>
 
           {/* Progress Bar */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
+          <div className="bg-white p-6 rounded-none border-2 border-black">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-semibold text-gray-700">Overall Progress</span>
               <span className="text-sm font-bold text-orange-600">{progressPercentage}%</span>
             </div>
 
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-white border border-black rounded-none h-4 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-orange-500 to-red-500 h-full transition-all duration-500"
+                className="bg-[#FF4D00] h-full transition-all duration-500"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
@@ -376,18 +376,18 @@ export default function CoreStepsChecklist() {
             const isExpanded = expandedSections.has(section);
 
             return (
-              <div key={section} className={`${info.bgColor} rounded-lg overflow-hidden border border-gray-200`}>
+              <div key={section} className={`${info.bgColor} rounded-none overflow-hidden border-2 border-black`}>
                 {/* Section Header */}
                 <button
                   onClick={() => toggleSection(section)}
-                  className="w-full p-6 text-left hover:bg-white/50 transition-colors flex items-center justify-between"
+                  className="w-full p-6 text-left hover:bg-white/50 transition-colors flex items-center justify-between border-b border-black"
                 >
                   <div>
-                    <div className={`text-sm font-bold bg-gradient-to-r ${info.color} bg-clip-text text-transparent mb-2`}>
+                    <div className="text-sm font-bold font-mono text-[#FF4D00] mb-2">
                       SECTION {section}
                     </div>
                     <h3 className={`text-xl font-bold ${info.textColor}`}>{info.title}</h3>
-                    <p className={`text-sm ${info.textColor} opacity-75 mt-1`}>{info.subtitle}</p>
+                    <p className="text-sm text-slate-700 mt-1">{info.subtitle}</p>
                   </div>
 
                   <ChevronDown
@@ -417,12 +417,12 @@ export default function CoreStepsChecklist() {
         </div>
 
         {/* Footer Note */}
-        <div className="mt-12 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded">
+        <div className="mt-12 bg-[#FFF5F0] border-2 border-black p-6 rounded-none">
           <div className="flex gap-3">
-            <AlertCircle size={20} className="text-yellow-700 flex-shrink-0 mt-0.5" />
+            <AlertCircle size={20} className="text-black flex-shrink-0 mt-0.5" />
             <div>
-              <h4 className="font-semibold text-yellow-900 mb-1">Governance-Grade Evaluation</h4>
-              <p className="text-sm text-yellow-800">
+              <h4 className="font-bold text-black mb-1 uppercase font-mono">Governance-Grade Evaluation</h4>
+              <p className="text-sm text-black">
                 These 24 steps are non-negotiable for evaluations intended for regulatory compliance, legal defensibility, or high-stakes deployment decisions. Omitting any step introduces measurable risk to evaluation validity and institutional liability.
               </p>
             </div>

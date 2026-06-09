@@ -108,32 +108,57 @@ export const BenchmarkSankey: React.FC = () => {
   }, []);
 
   const COLORS = {
-    nlp: '#FF6B6B',
-    vision: '#4ECDC4',
-    reasoning: '#45B7D1',
-    safety: '#FFA07A',
-    multimodal: '#98D8C8',
-    agentic: '#F7DC6F',
-    governance: '#BB8FCE',
-    emerging: '#90EE90',
-    active: '#FFD700',
-    saturated: '#FF6347',
-    legacy: '#808080'
+    nlp: '#000000',
+    vision: '#000000',
+    reasoning: '#000000',
+    safety: '#000000',
+    multimodal: '#000000',
+    agentic: '#000000',
+    governance: '#000000',
+    emerging: '#FF4D00',
+    active: '#FF4D00',
+    saturated: '#CCCCCC',
+    legacy: '#888888'
   };
 
   const getNodeColor = (name: string) => {
-    if (name.includes('NLP')) return COLORS.nlp;
-    if (name.includes('Vision')) return COLORS.vision;
-    if (name.includes('Reasoning')) return COLORS.reasoning;
-    if (name.includes('Safety')) return COLORS.safety;
-    if (name.includes('Multimodal')) return COLORS.multimodal;
-    if (name.includes('Agentic')) return COLORS.agentic;
-    if (name.includes('Governance')) return COLORS.governance;
-    if (name.includes('Emerging')) return COLORS.emerging;
-    if (name.includes('Active')) return COLORS.active;
-    if (name.includes('Saturated')) return COLORS.saturated;
-    if (name.includes('Legacy')) return COLORS.legacy;
-    return '#FF4D00';
+    if (name.includes('Benchmarks') || name.includes('NLP') || name.includes('Vision') || name.includes('Reasoning') || name.includes('Safety') || name.includes('Multimodal') || name.includes('Agentic') || name.includes('Governance')) {
+      return '#000000'; // Categories are black
+    }
+    if (name.includes('Emerging') || name.includes('Active')) return '#FF4D00'; // Active/Emerging are orange
+    if (name.includes('Saturated')) return '#CCCCCC'; // Saturated is light gray
+    if (name.includes('Legacy')) return '#888888'; // Legacy is dark gray
+    return '#FFFFFF'; // Individual benchmarks are white
+  };
+
+  const renderSankeyNode = (props: any) => {
+    const { x, y, width, height, payload } = props;
+    const color = getNodeColor(payload.name);
+    return (
+      <g>
+        <rect
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          fill={color}
+          stroke="#000000"
+          strokeWidth={2}
+        />
+        <text
+          x={x < 400 ? x + width + 8 : x - 8}
+          y={y + height / 2}
+          textAnchor={x < 400 ? 'start' : 'end'}
+          fill="#000000"
+          fontSize="10px"
+          fontFamily="Space Mono"
+          fontWeight="bold"
+          alignmentBaseline="middle"
+        >
+          {payload.name}
+        </text>
+      </g>
+    );
   };
 
   return (
@@ -154,8 +179,8 @@ export const BenchmarkSankey: React.FC = () => {
           <ResponsiveContainer width="100%" height={500}>
             <Sankey
               data={BENCHMARK_SANKEY_DATA}
-              node={{ fill: '#FF4D00', fillOpacity: 1 }}
-              link={{ stroke: '#FF4D00', strokeOpacity: 0.3 }}
+              node={renderSankeyNode}
+              link={{ stroke: '#000000', strokeOpacity: 0.15 }}
               nodePadding={150}
               margin={{ top: 20, right: 160, bottom: 20, left: 20 }}
             >
@@ -227,7 +252,7 @@ export const BenchmarkSankey: React.FC = () => {
       </div>
 
       {/* Statistics */}
-      <div className="border-2 border-black bg-gray-50 p-4">
+      <div className="border-2 border-black bg-[#FFF5F0] p-4">
         <div className="grid grid-cols-4 gap-3">
           <div className="text-center">
             <div className="font-archivo-black text-2xl text-black">50+</div>

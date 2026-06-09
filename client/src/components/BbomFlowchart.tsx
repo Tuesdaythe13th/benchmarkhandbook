@@ -90,10 +90,10 @@ const BBOM_LAYERS: BbomLayer[] = [
 ];
 
 const CATEGORY_COLORS = {
-  input: { bg: '#E8F4F8', border: '#0891B2', label: 'INPUT' },
-  processing: { bg: '#FEF3C7', border: '#F59E0B', label: 'PROCESSING' },
-  output: { bg: '#DCFCE7', border: '#22C55E', label: 'OUTPUT' },
-  governance: { bg: '#FCE7F3', border: '#EC4899', label: 'GOVERNANCE' }
+  input: { bg: '#FFFFFF', border: '#000000', labelBg: '#000000', label: 'INPUT' },
+  processing: { bg: '#FFFFFF', border: '#000000', labelBg: '#FF4D00', label: 'PROCESSING' },
+  output: { bg: '#FFFFFF', border: '#FF4D00', labelBg: '#FF4D00', label: 'OUTPUT' },
+  governance: { bg: '#FFF5F0', border: '#FF4D00', labelBg: '#000000', label: 'GOVERNANCE' }
 };
 
 export const BbomFlowchart: React.FC = () => {
@@ -171,8 +171,8 @@ export const BbomFlowchart: React.FC = () => {
                           LAYER {layer.id}
                         </span>
                         <span
-                          className="font-space-mono text-xs font-bold px-2 py-1 text-white"
-                          style={{ backgroundColor: colors.border }}
+                          className="font-space-mono text-xs font-bold px-2 py-1 text-white border border-black"
+                          style={{ backgroundColor: colors.labelBg }}
                         >
                           {colors.label}
                         </span>
@@ -248,22 +248,22 @@ export const BbomFlowchart: React.FC = () => {
       </div>
 
       {/* Summary Stats */}
-      <div className="border-2 border-black bg-gray-50 p-4">
+      <div className="border-2 border-black bg-[#FFF5F0] p-4">
         <div className="grid grid-cols-4 gap-3">
           <div className="text-center">
             <div className="font-archivo-black text-2xl text-black">11</div>
             <div className="font-space-mono text-xs text-gray-600 uppercase">Layers</div>
           </div>
           <div className="text-center">
-            <div className="font-archivo-black text-2xl text-blue-600">3</div>
+            <div className="font-archivo-black text-2xl text-black">3</div>
             <div className="font-space-mono text-xs text-gray-600 uppercase">Input</div>
           </div>
           <div className="text-center">
-            <div className="font-archivo-black text-2xl text-amber-600">5</div>
+            <div className="font-archivo-black text-2xl text-[#FF4D00]">5</div>
             <div className="font-space-mono text-xs text-gray-600 uppercase">Processing</div>
           </div>
           <div className="text-center">
-            <div className="font-archivo-black text-2xl text-emerald-600">3</div>
+            <div className="font-archivo-black text-2xl text-black">3</div>
             <div className="font-space-mono text-xs text-gray-600 uppercase">Output/Gov</div>
           </div>
         </div>

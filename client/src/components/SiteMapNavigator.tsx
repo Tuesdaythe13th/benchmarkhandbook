@@ -160,9 +160,9 @@ const SITE_SECTIONS: Section[] = [
 
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const styles = {
-    complete: "bg-green-100 text-green-800 border-green-300",
-    "in-progress": "bg-yellow-100 text-yellow-800 border-yellow-300",
-    "coming-soon": "bg-gray-100 text-gray-800 border-gray-300",
+    complete: "bg-black text-white border-black font-mono",
+    "in-progress": "bg-[#FF4D00] text-black border-black font-mono",
+    "coming-soon": "bg-white text-black border-black border-dashed font-mono",
   };
   const labels = {
     complete: "Complete",
@@ -170,7 +170,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
     "coming-soon": "Coming Soon",
   };
   return (
-    <span className={`px-2 py-1 text-xs font-semibold border rounded ${styles[status as keyof typeof styles]}`}>
+    <span className={`px-2 py-1 text-xs font-semibold border rounded-none ${styles[status as keyof typeof styles]}`}>
       {labels[status as keyof typeof labels]}
     </span>
   );
@@ -183,8 +183,8 @@ const SectionItem: React.FC<{ section: Section; level?: number }> = ({ section, 
   return (
     <div className="mb-2">
       <div
-        className={`flex items-center gap-3 p-3 rounded border border-gray-200 hover:bg-gray-50 cursor-pointer transition-all ${
-          level > 0 ? "ml-4 bg-gray-50" : "bg-white"
+        className={`flex items-center gap-3 p-3 rounded-none border-2 border-black hover:bg-[#FFF5F0] hover:shadow-[2px_2px_0_#000] cursor-pointer transition-all ${
+          level > 0 ? "ml-4 bg-[#FFF5F0]/30" : "bg-white"
         }`}
         onClick={() => hasSubsections && setExpanded(!expanded)}
       >
@@ -199,13 +199,13 @@ const SectionItem: React.FC<{ section: Section; level?: number }> = ({ section, 
         <span className="text-lg">{section.icon}</span>
 
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-sm text-black truncate">{section.title}</h4>
-          <p className="text-xs text-gray-600 truncate">{section.description}</p>
+          <h4 className="font-bold text-sm text-black truncate uppercase font-mono">{section.title}</h4>
+          <p className="text-xs text-slate-700 truncate font-inter">{section.description}</p>
         </div>
 
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="flex items-center gap-1 text-xs text-gray-500">
-            <Clock size={12} />
+          <div className="flex items-center gap-1 text-xs text-black font-mono">
+            <Clock size={12} className="text-[#FF4D00]" />
             {section.readTime}m
           </div>
           <StatusBadge status={section.status} />
@@ -248,7 +248,7 @@ export default function SiteMapNavigator() {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-40 bg-black text-white p-3 rounded-full hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
+        className="fixed bottom-6 right-6 z-40 bg-[#FF4D00] text-black border-2 border-black p-3 rounded-none hover:bg-black hover:text-white transition-all shadow-[4px_4px_0_#000] hover:shadow-none hover:translate-x-1 hover:translate-y-1"
         title="Open Site Map"
       >
         <BookOpen size={20} />
@@ -285,17 +285,17 @@ export default function SiteMapNavigator() {
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-2 text-xs mb-4">
-            <div className="bg-gray-800 p-2 rounded">
-              <div className="font-semibold">{completeCount}</div>
-              <div className="text-gray-400">Complete</div>
+            <div className="bg-black border border-[#FF4D00] p-2 rounded-none text-center">
+              <div className="font-bold text-[#FF4D00] font-mono">{completeCount}</div>
+              <div className="text-gray-400 font-mono text-[10px]">COMPLETE</div>
             </div>
-            <div className="bg-gray-800 p-2 rounded">
-              <div className="font-semibold">{totalReadTime}h</div>
-              <div className="text-gray-400">Total Read</div>
+            <div className="bg-black border border-[#FF4D00] p-2 rounded-none text-center">
+              <div className="font-bold text-[#FF4D00] font-mono">{totalReadTime}m</div>
+              <div className="text-gray-400 font-mono text-[10px]">TOTAL READ</div>
             </div>
-            <div className="bg-gray-800 p-2 rounded">
-              <div className="font-semibold">{SITE_SECTIONS.length}</div>
-              <div className="text-gray-400">Sections</div>
+            <div className="bg-black border border-[#FF4D00] p-2 rounded-none text-center">
+              <div className="font-bold text-[#FF4D00] font-mono">{SITE_SECTIONS.length}</div>
+              <div className="text-gray-400 font-mono text-[10px]">SECTIONS</div>
             </div>
           </div>
 
@@ -305,7 +305,7 @@ export default function SiteMapNavigator() {
             placeholder="Search sections..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-800 text-white rounded border border-gray-700 text-sm placeholder-gray-500 focus:outline-none focus:border-orange-500"
+            className="w-full px-3 py-2 bg-black text-white rounded-none border border-[#FF4D00] text-sm placeholder-gray-500 focus:outline-none focus:border-white font-mono"
           />
         </div>
 

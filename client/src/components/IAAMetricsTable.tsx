@@ -219,11 +219,11 @@ const IAA_METRICS: IAAMetric[] = [
 ];
 
 const INTERPRETATION_SCALE = [
-  { range: "0.81 - 1.00", label: "Almost Perfect / Excellent", color: "bg-green-500" },
-  { range: "0.61 - 0.80", label: "Substantial / Strong", color: "bg-blue-500" },
-  { range: "0.41 - 0.60", label: "Moderate", color: "bg-yellow-500" },
-  { range: "0.21 - 0.40", label: "Fair", color: "bg-orange-500" },
-  { range: "< 0.20", label: "Slight / Poor", color: "bg-red-500" },
+  { range: "0.81 - 1.00", label: "Almost Perfect / Excellent", color: "bg-[#FF4D00]" },
+  { range: "0.61 - 0.80", label: "Substantial / Strong", color: "bg-black" },
+  { range: "0.41 - 0.60", label: "Moderate", color: "bg-gray-800" },
+  { range: "0.21 - 0.40", label: "Fair", color: "bg-gray-500" },
+  { range: "< 0.20", label: "Slight / Poor", color: "bg-gray-300" },
 ];
 
 const MetricRow: React.FC<{ metric: IAAMetric; isExpanded: boolean; onToggle: () => void }> = ({
@@ -255,10 +255,10 @@ const MetricRow: React.FC<{ metric: IAAMetric; isExpanded: boolean; onToggle: ()
 
         {/* Confidence Interval Visualization */}
         <div className="flex-shrink-0 w-48">
-          <div className="relative h-6 bg-gray-200 rounded-full overflow-hidden">
+          <div className="relative h-6 bg-white border border-black rounded-none overflow-hidden">
             {/* CI Band */}
             <div
-              className="absolute h-full bg-gradient-to-r from-blue-400 to-blue-600 opacity-70"
+              className="absolute h-full bg-[#FFF5F0] border-l border-r border-black"
               style={{
                 left: `${leftPercent}%`,
                 width: `${widthPercent}%`,
@@ -266,7 +266,7 @@ const MetricRow: React.FC<{ metric: IAAMetric; isExpanded: boolean; onToggle: ()
             />
             {/* Point Estimate */}
             <div
-              className="absolute top-1/2 w-2 h-2 bg-blue-900 rounded-full transform -translate-y-1/2 -translate-x-1/2"
+              className="absolute top-0 bottom-0 w-1.5 bg-[#FF4D00] transform -translate-x-1/2"
               style={{ left: `${(metric.pointEstimate / 1.0) * 100}%` }}
             />
           </div>
@@ -333,7 +333,7 @@ const MetricRow: React.FC<{ metric: IAAMetric; isExpanded: boolean; onToggle: ()
 
           {/* Prevalence Note */}
           {metric.prevalenceAdjusted && (
-            <div className="mt-4 bg-blue-50 border-l-4 border-blue-500 p-3 rounded text-sm text-blue-800">
+            <div className="mt-4 bg-[#FFF5F0] border-2 border-black p-3 rounded-none text-sm text-black">
               <strong>Prevalence-Adjusted:</strong> This metric is robust to prevalence skew and recommended for imbalanced datasets.
             </div>
           )}
@@ -357,12 +357,12 @@ export default function IAAMetricsTable() {
   };
 
   return (
-    <div className="w-full py-12 px-4 bg-gradient-to-b from-white to-gray-50">
+    <div className="w-full py-12 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
           <div className="inline-block mb-4">
-            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+            <span className="bg-[#FF4D00] text-black border border-black px-3 py-1 rounded-none text-sm font-mono font-bold inline-block">
               STATISTICAL METHODS
             </span>
           </div>
@@ -376,8 +376,8 @@ export default function IAAMetricsTable() {
           </p>
 
           {/* Interpretation Scale */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="font-semibold text-gray-900 mb-4">Interpretation Scale (Landis & Koch, 1977)</h3>
+          <div className="bg-white rounded-none border-2 border-black p-6">
+            <h3 className="font-semibold text-black mb-4 uppercase font-mono">Interpretation Scale (Landis & Koch, 1977)</h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {INTERPRETATION_SCALE.map((item, index) => (
                 <div key={index} className="text-center">
@@ -413,38 +413,38 @@ export default function IAAMetricsTable() {
         </div>
 
         {/* Decision Guide */}
-        <div className="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-8">
-          <h3 className="text-2xl font-bold text-indigo-900 mb-6">IAA Metric Selection Decision Tree</h3>
+        <div className="mt-12 bg-white border-2 border-black rounded-none p-8">
+          <h3 className="text-2xl font-bold text-black mb-6 uppercase font-mono">IAA Metric Selection Decision Tree</h3>
 
           <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg border-l-4 border-indigo-500">
-              <p className="font-semibold text-gray-900 mb-2">1. How many raters?</p>
-              <ul className="text-sm text-gray-700 space-y-1 ml-4">
+            <div className="bg-white p-4 rounded-none border-2 border-black mb-4">
+              <p className="font-semibold text-black mb-2 font-mono">1. How many raters?</p>
+              <ul className="text-sm text-slate-800 space-y-1 ml-4">
                 <li>• <strong>2 raters:</strong> Cohen's κ or Scott's π</li>
                 <li>• <strong>3+ raters:</strong> Fleiss' κ, Krippendorff's α, or ICC</li>
               </ul>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-              <p className="font-semibold text-gray-900 mb-2">2. What data type?</p>
-              <ul className="text-sm text-gray-700 space-y-1 ml-4">
+            <div className="bg-white p-4 rounded-none border-2 border-black mb-4">
+              <p className="font-semibold text-black mb-2 font-mono">2. What data type?</p>
+              <ul className="text-sm text-slate-800 space-y-1 ml-4">
                 <li>• <strong>Categorical:</strong> Cohen's κ, Fleiss' κ, Gwet's AC2</li>
                 <li>• <strong>Ordinal (Likert):</strong> Krippendorff's α (with ordinal distance)</li>
                 <li>• <strong>Continuous:</strong> ICC(2,1) or ICC(3,1)</li>
               </ul>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border-l-4 border-pink-500">
-              <p className="font-semibold text-gray-900 mb-2">3. Is data imbalanced?</p>
-              <ul className="text-sm text-gray-700 space-y-1 ml-4">
+            <div className="bg-white p-4 rounded-none border-2 border-black mb-4">
+              <p className="font-semibold text-black mb-2 font-mono">3. Is data imbalanced?</p>
+              <ul className="text-sm text-slate-800 space-y-1 ml-4">
                 <li>• <strong>Yes (prevalence skew):</strong> Use Gwet's AC2 or Krippendorff's α</li>
                 <li>• <strong>No (balanced):</strong> Cohen's κ is acceptable</li>
               </ul>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border-l-4 border-green-500">
-              <p className="font-semibold text-gray-900 mb-2">4. Always report:</p>
-              <ul className="text-sm text-gray-700 space-y-1 ml-4">
+            <div className="bg-white p-4 rounded-none border-2 border-black mb-4">
+              <p className="font-semibold text-black mb-2 font-mono">4. Always report:</p>
+              <ul className="text-sm text-slate-800 space-y-1 ml-4">
                 <li>• Point estimate + 95% bootstrap confidence interval</li>
                 <li>• Raw percent agreement (as baseline)</li>
                 <li>• Item-level entropy heatmap</li>
@@ -455,9 +455,9 @@ export default function IAAMetricsTable() {
         </div>
 
         {/* Best Practices */}
-        <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg">
-          <h4 className="font-semibold text-yellow-900 mb-3">Best Practices for Reporting IAA</h4>
-          <ul className="text-sm text-yellow-800 space-y-2">
+        <div className="mt-8 bg-[#FFF5F0] border-2 border-black p-6 rounded-none">
+          <h4 className="font-bold text-black mb-3 uppercase font-mono">Best Practices for Reporting IAA</h4>
+          <ul className="text-sm text-black space-y-2">
             <li>✓ Report multiple metrics to triangulate reliability</li>
             <li>✓ Always include 95% confidence intervals (never point estimates alone)</li>
             <li>✓ Disaggregate by hazard category, language, and annotator pair</li>

@@ -82,7 +82,7 @@ export default function APBRMethodology() {
   const [activeComparison, setActiveComparison] = useState<number>(0);
 
   return (
-    <section className="py-20 px-4 bg-slate-50 border-t-4 border-purple-500">
+    <section className="py-20 px-4 bg-white border-t-2 border-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
@@ -123,40 +123,40 @@ export default function APBRMethodology() {
           {apbrBenefits.map((benefit, idx) => {
             const Icon = benefit.icon;
             return (
-              <Card key={idx} className="p-6 bg-white border-2 border-purple-200 hover:border-purple-400 transition-all">
+              <div key={idx} className="p-6 bg-white border-2 border-black rounded-none hover:bg-[#FFF5F0] transition-all">
                 <div className="flex gap-4">
-                  <Icon className="w-8 h-8 text-purple-600 flex-shrink-0" />
+                  <Icon className="w-8 h-8 text-[#FF4D00] flex-shrink-0" />
                   <div>
                     <h3 className="font-bold text-black mb-2">{benefit.title}</h3>
                     <p className="text-slate-700 text-sm">{benefit.description}</p>
                   </div>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
 
         {/* APBR vs Likert Comparison */}
         <div className="mb-12">
-          <h3 className="text-2xl font-bold text-black mb-6">APBR vs. Traditional Likert Scales</h3>
-          <div className="bg-white rounded-lg border-2 border-slate-300 overflow-hidden">
-            <div className="grid grid-cols-3 gap-0 border-b-2 border-slate-300">
-              <div className="p-4 bg-slate-100 font-bold text-black">Aspect</div>
-              <div className="p-4 bg-slate-100 font-bold text-black">Likert Scale</div>
-              <div className="p-4 bg-purple-100 font-bold text-purple-900">APBR</div>
+          <h3 className="text-2xl font-bold text-black mb-6 uppercase font-mono">APBR vs. Traditional Likert Scales</h3>
+          <div className="bg-white rounded-none border-2 border-black overflow-hidden">
+            <div className="grid grid-cols-3 gap-0 border-b-2 border-black bg-black text-white font-mono text-xs">
+              <div className="p-4 font-bold">Aspect</div>
+              <div className="p-4 font-bold">Likert Scale</div>
+              <div className="p-4 font-bold text-[#FF4D00]">APBR</div>
             </div>
             {comparisonData.map((row, idx) => (
               <div
                 key={idx}
-                className={`grid grid-cols-3 gap-0 border-b border-slate-200 ${
+                className={`grid grid-cols-3 gap-0 border-b border-black ${
                   idx % 2 === 0 ? "bg-white" : "bg-slate-50"
                 }`}
               >
-                <div className="p-4 font-semibold text-black">{row.aspect}</div>
-                <div className="p-4 text-slate-700">{row.likert}</div>
-                <div className="p-4 bg-purple-50 text-purple-900">
+                <div className="p-4 font-semibold text-black border-r border-black">{row.aspect}</div>
+                <div className="p-4 text-slate-700 border-r border-black">{row.likert}</div>
+                <div className="p-4 bg-[#FFF5F0] text-black">
                   <div className="font-semibold mb-1">{row.apbr}</div>
-                  <div className="text-xs text-green-700 font-bold">✓ {row.improvement}</div>
+                  <div className="text-xs text-black font-bold uppercase font-mono bg-[#FF4D00] inline-block px-1 border border-black">✓ {row.improvement}</div>
                 </div>
               </div>
             ))}
@@ -164,9 +164,9 @@ export default function APBRMethodology() {
         </div>
 
         {/* Research Findings */}
-        <Card className="mb-12 p-6 bg-purple-50 border-2 border-purple-300">
-          <h3 className="font-bold text-purple-900 mb-4">Research Findings</h3>
-          <p className="text-purple-800 mb-4">
+        <div className="mb-12 p-6 bg-white border-2 border-black rounded-none">
+          <h3 className="font-bold text-black mb-4 uppercase font-mono">Research Findings</h3>
+          <p className="text-slate-800 mb-4">
             <CitationHover
               citation={{
                 authors: "Mallinar, N., et al.",
@@ -180,43 +180,43 @@ export default function APBRMethodology() {
             </CitationHover>{" "}
             demonstrated that APBR yields:
           </p>
-          <ul className="space-y-2 text-purple-800">
+          <ul className="space-y-2 text-black">
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Substantially higher inter-rater agreement</strong> among both expert and
                 non-expert human evaluators
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Improved automated assessments</strong> compared to traditional Likert
                 scales
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Approximately half the evaluation time</strong> of Likert-based methods
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Reduced subjective scale-point ambiguity</strong> through binary criteria
               </span>
             </li>
           </ul>
-        </Card>
+        </div>
 
         {/* Implementation Example */}
-        <Card className="mb-12 p-6 bg-slate-50 border-2 border-slate-300">
-          <h3 className="font-bold text-black mb-4">Implementation Example</h3>
+        <div className="mb-12 p-6 bg-white border-2 border-black rounded-none">
+          <h3 className="font-bold text-black mb-4 uppercase font-mono">Implementation Example</h3>
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold text-black mb-2">Traditional Likert Approach:</h4>
-              <div className="bg-white p-4 rounded border border-slate-300 text-slate-700">
+              <div className="bg-white p-4 rounded-none border-2 border-black text-slate-700">
                 <p className="mb-2">Rate the response on a 1-5 scale for:</p>
                 <ul className="space-y-1 text-sm">
                   <li>• Accuracy (1=Very Inaccurate, 5=Very Accurate)</li>
@@ -227,58 +227,58 @@ export default function APBRMethodology() {
               </div>
             </div>
 
-            <div className="text-center text-slate-500 font-bold">↓ TRANSFORMED ↓</div>
+            <div className="text-center text-black font-bold font-mono">↓ TRANSFORMED ↓</div>
 
             <div>
               <h4 className="font-semibold text-black mb-2">APBR Approach:</h4>
-              <div className="bg-purple-50 p-4 rounded border border-purple-300 text-slate-700">
-                <p className="mb-2 font-semibold text-purple-900">Adaptive evaluation for this query:</p>
+              <div className="bg-[#FFF5F0] p-4 rounded-none border-2 border-black text-slate-700">
+                <p className="mb-2 font-semibold text-black font-mono">Adaptive evaluation for this query:</p>
                 <ul className="space-y-1 text-sm">
                   <li>
-                    <input type="checkbox" className="mr-2" defaultChecked /> Does the response
+                    <input type="checkbox" className="mr-2 accent-[#FF4D00]" defaultChecked /> Does the response
                     directly answer the question asked?
                   </li>
                   <li>
-                    <input type="checkbox" className="mr-2" defaultChecked /> Are all factual
+                    <input type="checkbox" className="mr-2 accent-[#FF4D00]" defaultChecked /> Are all factual
                     claims supported by evidence?
                   </li>
                   <li>
-                    <input type="checkbox" className="mr-2" /> Does the response include
+                    <input type="checkbox" className="mr-2 accent-[#FF4D00]" /> Does the response include
                     necessary caveats or limitations?
                   </li>
                   <li>
-                    <input type="checkbox" className="mr-2" defaultChecked /> Is the language
+                    <input type="checkbox" className="mr-2 accent-[#FF4D00]" defaultChecked /> Is the language
                     clear and understandable?
                   </li>
                 </ul>
-                <p className="text-xs text-purple-700 mt-3 italic">
+                <p className="text-xs text-[#FF4D00] mt-3 italic font-mono">
                   Note: Only criteria relevant to this specific query are evaluated
                 </p>
               </div>
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* Complementary Methodologies */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-4 bg-white border-2 border-slate-300">
-            <h4 className="font-bold text-black mb-2">BeTaL</h4>
+          <div className="p-4 bg-white border-2 border-black rounded-none">
+            <h4 className="font-bold text-black mb-2 font-mono text-sm">BeTaL</h4>
             <p className="text-sm text-slate-700">
               Benchmark Tuning with an LLM-in-the-loop (Dsouza et al., Snorkel AI, 2025)
             </p>
-          </Card>
-          <Card className="p-4 bg-white border-2 border-slate-300">
-            <h4 className="font-bold text-black mb-2">RLTHF</h4>
+          </div>
+          <div className="p-4 bg-white border-2 border-black rounded-none">
+            <h4 className="font-bold text-black mb-2 font-mono text-sm">RLTHF</h4>
             <p className="text-sm text-slate-700">
               Reinforcement Learning from Targeted Human Feedback (Xu et al., 2025)
             </p>
-          </Card>
-          <Card className="p-4 bg-white border-2 border-slate-300">
-            <h4 className="font-bold text-black mb-2">Process Reward Models</h4>
+          </div>
+          <div className="p-4 bg-white border-2 border-black rounded-none">
+            <h4 className="font-bold text-black mb-2 font-mono text-sm">Process Reward Models</h4>
             <p className="text-sm text-slate-700">
               Step-level evaluation for reasoning chains and trajectory-based assessment
             </p>
-          </Card>
+          </div>
         </div>
       </div>
     </section>

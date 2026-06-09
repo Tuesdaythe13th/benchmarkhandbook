@@ -40,6 +40,9 @@ const pageLinks = [
   { label: "Risk",          href: "/risk" },
   { label: "Multicultural", href: "/multicultural" },
   { label: "Rubric Design", href: "/rubric-design" },
+  { label: "Rubric",        href: "/rubric" },
+  { label: "Agentic",       href: "/agentic" },
+  { label: "Science",       href: "/science" },
   { label: "Metrics",       href: "/metrics" },
   { label: "Doctrine",      href: "/doctrine" },
 ];
@@ -153,7 +156,7 @@ export default function Nav() {
             justifyContent: "space-between",
             height: 64,
             gap: "1rem",
-            borderBottom: isHome ? "1px solid #E5E5E5" : "none",
+            borderBottom: "1px solid #E5E5E5",
           }}
         >
           {/* Logo */}
@@ -282,10 +285,9 @@ export default function Nav() {
           </div>
         </div>
 
-        {/* ROW 2: Section anchor links — only on home page */}
-        {isHome && (
-          <div
-            style={{
+        {/* ROW 2: Section anchor links */}
+        <div
+          style={{
               maxWidth: 1440,
               margin: "0 auto",
               padding: "0 1.5rem",
@@ -339,7 +341,6 @@ export default function Nav() {
               );
             })}
           </div>
-        )}
       </nav>
 
       {/* Global search overlay */}

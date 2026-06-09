@@ -21,27 +21,27 @@ const CONSTRUCT_STEPS: ConstructStep[] = [
     label: "Latent Construct (θ)",
     description: "Unobservable underlying characteristic (e.g., safety, helpfulness, reasoning fidelity)",
     symbol: "θ",
-    color: "from-purple-500 to-pink-500",
+    color: "bg-[#FF4D00] text-black border-2 border-black",
   },
   {
     id: "operationalization",
     label: "Operationalization",
     description: "Mapping latent construct to observable indicators through rubric criteria",
-    color: "from-blue-500 to-cyan-500",
+    color: "bg-black text-white border-2 border-black",
   },
   {
     id: "rubric",
     label: "Rubric Criteria (δ)",
     description: "Specific, measurable criteria with difficulty and discriminative capacity",
     symbol: "δ_i",
-    color: "from-orange-500 to-red-500",
+    color: "bg-white text-black border-2 border-black",
   },
   {
     id: "observable",
     label: "Observable Score (X)",
     description: "Numerical or categorical output from rubric evaluation",
     symbol: "X_ij",
-    color: "from-green-500 to-emerald-500",
+    color: "bg-[#FFF5F0] text-black border-2 border-black",
   },
 ];
 
@@ -65,12 +65,12 @@ export default function LatentConstructDiagram() {
   const [showErrorDecomposition, setShowErrorDecomposition] = useState(false);
 
   return (
-    <div className="w-full py-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+    <div className="w-full py-12 px-4 bg-white">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-12">
           <div className="inline-block mb-4">
-            <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">
+            <span className="bg-[#FF4D00] text-black border border-black px-3 py-1 rounded-none text-sm font-mono font-bold inline-block">
               MEASUREMENT THEORY
             </span>
           </div>
@@ -85,7 +85,7 @@ export default function LatentConstructDiagram() {
         </div>
 
         {/* Main Flow Diagram */}
-        <div className="bg-white rounded-lg border border-gray-200 p-8 mb-8">
+        <div className="bg-white rounded-none border-2 border-black p-8 mb-8">
           <div className="space-y-4">
             {CONSTRUCT_STEPS.map((step, index) => (
               <div key={step.id}>
@@ -94,17 +94,17 @@ export default function LatentConstructDiagram() {
                   className="w-full text-left group"
                 >
                   <div
-                    className={`bg-gradient-to-r ${step.color} p-6 rounded-lg text-white hover:shadow-lg transition-all cursor-pointer transform hover:scale-102`}
+                    className={`${step.color} p-6 rounded-none hover:shadow-[4px_4px_0_#000] transition-all cursor-pointer transform hover:scale-102`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
                           {step.symbol && (
-                            <span className="text-3xl font-bold opacity-75">{step.symbol}</span>
+                            <span className="text-3xl font-bold font-mono">{step.symbol}</span>
                           )}
-                          <h3 className="text-xl font-bold">{step.label}</h3>
+                          <h3 className="text-xl font-bold uppercase">{step.label}</h3>
                         </div>
-                        <p className="text-white/90 text-sm">{step.description}</p>
+                        <p className="text-sm">{step.description}</p>
                       </div>
                       <Info
                         size={20}
@@ -133,24 +133,24 @@ export default function LatentConstructDiagram() {
         <div className="mb-8">
           <button
             onClick={() => setShowEquation(!showEquation)}
-            className="w-full text-left bg-gradient-to-r from-indigo-500 to-violet-500 text-white p-6 rounded-lg hover:shadow-lg transition-all"
+            className="w-full text-left bg-black text-white p-6 rounded-none hover:bg-gray-900 transition-all border-2 border-black"
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-bold">The Psychometric Equation</h3>
+              <h3 className="text-xl font-bold uppercase font-mono">The Psychometric Equation</h3>
               <ChevronRight
                 size={24}
-                className={`transition-transform ${showEquation ? "rotate-90" : ""}`}
+                className={`transition-transform text-[#FF4D00] ${showEquation ? "rotate-90" : ""}`}
               />
             </div>
           </button>
 
           {showEquation && (
-            <div className="mt-4 bg-white border border-gray-200 rounded-lg p-8">
+            <div className="mt-4 bg-white border-2 border-black rounded-none p-8">
               {/* Equation Display */}
-              <div className="bg-gradient-to-r from-indigo-50 to-violet-50 p-6 rounded-lg mb-6 border border-indigo-200">
+              <div className="bg-[#FFF5F0] p-6 rounded-none mb-6 border-2 border-black">
                 <div className="text-center mb-2">
-                  <p className="text-sm text-gray-600 mb-2">Classical Psychometric Model</p>
-                  <p className="text-3xl font-mono font-bold text-indigo-900">
+                  <p className="text-sm text-gray-600 mb-2 font-mono uppercase">Classical Psychometric Model</p>
+                  <p className="text-3xl font-mono font-bold text-black">
                     X<sub>ij</sub> = f(θ<sub>j</sub>, δ<sub>i</sub>) + ε<sub>ij</sub>
                   </p>
                 </div>
@@ -161,9 +161,9 @@ export default function LatentConstructDiagram() {
                 {EQUATION_PARTS.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:border-indigo-300 transition-colors"
+                    className="bg-white p-4 rounded-none border-2 border-black hover:bg-[#FFF5F0] transition-colors"
                   >
-                    <div className="font-mono font-bold text-indigo-600 text-lg mb-2">
+                    <div className="font-mono font-bold text-[#FF4D00] text-lg mb-2">
                       {item.part}
                     </div>
                     <p className="text-sm text-gray-700">{item.meaning}</p>
@@ -172,9 +172,9 @@ export default function LatentConstructDiagram() {
               </div>
 
               {/* Interpretation */}
-              <div className="mt-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                <h4 className="font-semibold text-blue-900 mb-2">Interpretation</h4>
-                <p className="text-sm text-blue-800">
+              <div className="mt-6 bg-[#FFF5F0] border-2 border-black p-4 rounded-none">
+                <h4 className="font-semibold text-black mb-2 uppercase font-mono">Interpretation</h4>
+                <p className="text-sm text-black">
                   An observed score is a function of the true, unobservable latent construct and the rubric's structural parameters, plus random measurement error. Without a well-designed rubric (δ_i), the mapping from latent construct to observable score becomes unreliable and unmeasurable.
                 </p>
               </div>
@@ -186,20 +186,20 @@ export default function LatentConstructDiagram() {
         <div className="mb-8">
           <button
             onClick={() => setShowErrorDecomposition(!showErrorDecomposition)}
-            className="w-full text-left bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-lg hover:shadow-lg transition-all"
+            className="w-full text-left bg-black text-white p-6 rounded-none hover:bg-gray-900 transition-all border-2 border-black"
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-bold">Measurement Error Sources (ε_ij)</h3>
+              <h3 className="text-xl font-bold uppercase font-mono">Measurement Error Sources (ε_ij)</h3>
               <ChevronRight
                 size={24}
-                className={`transition-transform ${showErrorDecomposition ? "rotate-90" : ""}`}
+                className={`transition-transform text-[#FF4D00] ${showErrorDecomposition ? "rotate-90" : ""}`}
               />
             </div>
           </button>
 
           {showErrorDecomposition && (
-            <div className="mt-4 bg-white border border-gray-200 rounded-lg p-8">
-              <p className="text-gray-700 mb-6">
+            <div className="mt-4 bg-white border-2 border-black rounded-none p-8">
+              <p className="text-gray-700 mb-6 font-mono text-sm">
                 Random measurement error arises from multiple sources. Understanding these sources helps engineers design rubrics that minimize error and maximize signal-to-noise ratio.
               </p>
 
@@ -207,12 +207,12 @@ export default function LatentConstructDiagram() {
                 {ERROR_SOURCES.map((error, index) => (
                   <div key={index} className="mb-6">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-semibold text-gray-900">{error.source}</span>
-                      <span className="text-sm font-bold text-gray-600">{error.percentage}%</span>
+                      <span className="font-semibold text-black font-mono">{error.source}</span>
+                      <span className="text-sm font-bold text-black font-mono">{error.percentage}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div className="w-full bg-white border border-black rounded-none h-4 overflow-hidden">
                       <div
-                        className={`${error.color} h-full transition-all duration-1000`}
+                        className="bg-black h-full transition-all duration-1000"
                         style={{ width: `${error.percentage}%` }}
                       />
                     </div>
@@ -221,23 +221,23 @@ export default function LatentConstructDiagram() {
               </div>
 
               {/* Mitigation Strategies */}
-              <div className="mt-8 bg-green-50 border border-green-200 rounded-lg p-6">
-                <h4 className="font-semibold text-green-900 mb-4">Mitigation Strategies</h4>
-                <ul className="space-y-2 text-sm text-green-800">
+              <div className="mt-8 bg-[#FFF5F0] border-2 border-black rounded-none p-6">
+                <h4 className="font-semibold text-black mb-4 uppercase font-mono">Mitigation Strategies</h4>
+                <ul className="space-y-2 text-sm text-black">
                   <li className="flex gap-2">
-                    <span className="font-bold">→</span>
+                    <span className="font-bold text-[#FF4D00]">→</span>
                     <span>
                       <strong>Reduce Linguistic Ambiguity:</strong> Use precise, operationalized criteria with concrete examples and boundary cases.
                     </span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-bold">→</span>
+                    <span className="font-bold text-[#FF4D00]">→</span>
                     <span>
                       <strong>Standardize Annotator Training:</strong> Implement formal qualification curricula and double-coded shadow periods.
                     </span>
                   </li>
                   <li className="flex gap-2">
-                    <span className="font-bold">→</span>
+                    <span className="font-bold text-[#FF4D00]">→</span>
                     <span>
                       <strong>Control Environmental Factors:</strong> Standardize annotation interfaces, deploy honeypots, and monitor annotator fatigue.
                     </span>
@@ -249,9 +249,9 @@ export default function LatentConstructDiagram() {
         </div>
 
         {/* Key Takeaway */}
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-8">
-          <h3 className="font-bold text-purple-900 mb-3">Key Insight</h3>
-          <p className="text-purple-800">
+        <div className="bg-white border-2 border-black rounded-none p-8">
+          <h3 className="font-bold text-black mb-3 uppercase font-mono">Key Insight</h3>
+          <p className="text-black">
             <strong>A rubric is not a bureaucratic wrapper—it is the measurement instrument itself.</strong> Without an explicit, versioned rubric, human annotators and automated judges rely on idiosyncratic, uncalibrated internal mental models. The rubric formally specifies the mapping from latent constructs to observable scores, making evaluation reproducible, auditable, and defensible.
           </p>
         </div>

@@ -13,6 +13,9 @@ import MasterDoctrine from "./pages/MasterDoctrine";
 import Security from "./pages/Security";
 import Jailbreaks from "./pages/Jailbreaks";
 import Risk from "./pages/Risk";
+import AgenticPrimer from "./pages/AgenticPrimer";
+import RubricHandbook from "./pages/RubricHandbook";
+import EvalScience from "./pages/EvalScience";
 import SiteMapNavigator from "./components/SiteMapNavigator";
 
 function Router() {
@@ -25,6 +28,9 @@ function Router() {
       <Route path={"/risk"} component={Risk} />
       <Route path={"/multicultural"} component={Multicultural} />
       <Route path={"/rubric-design"} component={RubricDesign} />
+      <Route path={"/rubric"} component={RubricHandbook} />
+      <Route path={"/agentic"} component={AgenticPrimer} />
+      <Route path={"/science"} component={EvalScience} />
       <Route path={"/metrics"} component={MetricsGlossary} />
       <Route path={"/doctrine"} component={MasterDoctrine} />
       <Route path={"/404"} component={NotFound} />

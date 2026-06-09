@@ -83,12 +83,12 @@ export default function MultilingualSafetySection() {
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageData | null>(null);
 
   return (
-    <section className="py-20 px-4 bg-slate-50 border-t-4 border-blue-500">
+    <section className="py-20 px-4 bg-white border-t-2 border-black">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Globe className="w-8 h-8 text-blue-600" />
+            <Globe className="w-8 h-8 text-[#FF4D00]" />
             <h2 className="text-4xl font-black text-black">
               MULTILINGUAL SAFETY & LANGUAGE GAP
             </h2>
@@ -188,18 +188,18 @@ export default function MultilingualSafetySection() {
               <button
                 key={idx}
                 onClick={() => setSelectedLanguage(selectedLanguage?.language === lang.language ? null : lang)}
-                className={`text-left p-4 rounded-lg border-2 transition-all duration-200 ${
+                className={`text-left p-4 rounded-none border-2 transition-all duration-200 ${
                   selectedLanguage?.language === lang.language
-                    ? "bg-blue-100 border-blue-500 ring-2 ring-offset-2 ring-blue-400"
-                    : "bg-white border-slate-300 hover:border-blue-400"
+                    ? "bg-black text-white border-black"
+                    : "bg-white border-black text-black hover:bg-[#FFF5F0]"
                 }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 className="font-bold text-lg">{lang.language}</h4>
-                    <p className="text-sm text-slate-600">{lang.region}</p>
+                    <p className={`text-sm ${selectedLanguage?.language === lang.language ? "text-slate-300" : "text-slate-600"}`}>{lang.region}</p>
                   </div>
-                  <span className="text-xs font-bold bg-orange-100 text-orange-900 px-2 py-1 rounded">
+                  <span className="text-xs font-bold bg-[#FF4D00] text-black border border-black px-2 py-1 rounded-none font-mono">
                     Gap: {lang.safetyGap}%
                   </span>
                 </div>
@@ -210,9 +210,9 @@ export default function MultilingualSafetySection() {
                       <span className="font-semibold">Research Coverage</span>
                       <span>{lang.researchCoverage}%</span>
                     </div>
-                    <div className="w-full bg-slate-200 rounded-full h-2">
+                    <div className="w-full bg-white border border-black rounded-none h-3">
                       <div
-                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-black h-full transition-all duration-300"
                         style={{ width: `${lang.researchCoverage}%` }}
                       />
                     </div>
@@ -223,9 +223,9 @@ export default function MultilingualSafetySection() {
                       <span className="font-semibold">Bypass Rate</span>
                       <span>{lang.bypassRate}%</span>
                     </div>
-                    <div className="w-full bg-slate-200 rounded-full h-2">
+                    <div className="w-full bg-white border border-black rounded-none h-3">
                       <div
-                        className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-[#FF4D00] h-full transition-all duration-300"
                         style={{ width: `${lang.bypassRate}%` }}
                       />
                     </div>
@@ -233,7 +233,7 @@ export default function MultilingualSafetySection() {
                 </div>
 
                 {selectedLanguage?.language === lang.language && (
-                  <div className="mt-4 pt-4 border-t-2 border-blue-300">
+                  <div className="mt-4 pt-4 border-t-2 border-black">
                     <p className="text-sm text-slate-700">
                       <strong>Key Finding:</strong> {lang.language} shows a {lang.safetyGap}% safety
                       gap compared to English, with only {lang.researchCoverage}% research coverage
@@ -247,47 +247,47 @@ export default function MultilingualSafetySection() {
         </div>
 
         {/* Critical Gaps */}
-        <Card className="mb-12 p-6 bg-amber-50 border-2 border-amber-300">
-          <h3 className="font-bold text-amber-900 mb-4 flex items-center gap-2">
-            <TrendingDown className="w-5 h-5" />
+        <div className="mb-12 p-6 bg-white border-2 border-black rounded-none">
+          <h3 className="font-bold text-black mb-4 flex items-center gap-2 uppercase font-mono">
+            <TrendingDown className="w-5 h-5 text-[#FF4D00]" />
             Critical Research Gaps
           </h3>
-          <ul className="space-y-3 text-amber-900">
+          <ul className="space-y-3 text-black">
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Dataset Availability:</strong> Limited multilingual safety datasets,
                 particularly for low-resource languages
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Evaluation Bias:</strong> Most benchmarks designed for English-speaking
                 contexts, creating systematic measurement bias
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Generalization Assumption:</strong> Persistent belief that English safety
                 mechanisms transfer universally, contradicted by empirical evidence
               </span>
             </li>
             <li className="flex gap-3">
-              <span className="font-bold">•</span>
+              <span className="font-bold text-[#FF4D00]">•</span>
               <span>
                 <strong>Cultural Context:</strong> Safety definitions vary across cultures; harm
                 categories may not translate directly
               </span>
             </li>
           </ul>
-        </Card>
+        </div>
 
         {/* Recommendations */}
-        <div className="p-6 bg-blue-50 border-l-4 border-blue-500 rounded">
-          <h3 className="font-bold text-blue-900 mb-3">Governance Implications</h3>
-          <ul className="space-y-2 text-blue-900">
+        <div className="p-6 bg-[#FFF5F0] border-2 border-black rounded-none">
+          <h3 className="font-bold text-black mb-3 uppercase font-mono">Governance Implications</h3>
+          <ul className="space-y-2 text-black">
             <li className="flex gap-2">
               <span className="font-bold">1.</span>
               <span>
